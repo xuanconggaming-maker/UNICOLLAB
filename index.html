@@ -29,7 +29,6 @@
           transform: scale(1);
         }
       }
-
       .sso-input {
         transition: all 0.3s ease;
       }
@@ -38,7 +37,6 @@
         border-color: #93c5fd;
         background-color: #fff;
       }
-
       .custom-scrollbar::-webkit-scrollbar {
         width: 6px;
       }
@@ -50,7 +48,6 @@
         background: #cbd5e1;
         border-radius: 8px;
       }
-
       .modal-active {
         overflow: hidden;
       }
@@ -224,27 +221,6 @@
     </div>
 
     <div
-      class="mt-6 flex items-center justify-center space-x-3 text-sm text-gray-500 bg-white/80 px-6 py-2.5 rounded-full border border-gray-200 shadow-sm backdrop-blur-sm z-10 fade-in"
-    >
-      <i class="fa-solid fa-globe text-blue-500"></i>
-      <button
-        id="btn-vi"
-        onclick="switchLanguage('vi')"
-        class="font-bold text-blue-600 transition cursor-pointer"
-      >
-        Tiếng Việt
-      </button>
-      <span class="text-gray-300">|</span>
-      <button
-        id="btn-en"
-        onclick="switchLanguage('en')"
-        class="font-medium text-gray-500 hover:text-blue-600 transition cursor-pointer"
-      >
-        English
-      </button>
-    </div>
-
-    <div
       id="registerModal"
       class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4"
     >
@@ -366,152 +342,18 @@
             </div>
           </div>
 
-          <div class="flex items-start mb-6 px-2">
-            <input
-              type="checkbox"
-              id="termsCheckbox"
-              required
-              class="mt-1.5 mr-3 w-4 h-4 text-[#2563eb] bg-gray-100 border-gray-300 rounded focus:ring-[#2563eb] cursor-pointer shrink-0"
-            />
-            <label
-              for="termsCheckbox"
-              class="text-sm text-gray-500 cursor-pointer leading-tight"
-            >
-              Tôi đồng ý với
-              <a href="#" class="text-[#2563eb] font-bold hover:underline"
-                >Điều khoản sử dụng</a
-              >
-              và
-              <a href="#" class="text-[#2563eb] font-bold hover:underline"
-                >Chính sách bảo mật</a
-              >
-              của UNICOLLAB.
-            </label>
-          </div>
-
           <button
             type="submit"
             id="btnSubmitReg"
             class="w-full bg-[#2563eb] text-white font-bold py-4 rounded-full hover:bg-blue-700 transition uppercase tracking-wider shadow-md"
           >
-            HOÀN TẤT ĐĂNG KÝ SINH VIÊN
+            HOÀN TẤT ĐĂNG KÝ
           </button>
-
-          <div class="mt-5 text-center">
-            <p class="text-sm text-gray-600">
-              Đã có tài khoản?
-              <button
-                type="button"
-                onclick="document.getElementById('closeRegisterBtn').click()"
-                class="text-[#2563eb] font-bold hover:underline ml-1 transition"
-              >
-                Đăng nhập tại đây
-              </button>
-            </p>
-          </div>
         </form>
       </div>
     </div>
 
-    <div
-      id="forgotModal"
-      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4"
-    >
-      <div
-        class="bg-white rounded-3xl w-full max-w-xl overflow-hidden shadow-2xl relative transition-all duration-300 scale-95 opacity-0 p-8"
-      >
-        <button
-          id="closeForgotBtn"
-          class="absolute top-5 right-5 w-8 h-8 bg-gray-100 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-full flex items-center justify-center transition z-10 text-xl"
-        >
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-        <h2
-          class="text-[18px] font-bold text-gray-800 uppercase mb-5 tracking-wide text-center"
-        >
-          BẠN QUÊN MẬT KHẨU?
-        </h2>
-
-        <div class="border border-gray-200 rounded-2xl p-7 bg-gray-50/50">
-          <p class="text-gray-600 text-sm mb-6 text-center">
-            Vui lòng nhập Mã Sinh Viên / Tài khoản và địa chỉ Email để nhận liên
-            kết khôi phục.
-          </p>
-          <form
-            onsubmit="
-              event.preventDefault();
-              alert(
-                '✅ Đã gửi yêu cầu khôi phục thành công! Vui lòng kiểm tra email của bạn.',
-              );
-              document.getElementById('closeForgotBtn').click();
-            "
-          >
-            <div class="space-y-4 mb-6">
-              <div class="relative">
-                <i
-                  class="fa-regular fa-user absolute left-5 top-3.5 text-blue-400 text-lg"
-                ></i>
-                <input
-                  type="text"
-                  required
-                  placeholder="Mã SV / Tài khoản *"
-                  class="w-full pl-12 pr-5 py-3.5 bg-white border border-gray-200 rounded-full outline-none focus:ring-1 focus:ring-[#0ea5e9] transition text-sm shadow-sm font-bold text-gray-700"
-                />
-              </div>
-              <div class="relative">
-                <i
-                  class="fa-regular fa-envelope absolute left-5 top-3.5 text-blue-400 text-lg"
-                ></i>
-                <input
-                  type="email"
-                  required
-                  placeholder="Địa chỉ Email đã đăng ký *"
-                  class="w-full pl-12 pr-5 py-3.5 bg-white border border-gray-200 rounded-full outline-none focus:ring-1 focus:ring-[#0ea5e9] transition text-sm shadow-sm"
-                />
-              </div>
-            </div>
-
-            <div class="flex items-center space-x-4 mb-8">
-              <div class="flex flex-col items-center">
-                <div
-                  onclick="generateCaptcha()"
-                  class="captcha-bg border border-gray-300 w-32 h-12 rounded-xl flex items-center justify-center relative select-none cursor-pointer shadow-sm bg-white"
-                  title="Bấm vào để đổi mã khác"
-                >
-                  <span
-                    id="captchaText"
-                    class="font-bold text-[20px] tracking-[0.2em] text-black relative z-10 italic mix-blend-multiply"
-                    style="font-family: &quot;Courier New&quot;, monospace"
-                  ></span>
-                </div>
-                <span class="text-[10px] text-gray-400 mt-1 italic"
-                  ><i class="fa-solid fa-arrows-rotate mr-1"></i> Bấm để đổi
-                  mã</span
-                >
-              </div>
-              <div class="flex-1">
-                <input
-                  type="text"
-                  required
-                  placeholder="Nhập mã hiển thị *"
-                  class="w-full px-5 py-3.5 bg-white border border-gray-200 rounded-full outline-none focus:ring-1 focus:ring-[#0ea5e9] transition text-sm shadow-sm font-bold text-gray-700"
-                />
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              class="w-full bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-bold py-3.5 rounded-full transition shadow-md uppercase tracking-wider text-sm"
-            >
-              Gửi yêu cầu khôi phục
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-
     <script type="module">
-      // 1. Khởi tạo Firebase
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import {
         getFirestore,
@@ -527,20 +369,19 @@
         storageBucket: "unicollab-e81c0.firebasestorage.app",
         messagingSenderId: "983588473001",
         appId: "1:983588473001:web:0708bc4fe827e388f181b8",
-        measurementId: "G-8PQ0CRQKRM",
       };
 
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
-      // ==============================================================
-      // LOGIC FIREBASE: ĐĂNG KÝ
-      // ==============================================================
       window.submitRegister = async function (event) {
         event.preventDefault();
         const role = document.getElementById("roleSelect").value;
         const fullName = document.getElementById("regFullName").value.trim();
-        const idInput = document.getElementById("idInput").value.trim();
+        const idInput = document
+          .getElementById("idInput")
+          .value.trim()
+          .toUpperCase();
         const pass = document.getElementById("regPassword").value;
         const confirmPass = document.getElementById("regConfirmPassword").value;
 
@@ -548,7 +389,6 @@
           alert("⚠️ Mật khẩu nhập lại không khớp!");
           return;
         }
-
         if (
           role === "teacher" &&
           document.getElementById("teacherSecret").value !== "GV2026"
@@ -558,8 +398,7 @@
         }
 
         try {
-          // Kiểm tra xem ID đã tồn tại trên Firebase chưa
-          const userRef = doc(db, "users", idInput.toUpperCase());
+          const userRef = doc(db, "users", idInput);
           const docSnap = await getDoc(userRef);
 
           if (docSnap.exists()) {
@@ -567,20 +406,19 @@
             return;
           }
 
-          // Lưu lên Firebase
+          // Ghi dữ liệu vào Firebase (Sau này có thể đổi URL post qua file PHP)
           await setDoc(userRef, {
-            id: idInput.toUpperCase(),
+            id: idInput,
             name: fullName,
             role: role,
             password: pass,
             createdAt: new Date(),
           });
 
-          // Lưu LocalStorage để giữ phiên làm việc
           localStorage.setItem(
             "userProfileData",
             JSON.stringify({
-              id: idInput.toUpperCase(),
+              id: idInput,
               name: fullName,
               role: role,
               avatarBase64: "",
@@ -591,14 +429,11 @@
           window.location.href =
             role === "teacher" ? "dashboard.html" : "matching.html";
         } catch (error) {
-          console.error("Lỗi thêm user: ", error);
-          alert("Đã xảy ra lỗi khi kết nối với Database!");
+          console.error("Lỗi: ", error);
+          alert("Lỗi kết nối cơ sở dữ liệu!");
         }
       };
 
-      // ==============================================================
-      // LOGIC FIREBASE: ĐĂNG NHẬP
-      // ==============================================================
       window.handleLogin = async function (event) {
         event.preventDefault();
         let accVal = document
@@ -608,19 +443,11 @@
         const passVal = document.getElementById("loginPassword").value;
         const errorDiv = document.getElementById("errorMsg");
 
-        if (!accVal || !passVal) {
-          errorDiv.classList.remove("hidden");
-          errorDiv.classList.add("flex");
-          return;
-        }
-
         try {
           const docSnap = await getDoc(doc(db, "users", accVal));
-
           if (docSnap.exists() && docSnap.data().password === passVal) {
             const user = docSnap.data();
             errorDiv.classList.add("hidden");
-
             localStorage.setItem(
               "userProfileData",
               JSON.stringify({
@@ -630,7 +457,6 @@
                 avatarBase64: user.avatarBase64 || "",
               }),
             );
-
             window.location.href =
               user.role === "teacher" ? "dashboard.html" : "matching.html";
           } else {
@@ -638,94 +464,35 @@
             errorDiv.classList.add("flex");
           }
         } catch (error) {
-          console.error(error);
           alert("Lỗi kết nối cơ sở dữ liệu!");
         }
       };
 
-      // ==============================================================
-      // CÁC CHỨC NĂNG GIAO DIỆN CỦA TRANG (UI)
-      // Chú ý: Cần thêm chữ "window." vì đang dùng <script type="module">
-      // ==============================================================
-
+      // Các hàm UI Demo
       window.demoLogin = function (role) {
-        let userData = {};
         if (role === "student") {
-          userData = {
-            id: "SV_DEMO",
-            name: "Sinh viên Trải nghiệm",
-            role: "student",
-          };
-          localStorage.setItem("userProfileData", JSON.stringify(userData));
+          localStorage.setItem(
+            "userProfileData",
+            JSON.stringify({
+              id: "SV_DEMO",
+              name: "Sinh viên Trải nghiệm",
+              role: "student",
+            }),
+          );
           window.location.href = "matching.html";
-        } else if (role === "leader") {
-          userData = {
-            id: "LD_DEMO",
-            name: "Leader Siêu Cấp",
-            role: "student",
-          };
-          localStorage.setItem("userProfileData", JSON.stringify(userData));
-          window.location.href = "kanban.html";
         } else if (role === "teacher") {
-          userData = {
-            id: "GV_DEMO",
-            name: "Giảng viên Chấm thi",
-            role: "teacher",
-          };
-          localStorage.setItem("userProfileData", JSON.stringify(userData));
+          localStorage.setItem(
+            "userProfileData",
+            JSON.stringify({
+              id: "GV_DEMO",
+              name: "Giảng viên Chấm thi",
+              role: "teacher",
+            }),
+          );
           window.location.href = "dashboard.html";
-        }
-      };
-
-      const dict = {
-        vi: {
-          desc: "Nền tảng kết nối và điều hành nhóm dự án rèn nghề liên ngành.",
-          auth_title: "Hệ thống chung",
-          remember: "Duy trì đăng nhập",
-          forgot: "Quên mật khẩu?",
-          login_btn: "ĐĂNG NHẬP",
-          no_acc: "Chưa có tài khoản?",
-          reg_now: "Đăng ký ngay",
-        },
-        en: {
-          desc: "Platform for connecting and managing interdisciplinary practicum projects.",
-          auth_title: "Centralized Authentication",
-          remember: "Remember me",
-          forgot: "Forgot password?",
-          login_btn: "SIGN IN",
-          no_acc: "Don't have an account?",
-          reg_now: "Register now",
-        },
-      };
-      const placeholders = {
-        vi: { account: "Mã SV / Tài khoản", password: "Mật khẩu" },
-        en: { account: "Student ID / Username", password: "Password" },
-      };
-
-      window.switchLanguage = function (lang) {
-        const btnVi = document.getElementById("btn-vi");
-        const btnEn = document.getElementById("btn-en");
-        if (lang === "en") {
-          btnEn.className = "font-bold text-blue-600 transition cursor-pointer";
-          btnVi.className =
-            "font-medium text-gray-500 hover:text-blue-600 transition cursor-pointer";
         } else {
-          btnVi.className = "font-bold text-blue-600 transition cursor-pointer";
-          btnEn.className =
-            "font-medium text-gray-500 hover:text-blue-600 transition cursor-pointer";
+          window.location.href = "kanban.html";
         }
-        document.querySelectorAll("[data-i18n]").forEach((el) => {
-          const key = el.getAttribute("data-i18n");
-          if (dict[lang][key]) el.innerText = dict[lang][key];
-        });
-        document.querySelectorAll("[data-placeholder]").forEach((el) => {
-          const key = el.getAttribute("data-placeholder");
-          if (placeholders[lang][key]) el.placeholder = placeholders[lang][key];
-        });
-        document.getElementById("errorText").innerText =
-          lang === "en"
-            ? "Invalid account or password!"
-            : "Sai tài khoản hoặc mật khẩu!";
       };
 
       window.togglePasswordVisibility = function (inputId, iconElement) {
@@ -740,50 +507,26 @@
           iconElement.classList.remove("text-[#2563eb]");
         }
       };
-
-      window.toggleRegPassword = function (inputId, icon) {
-        window.togglePasswordVisibility(inputId, icon);
+      window.toggleRegPassword = function (id, el) {
+        window.togglePasswordVisibility(id, el);
       };
 
       window.handleRoleChange = function () {
         const role = document.getElementById("roleSelect").value;
         const authBox = document.getElementById("teacherAuthBox");
         const secretInput = document.getElementById("teacherSecret");
-        const idInput = document.getElementById("idInput");
-        const nameInput = document.getElementById("regFullName");
-        const btnSubmit = document.getElementById("btnSubmitReg");
-
         if (role === "teacher") {
           authBox.classList.remove("hidden");
           secretInput.setAttribute("required", "true");
-          idInput.placeholder = "Mã Giảng Viên *";
-          nameInput.placeholder = "Tên Giảng Viên *";
-          btnSubmit.innerText = "HOÀN TẤT ĐĂNG KÝ GIẢNG VIÊN";
         } else {
           authBox.classList.add("hidden");
           secretInput.removeAttribute("required");
-          secretInput.value = "";
-          idInput.placeholder = "Mã Sinh Viên *";
-          nameInput.placeholder = "Họ và tên *";
-          btnSubmit.innerText = "HOÀN TẤT ĐĂNG KÝ SINH VIÊN";
         }
       };
 
-      window.generateCaptcha = function () {
-        const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        let captcha = "";
-        for (let i = 0; i < 4; i++) {
-          captcha += chars[Math.floor(Math.random() * chars.length)] + " ";
-        }
-        document.getElementById("captchaText").innerText = captcha.trim();
-      };
-
-      // ==============================================================
-      // XỬ LÝ ĐÓNG/MỞ MODAL
-      // ==============================================================
+      // Xử lý Modal Đăng ký
       const regModal = document.getElementById("registerModal");
       const regContent = regModal.querySelector("div.rounded-3xl");
-
       document
         .getElementById("openRegisterBtn")
         .addEventListener("click", () => {
@@ -794,67 +537,25 @@
             regContent.classList.remove("scale-95", "opacity-0");
             regContent.classList.add("scale-100", "opacity-100");
           }, 10);
-          document.getElementById("roleSelect").value = "student";
-          window.handleRoleChange();
         });
-
-      const closeReg = () => {
-        document.body.classList.remove("modal-active");
-        regContent.classList.remove("scale-100", "opacity-100");
-        regContent.classList.add("scale-95", "opacity-0");
-        setTimeout(() => {
-          regModal.classList.remove("flex");
-          regModal.classList.add("hidden");
-        }, 300);
-      };
       document
         .getElementById("closeRegisterBtn")
-        .addEventListener("click", closeReg);
-      regModal.addEventListener("click", (e) => {
-        if (e.target === regModal) closeReg();
-      });
+        .addEventListener("click", () => {
+          document.body.classList.remove("modal-active");
+          regContent.classList.remove("scale-100", "opacity-100");
+          regContent.classList.add("scale-95", "opacity-0");
+          setTimeout(() => {
+            regModal.classList.remove("flex");
+            regModal.classList.add("hidden");
+          }, 300);
+        });
 
-      const forgotModal = document.getElementById("forgotModal");
-      const forgotContent = forgotModal.querySelector("#forgotModal > div");
-
-      document.getElementById("openForgotBtn").addEventListener("click", () => {
-        window.generateCaptcha();
-        document.body.classList.add("modal-active");
-        forgotModal.classList.remove("hidden");
-        forgotModal.classList.add("flex");
-        setTimeout(() => {
-          forgotContent.classList.remove("scale-95", "opacity-0");
-          forgotContent.classList.add("scale-100", "opacity-100");
-        }, 10);
-      });
-
-      const closeForgot = () => {
-        document.body.classList.remove("modal-active");
-        forgotContent.classList.remove("scale-100", "opacity-100");
-        forgotContent.classList.add("scale-95", "opacity-0");
-        setTimeout(() => {
-          forgotModal.classList.remove("flex");
-          forgotModal.classList.add("hidden");
-        }, 300);
-      };
-      document
-        .getElementById("closeForgotBtn")
-        .addEventListener("click", closeForgot);
-      forgotModal.addEventListener("click", (e) => {
-        if (e.target === forgotModal) closeForgot();
-      });
-
-      // ==============================================================
-      // AUTO LOGIN (Nếu đã đăng nhập trước đó)
-      // ==============================================================
       document.addEventListener("DOMContentLoaded", () => {
         const savedUser = localStorage.getItem("userProfileData");
         if (savedUser) {
           const userData = JSON.parse(savedUser);
-          if (userData.role === "student")
-            window.location.href = "matching.html";
-          if (userData.role === "teacher")
-            window.location.href = "dashboard.html";
+          window.location.href =
+            userData.role === "student" ? "matching.html" : "dashboard.html";
         }
       });
     </script>

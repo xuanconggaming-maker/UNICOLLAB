@@ -39,8 +39,6 @@
           transform: translateY(0);
         }
       }
-
-      /* Hiệu ứng Sidebar Tab Active */
       .nav-item.active {
         background-color: #2563eb;
         color: white;
@@ -69,7 +67,6 @@
         </div>
         <h1 class="text-lg font-black tracking-widest uppercase">UNICOLLAB</h1>
       </div>
-
       <div class="p-6 flex-1 overflow-y-auto custom-scrollbar">
         <p
           class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4"
@@ -82,35 +79,34 @@
             id="tab-projects"
             class="nav-item active flex items-center space-x-3 px-4 py-3 rounded-xl font-medium"
           >
-            <i class="fa-solid fa-layer-group w-5 text-center"></i>
-            <span>Quản lý Dự án</span>
+            <i class="fa-solid fa-layer-group w-5 text-center"></i
+            ><span>Quản lý Dự án</span>
           </a>
           <a
             onclick="switchTab('students')"
             id="tab-students"
             class="nav-item flex items-center space-x-3 px-4 py-3 rounded-xl font-medium"
           >
-            <i class="fa-solid fa-users w-5 text-center"></i>
-            <span>Quản lý Sinh viên</span>
+            <i class="fa-solid fa-users w-5 text-center"></i
+            ><span>Quản lý Sinh viên</span>
           </a>
           <a
             onclick="switchTab('tracking')"
             id="tab-tracking"
             class="nav-item flex items-center space-x-3 px-4 py-3 rounded-xl font-medium"
           >
-            <i class="fa-solid fa-chart-pie w-5 text-center"></i>
-            <span>Báo cáo Tiến độ</span>
+            <i class="fa-solid fa-chart-pie w-5 text-center"></i
+            ><span>Báo cáo Tiến độ</span>
           </a>
         </nav>
       </div>
-
       <div class="mt-auto p-6 border-t border-slate-800">
         <button
           onclick="teacherLogout()"
           class="flex items-center space-x-3 px-4 py-3 w-full text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-xl font-medium transition"
         >
-          <i class="fa-solid fa-right-from-bracket w-5 text-center"></i>
-          <span>Đăng xuất</span>
+          <i class="fa-solid fa-right-from-bracket w-5 text-center"></i
+          ><span>Đăng xuất</span>
         </button>
       </div>
     </aside>
@@ -122,31 +118,13 @@
         class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shrink-0 shadow-sm z-10"
       >
         <div class="flex items-center">
-          <button
-            class="md:hidden text-slate-500 hover:text-blue-600 mr-4 text-xl"
-          >
-            <i class="fa-solid fa-bars"></i>
-          </button>
           <h2 class="text-xl font-extrabold text-slate-800" id="topbarTitle">
             Hệ Thống Phê Duyệt Đồ Án
           </h2>
         </div>
-
         <div class="flex items-center space-x-4">
-          <button
-            onclick="alert('Không có thông báo mới.')"
-            class="w-10 h-10 rounded-full bg-slate-100 text-slate-500 hover:bg-blue-50 hover:text-blue-600 transition flex items-center justify-center relative"
-          >
-            <i class="fa-regular fa-bell"></i>
-            <span
-              id="pendingBell"
-              class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white hidden animate-pulse"
-            ></span>
-          </button>
-          <div class="h-8 w-px bg-slate-200"></div>
           <div
             class="flex items-center space-x-3 cursor-pointer hover:bg-slate-50 p-1.5 rounded-lg transition"
-            title="Tài khoản Giảng viên"
           >
             <div class="text-right hidden sm:block">
               <p class="text-sm font-bold text-slate-700" id="teacherName">
@@ -157,7 +135,6 @@
               </p>
             </div>
             <div
-              id="teacherAvatar"
               class="w-10 h-10 bg-gradient-to-tr from-blue-600 to-indigo-500 text-white rounded-full flex items-center justify-center font-bold shadow-sm"
             >
               GV
@@ -170,7 +147,7 @@
         <div id="content-projects" class="block fade-in">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div
-              class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between hover:shadow-md transition"
+              class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between"
             >
               <div>
                 <p class="text-sm font-bold text-slate-500 mb-1">
@@ -186,12 +163,10 @@
                 <i class="fa-solid fa-cubes"></i>
               </div>
             </div>
-
             <div
-              class="bg-white p-6 rounded-2xl border border-orange-200 shadow-sm flex items-center justify-between hover:shadow-md transition relative overflow-hidden"
+              class="bg-white p-6 rounded-2xl border border-orange-200 shadow-sm flex items-center justify-between"
             >
-              <div class="absolute inset-0 bg-orange-50 opacity-50"></div>
-              <div class="relative z-10">
+              <div>
                 <p class="text-sm font-bold text-orange-600 mb-1">
                   Đang chờ Duyệt
                 </p>
@@ -203,17 +178,15 @@
                 </h3>
               </div>
               <div
-                class="w-14 h-14 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-2xl relative z-10"
+                class="w-14 h-14 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-2xl"
               >
                 <i class="fa-solid fa-hourglass-half"></i>
               </div>
             </div>
-
             <div
-              class="bg-white p-6 rounded-2xl border border-emerald-200 shadow-sm flex items-center justify-between hover:shadow-md transition relative overflow-hidden"
+              class="bg-white p-6 rounded-2xl border border-emerald-200 shadow-sm flex items-center justify-between"
             >
-              <div class="absolute inset-0 bg-emerald-50 opacity-50"></div>
-              <div class="relative z-10">
+              <div>
                 <p class="text-sm font-bold text-emerald-600 mb-1">
                   Đang thực hiện
                 </p>
@@ -225,7 +198,7 @@
                 </h3>
               </div>
               <div
-                class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl relative z-10"
+                class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl"
               >
                 <i class="fa-solid fa-check-double"></i>
               </div>
@@ -236,62 +209,40 @@
             class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"
           >
             <div
-              class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              class="p-6 border-b border-slate-100 flex flex-col sm:flex-row justify-between gap-4"
             >
               <h3 class="text-lg font-bold text-slate-800">
                 Danh sách Dự án Yêu cầu
               </h3>
-              <div class="relative">
-                <i
-                  class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm"
-                ></i>
-                <input
-                  type="text"
-                  id="searchTable"
-                  oninput="renderProjectTable()"
-                  placeholder="Tìm tên dự án, leader..."
-                  class="pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full sm:w-64 transition"
-                />
-              </div>
+              <input
+                type="text"
+                id="searchTable"
+                oninput="renderProjectTable()"
+                placeholder="Tìm tên dự án, leader..."
+                class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm w-full sm:w-64"
+              />
             </div>
-
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr
-                    class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider font-bold"
-                  >
-                    <th class="p-4 border-b border-slate-200">
-                      Tên dự án & Mô tả
-                    </th>
-                    <th class="p-4 border-b border-slate-200">Lĩnh vực</th>
-                    <th class="p-4 border-b border-slate-200">
-                      Sinh viên (Leader)
-                    </th>
-                    <th class="p-4 border-b border-slate-200 text-center">
-                      Trạng thái
-                    </th>
-                    <th class="p-4 border-b border-slate-200 text-center">
-                      Thao tác
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  id="projectTableBody"
-                  class="text-sm divide-y divide-slate-100"
-                ></tbody>
-              </table>
-            </div>
-
-            <div
-              id="emptyTable"
-              class="hidden flex-col items-center justify-center py-16 text-slate-400 bg-slate-50/50"
-            >
-              <i class="fa-solid fa-folder-open text-5xl mb-4 opacity-30"></i>
-              <p class="font-medium text-slate-500">
-                Chưa có dự án nào được sinh viên tạo trên hệ thống.
-              </p>
-            </div>
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr
+                  class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider font-bold"
+                >
+                  <th class="p-4 border-b border-slate-200">Tên dự án</th>
+                  <th class="p-4 border-b border-slate-200">Lĩnh vực</th>
+                  <th class="p-4 border-b border-slate-200">Leader</th>
+                  <th class="p-4 border-b border-slate-200 text-center">
+                    Trạng thái
+                  </th>
+                  <th class="p-4 border-b border-slate-200 text-center">
+                    Thao tác
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                id="projectTableBody"
+                class="text-sm divide-y divide-slate-100"
+              ></tbody>
+            </table>
           </div>
         </div>
 
@@ -300,58 +251,34 @@
             class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"
           >
             <div
-              class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              class="p-6 border-b border-slate-100 flex flex-col sm:flex-row justify-between gap-4"
             >
               <h3 class="text-lg font-bold text-slate-800">
                 Danh sách Tài khoản Sinh viên
               </h3>
-              <div class="relative">
-                <i
-                  class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm"
-                ></i>
-                <input
-                  type="text"
-                  id="searchStudent"
-                  oninput="renderStudentTable()"
-                  placeholder="Tìm tên, mã sinh viên..."
-                  class="pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full sm:w-64 transition"
-                />
-              </div>
+              <input
+                type="text"
+                id="searchStudent"
+                oninput="renderStudentTable()"
+                placeholder="Tìm sinh viên..."
+                class="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm w-full sm:w-64"
+              />
             </div>
-
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr
-                    class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider font-bold"
-                  >
-                    <th class="p-4 border-b border-slate-200">Sinh viên</th>
-                    <th class="p-4 border-b border-slate-200">
-                      Mã Sinh Viên (ID)
-                    </th>
-                    <th class="p-4 border-b border-slate-200">Vai trò HT</th>
-                    <th class="p-4 border-b border-slate-200">Trạng thái TK</th>
-                    <th class="p-4 border-b border-slate-200 text-center">
-                      Hành động
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  id="studentTableBody"
-                  class="text-sm divide-y divide-slate-100"
-                ></tbody>
-              </table>
-            </div>
-
-            <div
-              id="emptyStudentTable"
-              class="hidden flex-col items-center justify-center py-16 text-slate-400 bg-slate-50/50"
-            >
-              <i class="fa-solid fa-user-slash text-5xl mb-4 opacity-30"></i>
-              <p class="font-medium text-slate-500">
-                Không tìm thấy sinh viên nào trong hệ thống.
-              </p>
-            </div>
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr
+                  class="bg-slate-50 text-slate-500 text-xs uppercase font-bold"
+                >
+                  <th class="p-4 border-b border-slate-200">Sinh viên</th>
+                  <th class="p-4 border-b border-slate-200">Mã SV</th>
+                  <th class="p-4 border-b border-slate-200">Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody
+                id="studentTableBody"
+                class="text-sm divide-y divide-slate-100"
+              ></tbody>
+            </table>
           </div>
         </div>
 
@@ -359,47 +286,27 @@
           <div
             class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6"
           >
-            <div
-              class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4"
-            >
-              <div>
-                <h3 class="text-xl font-bold text-gray-800">
-                  Tiến độ các nhóm Đang hoạt động
-                </h3>
-                <p class="text-sm text-gray-500">
-                  Theo dõi và đánh giá kết quả của các dự án đã được duyệt.
-                </p>
-              </div>
-            </div>
-
+            <h3 class="text-xl font-bold text-gray-800 mb-6">
+              Tiến độ các nhóm Đang hoạt động
+            </h3>
             <div
               class="grid grid-cols-1 lg:grid-cols-2 gap-6"
               id="trackingList"
             ></div>
-
-            <div
-              id="emptyTracking"
-              class="hidden flex-col items-center justify-center py-20 bg-gray-50 rounded-xl border border-dashed border-gray-300 col-span-full"
-            >
-              <i
-                class="fa-solid fa-bars-progress text-5xl text-gray-300 mb-4"
-              ></i>
-              <p class="text-gray-500 font-medium">
-                Chưa có dự án nào được phê duyệt để bắt đầu thực hiện.
-              </p>
-            </div>
           </div>
         </div>
       </main>
     </div>
 
     <script type="module">
-      // 1. Khởi tạo Firebase
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import {
         getFirestore,
         collection,
         getDocs,
+        doc,
+        updateDoc,
+        deleteDoc,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -409,46 +316,32 @@
         storageBucket: "unicollab-e81c0.firebasestorage.app",
         messagingSenderId: "983588473001",
         appId: "1:983588473001:web:0708bc4fe827e388f181b8",
-        measurementId: "G-8PQ0CRQKRM",
       };
 
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
-      // 2. Biến toàn cục
       window.allProjects = [];
       window.allUsers = {};
 
-      // 3. CHẠY KHI VỪA MỞ TRANG
       document.addEventListener("DOMContentLoaded", () => {
         const savedUser = localStorage.getItem("userProfileData");
         if (!savedUser) {
           window.location.href = "index.html";
           return;
         }
-
         const userData = JSON.parse(savedUser);
         if (userData.role === "student") {
-          alert("⚠️ KHU VỰC GIẢNG VIÊN: Sinh viên không có quyền truy cập!");
+          alert("Cấm truy cập!");
           window.location.href = "matching.html";
           return;
         }
-
-        document.getElementById("teacherName").innerText =
-          userData.name || "Giảng Viên";
-        document.getElementById("teacherAvatar").innerText = (
-          userData.name || "G"
-        )
-          .charAt(0)
-          .toUpperCase();
+        document.getElementById("teacherName").innerText = userData.name;
 
         window.loadProjectsData();
-        window.loadStudentsData(); // Gọi hàm kéo Firebase
+        window.loadStudentsData();
       });
 
-      // =====================================
-      // GIAO DIỆN & TAB
-      // =====================================
       window.switchTab = function (tabId) {
         ["projects", "students", "tracking"].forEach((t) => {
           document.getElementById("content-" + t).classList.add("hidden");
@@ -456,61 +349,38 @@
           const navItem = document.getElementById("tab-" + t);
           if (navItem) navItem.classList.remove("active");
         });
-
         document.getElementById("content-" + tabId).classList.remove("hidden");
         document.getElementById("content-" + tabId).classList.add("block");
-        const activeNav = document.getElementById("tab-" + tabId);
-        if (activeNav) activeNav.classList.add("active");
+        document.getElementById("tab-" + tabId).classList.add("active");
 
-        if (tabId === "projects")
-          document.getElementById("topbarTitle").innerText =
-            "Hệ Thống Phê Duyệt Đồ Án";
-        if (tabId === "students")
-          document.getElementById("topbarTitle").innerText =
-            "Quản Lý Danh Sách Sinh Viên";
-        if (tabId === "tracking")
-          document.getElementById("topbarTitle").innerText =
-            "Báo Cáo Tiến Độ Các Nhóm";
+        const titles = {
+          projects: "Hệ Thống Phê Duyệt Đồ Án",
+          students: "Quản Lý Danh Sách Sinh Viên",
+          tracking: "Báo Cáo Tiến Độ Các Nhóm",
+        };
+        document.getElementById("topbarTitle").innerText = titles[tabId];
       };
 
-      // =====================================
-      // LOGIC KÉO DATA SINH VIÊN TỪ FIREBASE
-      // =====================================
+      // ĐỒNG BỘ: TẢI DATA SINH VIÊN TỪ FIREBASE
       window.loadStudentsData = async function () {
         try {
           const querySnapshot = await getDocs(collection(db, "users"));
           window.allUsers = {};
-
           querySnapshot.forEach((doc) => {
-            // Lưu dữ liệu kéo từ Firebase vào biến toàn cục
             window.allUsers[doc.id] = doc.data();
           });
-
           window.renderStudentTable();
         } catch (error) {
-          console.error("Lỗi tải danh sách sinh viên: ", error);
-          // Nếu có lỗi (do chưa chỉnh Rules bảo mật hoặc rớt mạng), load data ảo tạm
-          window.allUsers = {
-            SV001: {
-              id: "SV001",
-              name: "Lỗi kết nối Firebase",
-              role: "student",
-            },
-          };
-          window.renderStudentTable();
+          console.error("Lỗi:", error);
         }
       };
 
       window.renderStudentTable = function () {
         const tbody = document.getElementById("studentTableBody");
-        const emptyState = document.getElementById("emptyStudentTable");
-        const searchInput = document.getElementById("searchStudent");
-        const searchQuery = searchInput
-          ? searchInput.value.toLowerCase().trim()
+        const searchQuery = document.getElementById("searchStudent")
+          ? document.getElementById("searchStudent").value.toLowerCase().trim()
           : "";
-
         tbody.innerHTML = "";
-        let hasStudent = false;
 
         for (const [userId, userObj] of Object.entries(window.allUsers)) {
           if (userObj.role === "student") {
@@ -518,266 +388,129 @@
               searchQuery &&
               !userObj.name.toLowerCase().includes(searchQuery) &&
               !userId.toLowerCase().includes(searchQuery)
-            ) {
+            )
               continue;
-            }
-
-            hasStudent = true;
-            const tr = document.createElement("tr");
-            tr.className = "hover:bg-slate-50 transition";
-            tr.innerHTML = `
-                        <td class="p-4">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-9 h-9 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-sm shrink-0 border border-indigo-200">
-                                    ${userObj.name.charAt(0).toUpperCase()}
-                                </div>
-                                <div>
-                                    <p class="font-bold text-slate-800 text-sm">${userObj.name}</p>
-                                    <p class="text-xs text-slate-500 mt-0.5">Sinh viên hệ thống</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="p-4 font-mono text-sm text-slate-600 font-bold uppercase tracking-wider">${userId}</td>
-                        <td class="p-4">
-                            <span class="bg-blue-50 text-blue-600 px-2.5 py-1 rounded-md text-xs font-bold border border-blue-100">Sinh viên</span>
-                        </td>
-                        <td class="p-4">
-                            <span class="bg-green-100 text-green-700 px-2.5 py-1 rounded-full text-xs font-bold"><i class="fa-solid fa-circle text-[8px] mr-1"></i> Đã đồng bộ DB</span>
-                        </td>
-                        <td class="p-4 text-center">
-                            <button onclick="alert('Đang mở bảng điểm của: ${userObj.name}')" class="text-slate-400 hover:text-blue-600 transition p-2 bg-white border border-slate-200 rounded-lg hover:bg-blue-50 shadow-sm" title="Xem chi tiết">
-                                <i class="fa-solid fa-eye"></i>
-                            </button>
-                        </td>
-                    `;
-            tbody.appendChild(tr);
+            tbody.innerHTML += `
+              <tr class="hover:bg-slate-50">
+                  <td class="p-4">
+                      <div class="flex items-center space-x-3">
+                          <div class="w-9 h-9 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-sm shrink-0 border border-indigo-200">${userObj.name.charAt(0).toUpperCase()}</div>
+                          <div><p class="font-bold text-slate-800 text-sm">${userObj.name}</p><p class="text-xs text-slate-500 mt-0.5">${userObj.major || "Đã đồng bộ Database"}</p></div>
+                      </div>
+                  </td>
+                  <td class="p-4 font-mono text-sm text-slate-600 font-bold uppercase">${userId}</td>
+                  <td class="p-4"><span class="bg-green-100 text-green-700 px-2.5 py-1 rounded-full text-xs font-bold">Hoạt động</span></td>
+              </tr>
+            `;
           }
-        }
-
-        if (!hasStudent) {
-          emptyState.classList.remove("hidden");
-          emptyState.classList.add("flex");
-        } else {
-          emptyState.classList.add("hidden");
-          emptyState.classList.remove("flex");
         }
       };
 
-      // =====================================
-      // LOGIC DỰ ÁN (Tạm giữ LocalStorage để đồng bộ với Trang Matching)
-      // =====================================
-      window.loadProjectsData = function () {
-        const customData = localStorage.getItem("customProjectsData");
-        if (customData) {
-          window.allProjects = JSON.parse(customData);
-          window.allProjects = window.allProjects.map((p) => {
-            if (!p.status) p.status = "pending";
-            return p;
-          });
-          localStorage.setItem(
-            "customProjectsData",
-            JSON.stringify(window.allProjects),
-          );
-        } else {
+      // ĐỒNG BỘ: TẢI DỰ ÁN TỪ FIREBASE
+      window.loadProjectsData = async function () {
+        try {
+          const querySnapshot = await getDocs(collection(db, "projects"));
           window.allProjects = [];
+          querySnapshot.forEach((doc) => {
+            window.allProjects.push(doc.data());
+          });
+          window.renderProjectTable();
+          window.renderTrackingTab();
+        } catch (e) {
+          console.error(e);
         }
-        window.renderProjectTable();
-        window.renderTrackingTab();
       };
 
       window.renderProjectTable = function () {
         const tbody = document.getElementById("projectTableBody");
-        const emptyState = document.getElementById("emptyTable");
-        const searchInput = document.getElementById("searchTable");
-        const searchQuery = searchInput
-          ? searchInput.value.toLowerCase().trim()
+        const searchQuery = document.getElementById("searchTable")
+          ? document.getElementById("searchTable").value.toLowerCase().trim()
           : "";
-
         tbody.innerHTML = "";
-        let pendingCount = 0;
-        let activeCount = 0;
+        let pendingCount = 0,
+          activeCount = 0;
 
         const filteredProjects = window.allProjects.filter(
           (p) =>
             p.title.toLowerCase().includes(searchQuery) ||
             (p.leaderName && p.leaderName.toLowerCase().includes(searchQuery)),
         );
+        filteredProjects.forEach((proj) => {
+          const status = proj.status || "pending";
+          if (status === "pending") pendingCount++;
+          if (status === "approved") activeCount++;
 
-        if (filteredProjects.length === 0) {
-          emptyState.classList.remove("hidden");
-          emptyState.classList.add("flex");
-        } else {
-          emptyState.classList.add("hidden");
-          emptyState.classList.remove("flex");
+          let statusHtml = "",
+            actionHtml = "";
+          if (status === "pending") {
+            statusHtml = `<span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">Chờ duyệt</span>`;
+            actionHtml = `
+                <button onclick="window.approveProject('${proj.title}')" class="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-700 mr-2">Duyệt</button>
+                <button onclick="window.rejectProject('${proj.title}')" class="bg-white border border-red-200 text-red-500 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-50">Từ chối</button>`;
+          } else if (status === "approved") {
+            statusHtml = `<span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">Đang làm</span>`;
+            actionHtml = `<button onclick="window.deleteProject('${proj.title}')" class="bg-white border border-red-200 text-red-500 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-50">Xóa dự án</button>`;
+          } else {
+            statusHtml = `<span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">Đã hủy</span>`;
+            actionHtml = `<button onclick="window.deleteProject('${proj.title}')" class="bg-white border border-red-200 text-red-500 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-50">Xóa dự án</button>`;
+          }
 
-          filteredProjects.forEach((proj) => {
-            const status = proj.status || "pending";
-            if (status === "pending") pendingCount++;
-            if (status === "approved") activeCount++;
-
-            let statusHtml = "";
-            let actionHtml = "";
-
-            if (status === "pending") {
-              statusHtml = `<span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-bold border border-orange-200 whitespace-nowrap"><i class="fa-solid fa-circle-notch fa-spin mr-1"></i> Chờ duyệt</span>`;
-              actionHtml = `
-                            <button onclick="window.approveProject('${proj.title}')" class="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-700 transition shadow-sm mr-2"><i class="fa-solid fa-check mr-1"></i> Duyệt</button>
-                            <button onclick="window.rejectProject('${proj.title}')" class="bg-white border border-red-200 text-red-500 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-50 transition shadow-sm" title="Từ chối"><i class="fa-solid fa-xmark"></i></button>
-                        `;
-            } else if (status === "approved") {
-              statusHtml = `<span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-200 whitespace-nowrap"><i class="fa-solid fa-check-double mr-1"></i> Đang làm</span>`;
-              actionHtml = `
-                            <button onclick="window.switchTab('tracking')" class="bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-slate-200 transition shadow-sm mr-2" title="Xem tiến độ"><i class="fa-solid fa-eye"></i></button>
-                            <button onclick="window.deleteProject('${proj.title}')" class="bg-white border border-red-200 text-red-500 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-50 transition shadow-sm" title="Xóa dự án"><i class="fa-solid fa-trash-can"></i></button>
-                        `;
-            } else {
-              statusHtml = `<span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold border border-red-200 whitespace-nowrap"><i class="fa-solid fa-ban mr-1"></i> Bị từ chối</span>`;
-              actionHtml = `
-                            <span class="text-xs font-medium text-slate-400 italic mr-3">Đã hủy</span>
-                            <button onclick="window.deleteProject('${proj.title}')" class="bg-white border border-red-200 text-red-500 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-50 transition shadow-sm" title="Xóa dự án"><i class="fa-solid fa-trash-can"></i></button>
-                        `;
-            }
-
-            const tr = document.createElement("tr");
-            tr.className = "hover:bg-slate-50 transition group";
-            tr.innerHTML = `
-                        <td class="p-4">
-                            <p class="font-bold text-slate-800 text-sm group-hover:text-blue-600 transition cursor-pointer">${proj.title}</p>
-                            <p class="text-xs text-slate-500 mt-0.5 line-clamp-1 max-w-[200px] sm:max-w-xs">${proj.description || "Không có mô tả"}</p>
-                        </td>
-                        <td class="p-4">
-                            <span class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded text-xs font-semibold whitespace-nowrap">${proj.category || "Đa ngành"}</span>
-                        </td>
-                        <td class="p-4">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">${proj.leaderName ? proj.leaderName.charAt(0).toUpperCase() : "U"}</div>
-                                <span class="font-medium text-slate-700 text-sm whitespace-nowrap">${proj.leaderName || "Unknown"}</span>
-                            </div>
-                        </td>
-                        <td class="p-4 text-center">${statusHtml}</td>
-                        <td class="p-4 text-center whitespace-nowrap">${actionHtml}</td>
-                    `;
-            tbody.appendChild(tr);
-          });
-        }
+          tbody.innerHTML += `
+              <tr class="hover:bg-slate-50 border-b border-slate-100">
+                  <td class="p-4"><p class="font-bold text-slate-800 text-sm">${proj.title}</p><p class="text-xs text-slate-500 mt-0.5 line-clamp-1 max-w-xs">${proj.description}</p></td>
+                  <td class="p-4"><span class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded text-xs font-semibold">${proj.category || "Đa ngành"}</span></td>
+                  <td class="p-4"><div class="flex items-center space-x-2"><div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-bold">${proj.leaderInitials || "U"}</div><span class="font-medium text-sm">${proj.leaderName}</span></div></td>
+                  <td class="p-4 text-center">${statusHtml}</td>
+                  <td class="p-4 text-center whitespace-nowrap">${actionHtml}</td>
+              </tr>
+          `;
+        });
 
         document.getElementById("statTotal").innerText =
           window.allProjects.length;
         document.getElementById("statPending").innerText = pendingCount;
         document.getElementById("statActive").innerText = activeCount;
-
-        if (pendingCount > 0)
-          document.getElementById("pendingBell").classList.remove("hidden");
-        else document.getElementById("pendingBell").classList.add("hidden");
       };
 
-      window.approveProject = function (title) {
-        if (
-          confirm(
-            `Xác nhận PHÊ DUYỆT dự án "${title}" để sinh viên bắt đầu thực hiện?`,
-          )
-        ) {
-          const index = window.allProjects.findIndex((p) => p.title === title);
-          if (index > -1) {
-            window.allProjects[index].status = "approved";
-            localStorage.setItem(
-              "customProjectsData",
-              JSON.stringify(window.allProjects),
-            );
-            window.loadProjectsData();
-          }
+      // ĐỒNG BỘ: UPDATE LÊN FIREBASE
+      window.approveProject = async function (title) {
+        if (confirm(`Phê duyệt dự án "${title}"?`)) {
+          await updateDoc(doc(db, "projects", title), { status: "approved" });
+          window.loadProjectsData();
         }
       };
-
-      window.rejectProject = function (title) {
-        if (confirm(`Bạn có chắc chắn muốn TỪ CHỐI dự án "${title}"?`)) {
-          const index = window.allProjects.findIndex((p) => p.title === title);
-          if (index > -1) {
-            window.allProjects[index].status = "rejected";
-            localStorage.setItem(
-              "customProjectsData",
-              JSON.stringify(window.allProjects),
-            );
-            window.loadProjectsData();
-          }
+      window.rejectProject = async function (title) {
+        if (confirm(`Từ chối dự án "${title}"?`)) {
+          await updateDoc(doc(db, "projects", title), { status: "rejected" });
+          window.loadProjectsData();
         }
       };
-
-      window.deleteProject = function (title) {
-        if (
-          confirm(
-            `CẢNH BÁO: Bạn có chắc chắn muốn XÓA VĨNH VIỄN dự án "${title}" khỏi hệ thống?`,
-          )
-        ) {
-          window.allProjects = window.allProjects.filter(
-            (p) => p.title !== title,
-          );
-          localStorage.setItem(
-            "customProjectsData",
-            JSON.stringify(window.allProjects),
-          );
+      window.deleteProject = async function (title) {
+        if (confirm(`Xóa vĩnh viễn dự án "${title}" khỏi mây?`)) {
+          await deleteDoc(doc(db, "projects", title));
           window.loadProjectsData();
         }
       };
 
       window.renderTrackingTab = function () {
         const trackingList = document.getElementById("trackingList");
-        const emptyTracking = document.getElementById("emptyTracking");
-
         const activeProjects = window.allProjects.filter(
           (p) => p.status === "approved",
         );
         trackingList.innerHTML = "";
-
-        if (activeProjects.length === 0) {
-          emptyTracking.classList.remove("hidden");
-          emptyTracking.classList.add("flex");
-        } else {
-          emptyTracking.classList.add("hidden");
-          emptyTracking.classList.remove("flex");
-
-          activeProjects.forEach((p) => {
-            const progress = Math.floor(Math.random() * 70) + 10;
-            let statusColor = progress > 50 ? "bg-[#10b981]" : "bg-blue-500";
-
-            const card = document.createElement("div");
-            card.className =
-              "bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md transition relative group overflow-hidden";
-            card.innerHTML = `
-                        <div class="absolute top-0 left-0 w-full h-1 bg-gray-100"><div class="h-1 ${statusColor}" style="width: ${progress}%"></div></div>
-                        <div class="flex justify-between items-start mb-3 mt-1">
-                            <span class="text-[10px] font-bold text-[#10b981] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 uppercase tracking-wider flex items-center"><i class="fa-solid fa-circle-play mr-1"></i> Đang chạy</span>
-                            <button onclick="alert('Chức năng đánh giá đang được cập nhật!')" class="text-xs bg-gray-50 border border-gray-200 text-gray-600 hover:bg-[#10b981] hover:text-white hover:border-[#10b981] font-bold px-3 py-1 rounded transition shadow-sm">Chấm điểm</button>
-                        </div>
-                        <h4 class="text-xl font-extrabold text-gray-800 mb-1 truncate" title="${p.title}">${p.title}</h4>
-                        <div class="flex items-center gap-2 mb-4">
-                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shrink-0">${p.leaderInitials || "U"}</div>
-                            <span class="text-sm font-bold text-gray-600">Trưởng nhóm: ${p.leaderName || "Unknown"}</span>
-                        </div>
-                        
-                        <div class="bg-gray-50 rounded-lg p-3 border border-gray-100">
-                            <div class="flex justify-between text-xs font-bold text-gray-500 mb-1.5">
-                                <span>Thành viên: ${p.currentMembers || 1}/${p.slotsNeeded || 5}</span>
-                                <span class="text-gray-700">Tiến độ: ${progress}%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
-                                <div class="${statusColor} h-1.5 rounded-full" style="width: ${progress}%"></div>
-                            </div>
-                        </div>
-                    `;
-            trackingList.appendChild(card);
-          });
-        }
+        activeProjects.forEach((p) => {
+          trackingList.innerHTML += `
+            <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                <h4 class="text-xl font-extrabold text-gray-800 mb-1">${p.title}</h4>
+                <div class="flex items-center gap-2 mb-4"><span class="text-sm font-bold text-gray-600">Trưởng nhóm: ${p.leaderName}</span></div>
+                <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden"><div class="bg-emerald-500 h-2 rounded-full" style="width: 50%"></div></div>
+            </div>`;
+        });
       };
 
-      // =====================================
-      // ĐĂNG XUẤT
-      // =====================================
       window.teacherLogout = function () {
-        if (confirm("Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?")) {
-          localStorage.removeItem("userProfileData");
-          window.location.href = "index.html";
-        }
+        localStorage.removeItem("userProfileData");
+        window.location.href = "index.html";
       };
     </script>
   </body>

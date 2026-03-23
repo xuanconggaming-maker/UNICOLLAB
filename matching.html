@@ -11,21 +11,76 @@
     />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
-      body { font-family: "Plus Jakarta Sans", sans-serif; background-color: #f9fafb; color: #1f2937; }
-      .fade-in-section { animation: fadeIn 0.5s ease-out; }
-      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-      .modal-active { overflow: hidden; }
-      .skill-tag { transition: all 0.2s; }
-      .skill-tag:hover { background-color: #fee2e2; color: #dc2626; border-color: #fecaca; }
-      .nav-link { position: relative; }
-      .nav-link::after { content: ""; position: absolute; bottom: -2px; left: 0; width: 0; h-full; height: 2px; background-color: #2563eb; transition: width 0.3s; }
-      .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-      .custom-scrollbar::-webkit-scrollbar { width: 6px; h-full; height: 6px; }
-      .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-      .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
-      .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
-      optgroup { font-weight: bold; color: #111827; }
-      option { font-weight: normal; color: #4b5563; padding-left: 10px; }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: #f9fafb;
+        color: #1f2937;
+      }
+      .fade-in-section {
+        animation: fadeIn 0.5s ease-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modal-active {
+        overflow: hidden;
+      }
+      .skill-tag {
+        transition: all 0.2s;
+      }
+      .skill-tag:hover {
+        background-color: #fee2e2;
+        color: #dc2626;
+        border-color: #fecaca;
+      }
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #2563eb;
+        transition: width 0.3s;
+      }
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 100%;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 10px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #9ca3af;
+      }
+      optgroup {
+        font-weight: bold;
+        color: #111827;
+      }
+      option {
+        font-weight: normal;
+        color: #4b5563;
+        padding-left: 10px;
+      }
     </style>
   </head>
   <body class="bg-[#f8fafc]">
@@ -52,22 +107,22 @@
         </div>
         <nav class="flex items-center gap-7">
           <a
-            href="#"
+            href="matching.html"
             class="nav-link active text-sm font-semibold text-blue-600"
             >Tìm đồng đội</a
           >
           <a
-            href="#"
+            href="ideas.html"
             class="nav-link text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
             >Ý tưởng mới</a
           >
           <a
-            href="#"
+            href="guide.html"
             class="nav-link text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
             >Cẩm nang</a
           >
           <a
-            href="#"
+            href="events.html"
             class="nav-link text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
             >Sự kiện</a
           >
@@ -109,13 +164,12 @@
               >
                 <div
                   class="dropdown-avatar w-12 h-12 rounded-full flex items-center justify-center font-bold text-white text-xl shadow-inner overflow-hidden"
+                  id="dropdownAvatar"
                 ></div>
                 <div class="flex flex-col">
                   <span
                     class="dropdown-name font-extrabold text-gray-800"
-                  ></span>
-                  <span
-                    class="dropdown-id text-xs text-gray-500 font-mono"
+                    id="dropdownName"
                   ></span>
                 </div>
               </div>
@@ -370,7 +424,7 @@
                 type="text"
                 id="profileRole"
                 required
-                placeholder="Ví dụ: Ca sĩ, Designer, Đạo diễn..."
+                placeholder="Ví dụ: Ca sĩ, Designer..."
                 class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
@@ -506,7 +560,7 @@
 
           <div>
             <label class="block text-sm font-bold text-gray-700 mb-1.5"
-              >Kỹ năng dự án cần * (Ví dụ: Thanh nhạc, Đạo diễn...)</label
+              >Kỹ năng dự án cần *</label
             >
             <div
               id="projectSkillContainer"
@@ -550,7 +604,7 @@
               <option>Trống</option>
               <option>Đạo diễn</option>
               <option>Biên kịch</option>
-              <option>Quay phim (Cameraman)</option>
+              <option>Quay phim</option>
               <option>Diễn viên chính</option>
               <option>Biên đạo múa</option>
               <option>Hội họa</option>
@@ -602,7 +656,6 @@
           Dự án:
           <span id="targetProject" class="font-bold text-blue-600"></span>
         </p>
-
         <form onsubmit="submitApplication(event)" class="space-y-5">
           <div>
             <label class="block text-sm font-bold text-gray-700 mb-1.5"
@@ -616,7 +669,7 @@
           </div>
           <div>
             <label class="block text-sm font-bold text-gray-700 mb-1.5"
-              >Lời nhắn đến Leader (Kinh nghiệm, lý do tham gia...)</label
+              >Lời nhắn đến Leader</label
             >
             <textarea
               id="applyMessage"
@@ -669,7 +722,6 @@
           id="detailTitle"
           class="text-3xl font-extrabold text-gray-900 mb-6 tracking-tighter leading-tight"
         ></h2>
-
         <div
           class="bg-gray-50 p-6 rounded-2xl border border-gray-100 mb-8 space-y-4"
         >
@@ -683,15 +735,14 @@
             class="text-sm text-gray-600 leading-relaxed whitespace-pre-line"
           ></p>
         </div>
-
         <div class="flex items-center gap-3 border-t border-gray-100 pt-6">
           <div
             id="detailLeaderAvatar"
             class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white text-xl shadow-inner overflow-hidden"
           ></div>
           <div class="flex flex-col">
-            <span class="text-xs text-gray-500">Trưởng nhóm (Leader)</span>
-            <span
+            <span class="text-xs text-gray-500">Trưởng nhóm (Leader)</span
+            ><span
               id="detailLeaderName"
               class="font-bold text-gray-800 text-base"
             ></span>
@@ -702,7 +753,7 @@
 
     <div
       id="savedModal"
-      class="hidden fixed inset-0 bg-black/60 z-50 justify-endbackdrop-blur-sm transition-opacity duration-300"
+      class="hidden fixed inset-0 bg-black/60 z-50 justify-end backdrop-blur-sm transition-opacity duration-300"
       onclick="closeSavedModal()"
     >
       <div
@@ -722,18 +773,21 @@
           <i class="fa-regular fa-bookmark text-blue-600"></i> Dự Án Đã Ứng
           Tuyển
         </h2>
-
         <div id="savedListContainer" class="space-y-5"></div>
       </div>
     </div>
 
     <script type="module">
-      // 1. Khởi tạo Firebase
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import {
         getFirestore,
         collection,
         getDocs,
+        doc,
+        setDoc,
+        getDoc,
+        updateDoc,
+        deleteDoc,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -743,35 +797,26 @@
         storageBucket: "unicollab-e81c0.firebasestorage.app",
         messagingSenderId: "983588473001",
         appId: "1:983588473001:web:0708bc4fe827e388f181b8",
-        measurementId: "G-8PQ0CRQKRM",
       };
 
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
-      // ==========================================
-      // BIẾN TOÀN CỤC
-      // ==========================================
-      let loggedInUserId = "";
-      let hasCompletedProfile = false;
-      let loggedInUserName = "A";
-      let loggedInUserAvatarBase64 = "";
+      window.loggedInUserId = "";
+      window.hasCompletedProfile = false;
+      window.loggedInUserName = "";
+      window.loggedInUserAvatarBase64 = "";
+      window.currentProjectToApply = "";
+      window.editingProjectTitle = null;
+      window.customProjects = [];
+      window.globalApps = [];
 
-      let currentProjectToApply = "";
-      let editingProjectTitle = null;
-      let savedProjects = [];
-      let customProjects = [];
-      let appliedProjects = [];
-      let globalApps = [];
-
-      // Dữ liệu dự án mặc định - CẬP NHẬT THEO BỐI CẢNH NAUE
       const defaultProjects = [
         {
           title: "Band nhạc dân tộc hiện đại 'Hồn Việt'",
           category: "Âm nhạc",
           roles: [
             { role: "Sáo trúc", count: 1 },
-            { role: "Đàn Trưng", count: 1 },
             { role: "Phối khí", count: 1 },
           ],
           deadline: "15/05/2026",
@@ -783,153 +828,95 @@
           leaderAvatar: "",
           isOwner: false,
           currentMembers: 2,
-          slotsNeeded: 3,
+          slotsNeeded: 2,
         },
         {
           title: "Vở kịch tốt nghiệp 'Mùa hè rực rỡ'",
           category: "Sân khấu",
-          roles: [
-            { role: "Diễn viên chính (Nữ)", count: 1 },
-            { role: "Âm thanh", count: 1 },
-          ],
+          roles: [{ role: "Diễn viên chính (Nữ)", count: 1 }],
           deadline: "20/06/2026",
-          description:
-            "Dự án Khoa SK-ĐA & Múa. Tìm bạn diễn nữ và phụ trách âm thanh.",
-          skills: ["Diễn xuất", "Adobe Audition"],
+          description: "Dự án Khoa SK-ĐA & Múa. Tìm bạn diễn nữ.",
+          skills: ["Diễn xuất"],
           leaderName: "Lâm Thị B",
           leaderInitials: "B",
           leaderAvatar: "",
           isOwner: false,
           currentMembers: 5,
-          slotsNeeded: 2,
-        },
-        {
-          title: "Triển lãm tranh 'Sắc màu Nghệ An'",
-          category: "Mỹ thuật",
-          roles: [{ role: "Hội họa họa sỹ", count: 2 }],
-          deadline: "30/04/2026",
-          description:
-            "Gom tác phẩm vẽ về quê hương Nghệ An. Khoa Mỹ thuật chủ trì.",
-          skills: ["Sơn dầu", "Acrylic", "Sáng tác"],
-          leaderName: "Phạm Văn C",
-          leaderInitials: "C",
-          leaderAvatar: "",
-          isOwner: false,
-          currentMembers: 3,
-          slotsNeeded: 2,
-        },
-        {
-          title: "Ứng dụng UNICOLLAB - NAUE",
-          category: "Công nghệ",
-          roles: [
-            { role: "Developer", count: 2 },
-            { role: "UI/UX Designer", count: 1 },
-          ],
-          deadline: "01/07/2026",
-          description:
-            "Phát triển app kết nối đồ án cho sinh viên trường. Đội ngũ Khoa CNTT.",
-          skills: ["React Native", "Figma", "Firebase"],
-          leaderName: "Dương Quốc Đ",
-          leaderInitials: "Đ",
-          leaderAvatar: "",
-          isOwner: false,
-          currentMembers: 2,
-          slotsNeeded: 3,
-        },
-        {
-          title: "Tour du lịch trải nghiệm Văn hóa Vinh",
-          category: "Văn hóa",
-          roles: [
-            { role: "Hướng dẫn viên", count: 1 },
-            { role: "Content Marketing", count: 1 },
-          ],
-          deadline: "10/05/2026",
-          description:
-            "Xây dựng tour cho sinh viên. Khoa VH & Du lịch phối hợp.",
-          skills: ["Tiếng Anh", "Thuyết trình", "Viết bài"],
-          leaderName: "Nguyễn Thị E",
-          leaderInitials: "E",
-          leaderAvatar: "",
-          isOwner: false,
-          currentMembers: 1,
-          slotsNeeded: 2,
+          slotsNeeded: 1,
         },
       ];
 
-      document.addEventListener("DOMContentLoaded", () => {
+      document.addEventListener("DOMContentLoaded", async () => {
         const savedUser = localStorage.getItem("userProfileData");
         if (!savedUser) {
           window.location.href = "index.html";
           return;
         }
-
-        const userData = JSON.parse(savedUser);
-        if (userData.role === "teacher") {
+        const localData = JSON.parse(savedUser);
+        if (localData.role === "teacher") {
           window.location.href = "dashboard.html";
           return;
         }
 
-        loggedInUserId = userData.id || "SV001";
-        loggedInUserName = userData.name;
-        loggedInUserAvatarBase64 = userData.avatarBase64 || "";
+        window.loggedInUserId = localData.id;
 
-        document.getElementById("userName").innerText = userData.name;
-        document
-          .getElementById("userName")
-          .classList.replace("text-gray-500", "text-green-600");
-
-        const avatarEl = document.getElementById("userAvatar");
-
-        if (loggedInUserAvatarBase64) {
-          avatarEl.innerHTML = `<img src="${loggedInUserAvatarBase64}" class="w-full h-full object-cover rounded-full">`;
-          avatarEl.classList.remove(
-            "bg-gray-300",
-            "bg-green-500",
-            "bg-orange-500",
+        try {
+          const userSnap = await getDoc(
+            doc(db, "users", window.loggedInUserId),
           );
-        } else {
-          avatarEl.classList.replace("bg-gray-300", "bg-orange-500");
-          avatarEl.innerText = userData.name.charAt(0).toUpperCase();
+          if (userSnap.exists()) {
+            const fbUser = userSnap.data();
+            window.loggedInUserName = fbUser.name;
+            window.loggedInUserAvatarBase64 = fbUser.avatarBase64 || "";
+            if (fbUser.avatarBase64) window.hasCompletedProfile = true;
+          } else {
+            window.loggedInUserName = localData.name;
+          }
+        } catch (e) {
+          console.error(e);
+          window.loggedInUserName = localData.name;
         }
 
-        if (userData.avatarBase64) {
-          hasCompletedProfile = true;
+        document.getElementById("userName").innerText = window.loggedInUserName;
+        const avatarEl = document.getElementById("userAvatar");
+        if (window.loggedInUserAvatarBase64) {
+          avatarEl.innerHTML = `<img src="${window.loggedInUserAvatarBase64}" class="w-full h-full object-cover rounded-full">`;
+        } else {
+          avatarEl.classList.replace("bg-gray-300", "bg-orange-500");
+          avatarEl.innerText = window.loggedInUserName.charAt(0).toUpperCase();
+        }
+
+        if (window.hasCompletedProfile) {
           document
             .getElementById("profileReminderBanner")
             .classList.add("hidden");
+        } else {
           document
-            .getElementById("personalDataArea")
+            .getElementById("profileReminderBanner")
             .classList.remove("hidden");
-          document.getElementById("dropdownProgressBar").style.width = "100%";
-          document
-            .getElementById("dropdownProgressBar")
-            .classList.replace("bg-orange-500", "bg-green-500");
-          document.getElementById("dropdownProgressText").innerText =
-            "100% - Hồ sơ hoàn thiện";
         }
 
-        const appsData = localStorage.getItem("globalApplications");
-        if (appsData) globalApps = JSON.parse(appsData);
-
-        const savedCustomProjects = localStorage.getItem("customProjectsData");
-        if (savedCustomProjects)
-          customProjects = JSON.parse(savedCustomProjects);
+        try {
+          const projSnap = await getDocs(collection(db, "projects"));
+          window.customProjects = projSnap.docs.map((doc) => doc.data());
+          const appSnap = await getDocs(collection(db, "applications"));
+          window.globalApps = appSnap.docs.map((doc) => doc.data());
+        } catch (e) {
+          console.error("Lỗi Firebase:", e);
+        }
 
         window.filterProjects();
         window.updateLeaderVisibility();
         window.updateAppliedCountMenu();
       });
 
-      // ==========================================
-      // CÁC HÀM XỬ LÝ GIAO DIỆN (Gắn vào window)
-      // ==========================================
-
+      // --- CÁC HÀM UI ---
       window.updateAppliedCountMenu = function () {
-        const count = globalApps.filter(
-          (app) => app.applicantId === loggedInUserId,
+        const count = window.globalApps.filter(
+          (app) => app.applicantId === window.loggedInUserId,
         ).length;
-        const badge = document.getElementById("appliedCountMenu");
-        if (badge) badge.innerText = count;
+        if (document.getElementById("appliedCountMenu"))
+          document.getElementById("appliedCountMenu").innerText = count;
       };
 
       window.filterProjects = function () {
@@ -938,40 +925,34 @@
           .value.toLowerCase()
           .trim();
         const cat = document.getElementById("filterCategory").value;
-        let filtered = [...customProjects, ...defaultProjects];
+        let filtered = [...window.customProjects, ...defaultProjects];
 
-        if (keyword) {
+        if (keyword)
           filtered = filtered.filter(
             (p) =>
               p.title.toLowerCase().includes(keyword) ||
               p.description.toLowerCase().includes(keyword) ||
               (p.skills || []).some((s) => s.toLowerCase().includes(keyword)),
           );
-        }
-        if (cat !== "all") {
+        if (cat !== "all")
           filtered = filtered.filter(
             (p) =>
               p.category &&
               p.category.toLowerCase().includes(cat.toLowerCase()),
           );
-        }
 
         const grid = document.getElementById("projectGrid");
         grid.innerHTML = "";
-
-        if (filtered.length === 0) {
+        if (filtered.length === 0)
           grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500">Không tìm thấy kết quả.</div>`;
-        } else {
-          filtered.forEach((p) => renderProjectCard(p));
-        }
+        else filtered.forEach((p) => window.renderProjectCard(p));
       };
 
-      function renderProjectCard(p) {
+      window.renderProjectCard = function (p) {
         let skillsHtml = "";
-        (p.skills || []).forEach((skill) => {
-          skillsHtml += `<span class="bg-blue-50 border border-blue-200 text-blue-700 px-3 py-1.5 rounded-lg text-[11px] font-bold">${skill}</span>`;
+        (p.skills || []).forEach((s) => {
+          skillsHtml += `<span class="bg-blue-50 border border-blue-200 text-blue-700 px-3 py-1.5 rounded-lg text-[11px] font-bold">${s}</span>`;
         });
-
         let rolesHtml = "";
         let totalSlotsCount = p.slotsNeeded || 0;
         if (p.roles && p.roles.length > 0) {
@@ -984,376 +965,47 @@
           rolesHtml = `<span class="flex items-center text-[11px] font-bold text-gray-600 bg-gray-100 px-2.5 py-1 rounded-md border border-gray-200"><i class="fa-solid fa-user-tag mr-1.5 text-gray-400"></i> ${totalSlotsCount || 5} Thành viên</span>`;
         }
 
-        const myApp = globalApps.find(
-          (app) =>
-            app.projectId === p.title && app.applicantId === loggedInUserId,
+        const myApp = window.globalApps.find(
+          (a) =>
+            a.projectId === p.title && a.applicantId === window.loggedInUserId,
         );
-        let currentMems = p.currentMembers || 1;
-        let isFull = currentMems >= totalSlotsCount && totalSlotsCount > 0;
+        let isFull =
+          (p.currentMembers || 1) >= totalSlotsCount && totalSlotsCount > 0;
         let statusBadge = isFull
           ? `<span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-full text-[10px] font-bold"><i class="fa-solid fa-lock mr-1"></i> Đã đóng</span>`
           : `<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold"><i class="fa-solid fa-fire mr-1"></i> Đang tuyển</span>`;
 
         let actionButton = "";
-
-        if (p.isOwner && p.leaderName === loggedInUserName) {
-          actionButton = `
-                <div class="flex space-x-2">
-                    <button onclick="editProject('${p.title}', event)" class="bg-yellow-50 hover:bg-yellow-500 text-yellow-600 hover:text-white border border-yellow-200 w-9 h-9 rounded-full flex items-center justify-center transition shadow-sm" title="Sửa dự án"><i class="fa-solid fa-pen text-sm"></i></button>
-                    <button onclick="deleteProject('${p.title}', event)" class="bg-red-50 hover:bg-red-500 text-red-500 hover:text-white border border-red-200 w-9 h-9 rounded-full flex items-center justify-center transition shadow-sm" title="Xóa dự án"><i class="fa-solid fa-trash-can text-sm"></i></button>
-                    <button onclick="window.location.href='kanban.html'" class="bg-white border-2 border-blue-600 text-blue-600 font-bold py-1.5 px-4 rounded-full text-sm hover:bg-blue-50 transition">Dự án của bạn</button>
-                </div>`;
+        if (p.isOwner && p.leaderName === window.loggedInUserName) {
+          actionButton = `<div class="flex space-x-2"><button onclick="editProject('${p.title}', event)" class="bg-yellow-50 text-yellow-600 w-9 h-9 rounded-full flex items-center justify-center"><i class="fa-solid fa-pen"></i></button><button onclick="deleteProject('${p.title}', event)" class="bg-red-50 text-red-500 w-9 h-9 rounded-full flex items-center justify-center"><i class="fa-solid fa-trash-can"></i></button><button onclick="window.location.href='kanban.html'" class="bg-white border-2 border-blue-600 text-blue-600 font-bold py-1.5 px-4 rounded-full text-sm">Quản lý</button></div>`;
         } else if (myApp) {
-          actionButton = `<button class="bg-gray-100 text-gray-500 font-bold py-2 px-6 rounded-full text-sm cursor-not-allowed shadow-inner" disabled>Đã nộp đơn</button>`;
+          actionButton = `<button class="bg-gray-100 text-gray-500 font-bold py-2 px-6 rounded-full text-sm cursor-not-allowed">Đã nộp đơn</button>`;
         } else if (isFull) {
-          actionButton = `<button class="bg-gray-100 text-red-400 font-bold py-2 px-6 rounded-full text-sm cursor-not-allowed" disabled>Đủ người</button>`;
+          actionButton = `<button class="bg-gray-100 text-red-400 font-bold py-2 px-6 rounded-full text-sm cursor-not-allowed">Đủ người</button>`;
         } else {
-          actionButton = `<button onclick="handleApply('${p.title}')" class="bg-white border-2 border-[#2563eb] text-[#2563eb] hover:bg-blue-50 font-bold py-2 px-6 rounded-full text-sm transition shadow-sm">Ứng tuyển</button>`;
+          actionButton = `<button onclick="handleApply('${p.title}')" class="bg-white border-2 border-blue-600 text-blue-600 font-bold py-2 px-6 rounded-full text-sm">Ứng tuyển</button>`;
         }
 
-        // --- CƠ CHẾ ĐỒNG BỘ ẢNH ---
-        // Lấy avatar từ data dự án
         let actualAvatar = p.leaderAvatar;
-
-        // NẾU đây là dự án của bạn VÀ bạn đã có ảnh trong hồ sơ -> Ép hệ thống dùng ảnh hiện tại của bạn (chữa cháy cho dự án cũ)
         if (
           p.isOwner &&
-          p.leaderName === loggedInUserName &&
-          loggedInUserAvatarBase64
-        ) {
-          actualAvatar = loggedInUserAvatarBase64;
-        }
+          p.leaderName === window.loggedInUserName &&
+          window.loggedInUserAvatarBase64
+        )
+          actualAvatar = window.loggedInUserAvatarBase64;
+        let leaderAvatarHtml = actualAvatar
+          ? `<img src="${actualAvatar}" class="w-10 h-10 object-cover rounded-full border border-gray-100 shadow-sm">`
+          : `<div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-sm">${p.leaderInitials || "L"}</div>`;
 
-        let leaderAvatarHtml = "";
-        if (actualAvatar) {
-          leaderAvatarHtml = `<img src="${actualAvatar}" class="w-10 h-10 object-cover rounded-full border border-gray-100 shadow-sm" alt="Leader">`;
-        } else {
-          leaderAvatarHtml = `<div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-sm border border-blue-200 shadow-inner">${p.leaderInitials || "L"}</div>`;
-        }
-
-        const newCard = document.createElement("div");
-        newCard.className =
-          "bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col relative p-6";
-        newCard.innerHTML = `
-                <div class="flex justify-between items-start mb-4">
-                    <div class="flex items-center space-x-3"><div class="text-xs font-black text-blue-600 uppercase">${p.category || "Đa ngành"}</div>${statusBadge}</div>
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2 leading-snug hover:text-blue-600 cursor-pointer" onclick="openDetailModal('${p.title}', '${p.leaderName}')">${p.title}</h3>
-                <p class="text-gray-500 text-sm mb-5 line-clamp-2 cursor-pointer" onclick="openDetailModal('${p.title}', '${p.leaderName}')">${p.description}</p>
-                <div class="mb-5 space-y-3"><div class="flex flex-wrap gap-2">${skillsHtml}</div><div class="flex flex-wrap gap-2 pt-1 border-t border-gray-100">${rolesHtml}</div></div>
-                <div class="flex justify-between items-center border-t border-gray-50 pt-4 mt-auto">
-                    <div class="flex items-center space-x-3">
-                        ${leaderAvatarHtml}
-                        <span class="text-sm text-gray-700 font-bold line-clamp-1">${p.leaderName || "Leader"}</span>
-                    </div>
-                    ${actionButton}
-                </div>
-            `;
-        document.getElementById("projectGrid").appendChild(newCard);
-      }
-
-      window.deleteProject = function (title, event) {
-        event.stopPropagation();
-        if (confirm(`Xóa vĩnh viễn dự án "${title}"?`)) {
-          customProjects = customProjects.filter((p) => p.title !== title);
-          localStorage.setItem(
-            "customProjectsData",
-            JSON.stringify(customProjects),
-          );
-          window.filterProjects();
-          window.updateLeaderVisibility();
-        }
+        const card = document.createElement("div");
+        card.className =
+          "bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition flex flex-col p-6";
+        card.innerHTML = `<div class="flex justify-between items-start mb-4"><div class="flex items-center space-x-3"><div class="text-xs font-black text-blue-600 uppercase">${p.category || "Đa ngành"}</div>${statusBadge}</div></div><h3 class="text-xl font-bold text-gray-800 mb-2 cursor-pointer" onclick="openDetailModal('${p.title}')">${p.title}</h3><p class="text-gray-500 text-sm mb-5 line-clamp-2 cursor-pointer" onclick="openDetailModal('${p.title}')">${p.description}</p><div class="mb-5 space-y-3"><div class="flex flex-wrap gap-2">${skillsHtml}</div><div class="flex flex-wrap gap-2 pt-1 border-t border-gray-100">${rolesHtml}</div></div><div class="flex justify-between items-center border-t border-gray-50 pt-4 mt-auto"><div class="flex items-center space-x-3">${leaderAvatarHtml}<span class="text-sm text-gray-700 font-bold">${p.leaderName}</span></div>${actionButton}</div>`;
+        document.getElementById("projectGrid").appendChild(card);
       };
 
-      window.editProject = function (title, event) {
-        event.stopPropagation();
-        const p = customProjects.find((proj) => proj.title === title);
-        if (!p) return;
-
-        editingProjectTitle = title;
-
-        document.getElementById("createModalTitle").innerHTML =
-          '<i class="fa-solid fa-pen-to-square text-[#2563eb] mr-3"></i> CẬP NHẬT DỰ ÁN';
-        document.getElementById("btnSubmitProject").innerText = "LƯU THAY ĐỔI";
-        document.getElementById("newProjName").value = p.title;
-        document.getElementById("projectDesc").value = p.description;
-
-        if (p.deadline) {
-          const parts = p.deadline.split("/");
-          const year = parts.length === 3 ? parts[2] : "2026";
-          document.getElementById("projectDeadline").value =
-            `${year}-${parts[1]}-${parts[0]}`;
-        }
-
-        window.projectTagManager.setTags(p.skills || []);
-
-        const container = document.getElementById("dynamicRolesContainer");
-        container.innerHTML = "";
-        if (p.roles && p.roles.length > 0) {
-          p.roles.forEach((r) => {
-            window.addRoleRow();
-            const rows = container.querySelectorAll(".role-row");
-            const lastRow = rows[rows.length - 1];
-            lastRow.querySelector(".role-name").value = r.role;
-            lastRow.querySelector(".role-major").value = r.major || "Đa ngành";
-            lastRow.querySelector(".role-count").value = r.count;
-          });
-        } else {
-          window.addRoleRow();
-        }
-
-        document.body.classList.add("modal-active");
-        const createModal = document.getElementById("createProjectModal");
-        createModal.classList.remove("hidden");
-        createModal.classList.add("flex");
-        setTimeout(() => {
-          createModal
-            .querySelector("div.bg-white")
-            .classList.remove("scale-95", "opacity-0");
-          createModal
-            .querySelector("div.bg-white")
-            .classList.add("scale-100", "opacity-100");
-        }, 10);
-      };
-
-      window.submitCreateProject = function (event) {
-        event.preventDefault();
-        try {
-          const projName = document.getElementById("newProjName").value;
-          const desc = document.getElementById("projectDesc").value;
-          const rawDate = document.getElementById("projectDeadline").value;
-          const dateObj = new Date(rawDate);
-          const formattedDate =
-            ("0" + dateObj.getDate()).slice(-2) +
-            "/" +
-            ("0" + (dateObj.getMonth() + 1)).slice(-2) +
-            "/" +
-            dateObj.getFullYear();
-
-          if (projectSkills.length === 0) {
-            alert("⚠️ Nhập ít nhất 1 kỹ năng!");
-            return;
-          }
-
-          const roleRows = document.querySelectorAll(".role-row");
-          let extractedRoles = [];
-          let totalSlots = 0;
-          let categoriesSet = new Set();
-
-          roleRows.forEach((row) => {
-            const roleName = row.querySelector(".role-name").value;
-            const roleMajor = row.querySelector(".role-major").value;
-            const roleCount =
-              parseInt(row.querySelector(".role-count").value) || 0;
-            if (roleName && roleMajor && roleCount > 0) {
-              extractedRoles.push({
-                role: roleName,
-                major: roleMajor,
-                count: roleCount,
-              });
-              totalSlots += roleCount;
-              if (roleMajor !== "Đa ngành") {
-                // Lấy tên khoa từ ngàng học (ví dụ "Khoa Âm nhạc - Thanh nhạc" lấy "Âm nhạc")
-                let khoaName = roleMajor.split(" - ")[0].split("Khoa ")[1];
-                if (khoaName) categoriesSet.add(khoaName);
-                else categoriesSet.add("Đa ngành");
-              }
-            }
-          });
-
-          if (extractedRoles.length === 0) {
-            alert("⚠️ Vui lòng thêm vị trí tuyển!");
-            return;
-          }
-          let dynamicCategory = Array.from(categoriesSet).join(" & ");
-          if (!dynamicCategory) dynamicCategory = "Đa ngành";
-
-          if (editingProjectTitle) {
-            const index = customProjects.findIndex(
-              (p) => p.title === editingProjectTitle,
-            );
-            if (index > -1) {
-              customProjects[index].title = projName;
-              customProjects[index].category = dynamicCategory;
-              customProjects[index].roles = extractedRoles;
-              customProjects[index].slotsNeeded = totalSlots;
-              customProjects[index].deadline = formattedDate;
-              customProjects[index].description = desc;
-              customProjects[index].skills = projectSkills.slice();
-              // Lưu ảnh leader hiện tại khi sửa
-              customProjects[index].leaderAvatar = loggedInUserAvatarBase64;
-            }
-
-            if (editingProjectTitle !== projName) {
-              globalApps.forEach((app) => {
-                if (app.projectId === editingProjectTitle)
-                  app.projectId = projName;
-              });
-              localStorage.setItem(
-                "globalApplications",
-                JSON.stringify(globalApps),
-              );
-            }
-
-            localStorage.setItem(
-              "customProjectsData",
-              JSON.stringify(customProjects),
-            );
-            alert(`✅ Cập nhật dự án "${projName}" thành công!`);
-            window.closeCreateProjectModal();
-            window.filterProjects();
-          } else {
-            const newProjectObj = {
-              title: projName,
-              category: dynamicCategory,
-              roles: extractedRoles,
-              slotsNeeded: totalSlots,
-              deadline: formattedDate,
-              description: desc,
-              skills: projectSkills.slice(),
-              leaderName: loggedInUserName,
-              leaderInitials: loggedInUserName.charAt(0).toUpperCase(),
-              leaderAvatar: loggedInUserAvatarBase64, // Lưu ảnh leader ngay khi tạo
-              isOwner: true,
-              currentMembers: 1,
-              status: "pending",
-            };
-
-            customProjects.unshift(newProjectObj);
-            localStorage.setItem(
-              "customProjectsData",
-              JSON.stringify(customProjects),
-            );
-            alert(
-              `🎉 TẠO DỰ ÁN THÀNH CÔNG!\nHệ thống sẽ đưa bạn đến Khu vực Quản lý (Kanban).`,
-            );
-            window.location.href = "kanban.html";
-          }
-        } catch (error) {
-          alert("Đã xảy ra lỗi, vui lòng thử lại!");
-        }
-      };
-
-      window.updateLeaderVisibility = function () {
-        const leaderBtn = document.getElementById("leaderAreaBtn");
-        const isLeader = customProjects.some(
-          (p) => p.leaderName === loggedInUserName && p.isOwner === true,
-        );
-        if (isLeader) {
-          leaderBtn.classList.remove("hidden");
-          leaderBtn.classList.add("flex");
-        } else {
-          leaderBtn.classList.add("hidden");
-          leaderBtn.classList.remove("flex");
-        }
-      };
-
-      // ==========================================
-      // CÁC HÀM XỬ LÝ MENU DROPDOWN & MODAL
-      // ==========================================
-
-      window.toggleUserDropdown = function (event) {
-        event.stopPropagation();
-        document.getElementById("userDropdown").classList.toggle("hidden");
-      };
-
-      window.addEventListener("click", function (e) {
-        if (
-          !document.getElementById("userProfileContainer").contains(e.target)
-        ) {
-          document.getElementById("userDropdown").classList.add("hidden");
-        }
-      });
-
-      window.clearTestData = function () {
-        if (confirm("Đăng xuất khỏi hệ thống?")) {
-          localStorage.removeItem("userProfileData");
-          window.location.href = "index.html";
-        }
-      };
-
-      window.openSavedModal = function () {
-        document.body.classList.add("modal-active");
-        document.getElementById("savedModal").classList.remove("hidden");
-        document.getElementById("savedModal").classList.add("flex");
-        window.renderSavedList();
-        setTimeout(() => {
-          document
-            .getElementById("savedSidebarContent")
-            .classList.remove("translate-x-full");
-        }, 10);
-      };
-
-      window.closeSavedModal = function () {
-        document.body.classList.remove("modal-active");
-        document
-          .getElementById("savedSidebarContent")
-          .classList.add("translate-x-full");
-        setTimeout(() => {
-          document.getElementById("savedModal").classList.add("hidden");
-          document.getElementById("savedModal").classList.remove("flex");
-        }, 300);
-      };
-
-      window.openProfileModal = function () {
-        document.body.classList.add("modal-active");
-        document.getElementById("profileModal").classList.remove("hidden");
-        document.getElementById("profileModal").classList.add("flex");
-        setTimeout(() => {
-          document
-            .getElementById("profileModal")
-            .children[0].classList.remove("scale-95", "opacity-0");
-        }, 10);
-
-        document.getElementById("profileFullName").value = loggedInUserName;
-
-        const profile =
-          JSON.parse(localStorage.getItem("userProfileData")) || {};
-        if (profile.major)
-          document.getElementById("profileMajor").value = profile.major;
-        if (profile.year)
-          document.getElementById("profileYear").value = profile.year;
-        if (profile.desiredRole)
-          document.getElementById("profileRole").value = profile.desiredRole;
-        if (profile.portfolioLink)
-          document.getElementById("profileLink").value = profile.portfolioLink;
-        if (profile.bio)
-          document.getElementById("profileBio").value = profile.bio;
-
-        const imgPreview = document.getElementById("avatarPreview");
-        const defaultIcon = document.querySelector("#avatarPreviewContainer i");
-        if (profile.avatarBase64) {
-          imgPreview.src = profile.avatarBase64;
-          imgPreview.classList.remove("hidden");
-          defaultIcon.classList.add("hidden");
-        } else {
-          imgPreview.classList.add("hidden");
-          defaultIcon.classList.remove("hidden");
-          defaultIcon.classList.replace("text-blue-600", "text-orange-500");
-          document
-            .getElementById("avatarPreviewContainer")
-            .classList.add("border-orange-200");
-        }
-
-        if (profile.skills && profile.skills.length > 0) {
-          window.profileTagManager.setTags(profile.skills);
-        } else {
-          window.profileTagManager.reset();
-        }
-      };
-
-      window.closeProfileModal = function () {
-        document.body.classList.remove("modal-active");
-        document
-          .getElementById("profileModal")
-          .children[0].classList.add("scale-95", "opacity-0");
-        setTimeout(() => {
-          document.getElementById("profileModal").classList.add("hidden");
-          document.getElementById("profileModal").classList.remove("flex");
-        }, 300);
-      };
-
-      window.submitProfile = function (e) {
+      // --- KẾT NỐI FIREBASE CRUD ---
+      window.submitProfile = async function (e) {
         e.preventDefault();
         const name = document.getElementById("profileFullName").value.trim();
         const major = document.getElementById("profileMajor").value;
@@ -1363,137 +1015,365 @@
         const bio = document.getElementById("profileBio").value.trim();
 
         if (profileSkills.length === 0) {
-          alert("⚠️ Vui lòng chọn ít nhất 1 kỹ năng cốt lõi!");
+          alert("⚠️ Vui lòng chọn ít nhất 1 kỹ năng!");
           return;
         }
-
         const imgEl = document.getElementById("avatarPreview");
         if (imgEl.classList.contains("hidden")) {
-          alert(
-            "⚠️ Yêu cầu bắt buộc: Vui lòng tải lên ảnh đại diện hình thay vì dùng chữ!",
-          );
-          document
-            .getElementById("avatarPreviewContainer")
-            .classList.replace("border-gray-200", "border-red-300");
-          document
-            .getElementById("avatarPreviewContainer")
-            .classList.add("bg-red-50");
+          alert("⚠️ Bắt buộc tải lên ảnh đại diện!");
           return;
         }
 
-        const currentAvatarBase64 = imgEl.src;
-
-        let users = JSON.parse(localStorage.getItem("unicollab_users")) || {};
-        if (users[loggedInUserId]) {
-          users[loggedInUserId].name = name;
-          localStorage.setItem("unicollab_users", JSON.stringify(users));
+        try {
+          await updateDoc(doc(db, "users", window.loggedInUserId), {
+            name: name,
+            major: major,
+            year: year,
+            desiredRole: desiredRole,
+            portfolioLink: link,
+            bio: bio,
+            skills: profileSkills.slice(),
+            avatarBase64: imgEl.src,
+          });
+          window.customProjects.forEach(async (p) => {
+            if (p.leaderName === window.loggedInUserName && p.isOwner) {
+              await updateDoc(doc(db, "projects", p.title), {
+                leaderAvatar: imgEl.src,
+              });
+            }
+          });
+          alert("✅ Cập nhật hồ sơ thành công!");
+          location.reload();
+        } catch (e) {
+          console.error(e);
+          alert("Lỗi mạng! Vui lòng thử lại.");
         }
-
-        let profile = JSON.parse(localStorage.getItem("userProfileData")) || {};
-        profile.name = name;
-        profile.major = major;
-        profile.year = year;
-        profile.desiredRole = desiredRole;
-        profile.portfolioLink = link;
-        profile.bio = bio;
-        profile.skills = profileSkills.slice();
-        profile.avatarBase64 = currentAvatarBase64;
-
-        localStorage.setItem("userProfileData", JSON.stringify(profile));
-
-        // --- CẬP NHẬT ẢNH CHO TẤT CẢ CÁC DỰ ÁN CŨ ĐÃ TẠO ---
-        let projData =
-          JSON.parse(localStorage.getItem("customProjectsData")) || [];
-        let isUpdated = false;
-        projData.forEach((p) => {
-          if (p.leaderName === loggedInUserName && p.isOwner) {
-            p.leaderAvatar = currentAvatarBase64;
-            isUpdated = true;
-          }
-        });
-        if (isUpdated) {
-          localStorage.setItem("customProjectsData", JSON.stringify(projData));
-        }
-
-        alert("✅ Cập nhật hồ sơ thành công!");
-        location.reload();
       };
 
-      window.previewAvatar = function (event) {
-        const reader = new FileReader();
-        const container = document.getElementById("avatarPreviewContainer");
-        const img = document.getElementById("avatarPreview");
-        const icon = container.querySelector("i");
+      window.submitCreateProject = async function (event) {
+        event.preventDefault();
+        try {
+          const projName = document
+            .getElementById("newProjName")
+            .value.replace(/\//g, "-");
+          const desc = document.getElementById("projectDesc").value;
+          const rawDate = document.getElementById("projectDeadline").value;
+          const formattedDate = rawDate.split("-").reverse().join("/");
+          if (projectSkills.length === 0)
+            return alert("Nhập ít nhất 1 kỹ năng!");
 
-        reader.onload = function () {
-          img.src = reader.result;
-          img.classList.remove("hidden");
-          icon.classList.add("hidden");
-          container.classList.remove(
-            "border-red-300",
-            "bg-red-50",
-            "border-orange-200",
-          );
-          container.classList.add("border-blue-200", "ring-2", "ring-blue-100");
+          let extractedRoles = [];
+          let totalSlots = 0;
+          let categoriesSet = new Set();
+          document.querySelectorAll(".role-row").forEach((row) => {
+            const rName = row.querySelector(".role-name").value;
+            const rMajor = row.querySelector(".role-major").value;
+            const rCount =
+              parseInt(row.querySelector(".role-count").value) || 0;
+            if (rName && rMajor && rCount > 0) {
+              extractedRoles.push({
+                role: rName,
+                major: rMajor,
+                count: rCount,
+              });
+              totalSlots += rCount;
+              let khoaName = rMajor.split(" - ")[0].split("Khoa ")[1];
+              categoriesSet.add(khoaName || "Đa ngành");
+            }
+          });
+
+          if (extractedRoles.length === 0) return alert("Thêm vị trí tuyển!");
+          let dynamicCategory =
+            Array.from(categoriesSet).join(" & ") || "Đa ngành";
+
+          const newProjectObj = {
+            title: projName,
+            category: dynamicCategory,
+            roles: extractedRoles,
+            slotsNeeded: totalSlots,
+            deadline: formattedDate,
+            description: desc,
+            skills: projectSkills.slice(),
+            leaderId: window.loggedInUserId,
+            leaderName: window.loggedInUserName,
+            leaderInitials: window.loggedInUserName.charAt(0).toUpperCase(),
+            leaderAvatar: window.loggedInUserAvatarBase64,
+            isOwner: true,
+            currentMembers: 1,
+            status: "pending",
+          };
+
+          if (window.editingProjectTitle) {
+            await deleteDoc(doc(db, "projects", window.editingProjectTitle));
+          }
+          await setDoc(doc(db, "projects", projName), newProjectObj);
+          alert(`🎉 TẠO DỰ ÁN THÀNH CÔNG VÀ ĐÃ ĐỒNG BỘ!`);
+          window.location.href = "kanban.html";
+        } catch (error) {
+          console.error(error);
+          alert("Lỗi lưu dự án!");
+        }
+      };
+
+      window.submitApplication = async function (e) {
+        e.preventDefault();
+        const role = document.getElementById("applyRoleSelect").value;
+        const msg = document.getElementById("applyMessage").value;
+        if (!role) return alert("Chọn vị trí!");
+
+        const appId = `${window.currentProjectToApply}_${window.loggedInUserId}`;
+        try {
+          await setDoc(doc(db, "applications", appId), {
+            projectId: window.currentProjectToApply,
+            applicantId: window.loggedInUserId,
+            applicantName: window.loggedInUserName,
+            applicantAvatar: window.loggedInUserAvatarBase64,
+            role: role,
+            message: msg,
+            status: "pending",
+            time: new Date().toLocaleString("vi-VN"),
+          });
+          alert("✅ Gửi đơn ứng tuyển thành công!");
+          location.reload();
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      window.deleteProject = async function (title, event) {
+        event.stopPropagation();
+        if (confirm(`Xóa vĩnh viễn dự án "${title}" trên toàn hệ thống?`)) {
+          await deleteDoc(doc(db, "projects", title));
+          location.reload();
+        }
+      };
+
+      // CƠ CHẾ NÉN ẢNH CANVAS GIÚP TỐI ƯU DUNG LƯỢNG CHO FIREBASE
+      window.previewAvatar = function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.createElement("canvas");
+            const MAX_WIDTH = 300;
+            const MAX_HEIGHT = 300;
+            let width = img.width;
+            let height = img.height;
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.7); // Nén jpeg 70% chất lượng
+
+            document.getElementById("avatarPreview").src = dataUrl;
+            document.getElementById("avatarPreview").classList.remove("hidden");
+            document
+              .querySelector("#avatarPreviewContainer i")
+              .classList.add("hidden");
+          };
+          img.src = event.target.result;
         };
-        if (event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+        reader.readAsDataURL(file);
+      };
+
+      window.openProfileModal = async function () {
+        document.body.classList.add("modal-active");
+        document.getElementById("profileModal").classList.remove("hidden");
+        document.getElementById("profileModal").classList.add("flex");
+        setTimeout(
+          () =>
+            document
+              .getElementById("profileModal")
+              .children[0].classList.remove("scale-95", "opacity-0"),
+          10,
+        );
+
+        try {
+          const userSnap = await getDoc(
+            doc(db, "users", window.loggedInUserId),
+          );
+          if (userSnap.exists()) {
+            const p = userSnap.data();
+            document.getElementById("profileFullName").value = p.name;
+            if (p.major)
+              document.getElementById("profileMajor").value = p.major;
+            if (p.year) document.getElementById("profileYear").value = p.year;
+            if (p.desiredRole)
+              document.getElementById("profileRole").value = p.desiredRole;
+            if (p.portfolioLink)
+              document.getElementById("profileLink").value = p.portfolioLink;
+            if (p.bio) document.getElementById("profileBio").value = p.bio;
+            if (p.avatarBase64) {
+              document.getElementById("avatarPreview").src = p.avatarBase64;
+              document
+                .getElementById("avatarPreview")
+                .classList.remove("hidden");
+              document
+                .querySelector("#avatarPreviewContainer i")
+                .classList.add("hidden");
+            }
+            if (p.skills) window.profileTagManager.setTags(p.skills);
+          }
+        } catch (e) {}
       };
 
       window.openCreateProjectModal = function (isNew = false) {
-        if (!hasCompletedProfile) {
-          alert(
-            "⚠️ Bạn chưa có ảnh đại diện! Vui lòng tải lên ảnh đại diện trong Hồ sơ cá nhân để hoàn tất hồ sơ và bắt đầu tạo dự án.",
-          );
-          window.openProfileModal();
-          return;
+        if (!window.hasCompletedProfile) {
+          alert("⚠️ Bạn chưa có ảnh đại diện! Cập nhật hồ sơ trước.");
+          return window.openProfileModal();
         }
-
-        if (isNew) {
-          editingProjectTitle = null;
-          document.getElementById("createModalTitle").innerHTML =
-            '<i class="fa-solid fa-folder-plus text-[#2563eb] mr-3"></i> TẠO DỰ ÁN TÌM ĐỒNG ĐỘI';
-          document.getElementById("btnSubmitProject").innerText =
-            "ĐĂNG DỰ ÁN LÊN HỆ THỐNG";
-          document.getElementById("projectForm").reset();
-          window.projectTagManager.reset();
-          const container = document.getElementById("dynamicRolesContainer");
-          container.innerHTML = "";
-          window.addRoleRow();
-        }
-
+        document.body.classList.add("modal-active");
         document
           .getElementById("createProjectModal")
           .classList.remove("hidden");
         document.getElementById("createProjectModal").classList.add("flex");
+        setTimeout(
+          () =>
+            document
+              .getElementById("createProjectModal")
+              .children[0].classList.remove("scale-95", "opacity-0"),
+          10,
+        );
+        if (isNew) {
+          window.editingProjectTitle = null;
+          document.getElementById("createModalTitle").innerText =
+            "TẠO DỰ ÁN MỚI";
+          document.getElementById("projectForm").reset();
+          window.projectTagManager.reset();
+          document.getElementById("dynamicRolesContainer").innerHTML = "";
+          window.addRoleRow();
+        }
+      };
+
+      window.editProject = function (title, event) {
+        event.stopPropagation();
+        const p = window.customProjects.find((x) => x.title === title);
+        if (!p) return;
+        window.openCreateProjectModal(false);
+        window.editingProjectTitle = title;
+        document.getElementById("createModalTitle").innerText =
+          "CẬP NHẬT DỰ ÁN";
+        document.getElementById("newProjName").value = p.title;
+        document.getElementById("projectDesc").value = p.description;
+        if (p.deadline)
+          document.getElementById("projectDeadline").value = p.deadline
+            .split("/")
+            .reverse()
+            .join("-");
+        window.projectTagManager.setTags(p.skills || []);
+        document.getElementById("dynamicRolesContainer").innerHTML = "";
+        if (p.roles) {
+          p.roles.forEach((r) => {
+            window.addRoleRow();
+            const rows = document.querySelectorAll(".role-row");
+            const last = rows[rows.length - 1];
+            last.querySelector(".role-name").value = r.role;
+            last.querySelector(".role-major").value = r.major;
+            last.querySelector(".role-count").value = r.count;
+          });
+        }
+      };
+
+      window.handleApply = function (title) {
+        if (!window.hasCompletedProfile) {
+          alert("⚠️ Cập nhật hồ sơ có ảnh trước khi ứng tuyển.");
+          return window.openProfileModal();
+        }
+        window.currentProjectToApply = title;
+        document.getElementById("targetProject").innerText = title;
+        const p = [...defaultProjects, ...window.customProjects].find(
+          (x) => x.title === title,
+        );
+        const sel = document.getElementById("applyRoleSelect");
+        sel.innerHTML = "";
+        if (p && p.roles)
+          p.roles.forEach(
+            (r) => (sel.innerHTML += `<option>${r.role}</option>`),
+          );
         document.body.classList.add("modal-active");
-
-        const createContent = document
-          .getElementById("createProjectModal")
-          .querySelector("div.bg-white");
-        setTimeout(() => {
-          createContent.classList.remove("scale-95", "opacity-0");
-          createContent.classList.add("scale-100", "opacity-100");
-        }, 10);
+        document.getElementById("applyModal").classList.remove("hidden");
+        document.getElementById("applyModal").classList.add("flex");
+        setTimeout(
+          () =>
+            document
+              .getElementById("applyModal")
+              .children[0].classList.remove("scale-95", "opacity-0"),
+          10,
+        );
       };
 
-      window.closeCreateProjectModal = function () {
-        const createModal = document.getElementById("createProjectModal");
-        const createContent = createModal.querySelector("div.bg-white");
+      window.openDetailModal = function (title) {
+        const p = [...defaultProjects, ...window.customProjects].find(
+          (x) => x.title === title,
+        );
+        if (p) {
+          document.getElementById("detailTitle").innerText = p.title;
+          document.getElementById("detailCategory").innerText =
+            p.category || "Đa ngành";
+          document.getElementById("detailDesc").innerText = p.description;
+          document.getElementById("detailLeaderName").innerText = p.leaderName;
+          let ava = p.leaderAvatar;
+          if (
+            p.isOwner &&
+            p.leaderName === window.loggedInUserName &&
+            window.loggedInUserAvatarBase64
+          )
+            ava = window.loggedInUserAvatarBase64;
+          document.getElementById("detailLeaderAvatar").innerHTML = ava
+            ? `<img src="${ava}" class="w-full h-full object-cover">`
+            : p.leaderInitials || "L";
+          document.body.classList.add("modal-active");
+          document.getElementById("detailModal").classList.remove("hidden");
+          document.getElementById("detailModal").classList.add("flex");
+          setTimeout(
+            () =>
+              document
+                .getElementById("detailModal")
+                .children[0].classList.remove("scale-95", "opacity-0"),
+            10,
+          );
+        }
+      };
+
+      window.closeProfileModal = () => {
         document.body.classList.remove("modal-active");
-        createContent.classList.remove("scale-100", "opacity-100");
-        createContent.classList.add("scale-95", "opacity-0");
-        setTimeout(() => {
-          createModal.classList.remove("flex");
-          createModal.classList.add("hidden");
-        }, 300);
+        document.getElementById("profileModal").classList.add("hidden");
+        document.getElementById("profileModal").classList.remove("flex");
+      };
+      window.closeCreateProjectModal = () => {
+        document.body.classList.remove("modal-active");
+        document.getElementById("createProjectModal").classList.add("hidden");
+        document.getElementById("createProjectModal").classList.remove("flex");
+      };
+      window.closeApplyModal = () => {
+        document.body.classList.remove("modal-active");
+        document.getElementById("applyModal").classList.add("hidden");
+        document.getElementById("applyModal").classList.remove("flex");
+      };
+      window.closeDetailModal = () => {
+        document.body.classList.remove("modal-active");
+        document.getElementById("detailModal").classList.add("hidden");
+        document.getElementById("detailModal").classList.remove("flex");
       };
 
-      // CẬP NHẬT LẠI HÀM THÊM VỊ TRÍ VỚI CÁC NGÀNH CỦA NAUE
       window.addRoleRow = function () {
         const container = document.getElementById("dynamicRolesContainer");
         const row = document.createElement("div");
         row.className =
-          "role-row flex flex-col md:flex-row gap-3 items-end fade-in-section";
+          "role-row flex flex-col md:flex-row gap-3 items-end fade-in-section mb-2";
         row.innerHTML = `
             <div class="w-full md:w-2/5 relative">
                 <input type="text" list="roleList" required placeholder="Vai trò (VD: Ca sĩ, Designer...)" class="role-name w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 transition">
@@ -1501,37 +1381,12 @@
             <div class="w-full md:w-2/5">
                 <select required class="role-major w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none cursor-pointer text-gray-600 focus:ring-1 focus:ring-blue-500 transition">
                     <option value="" disabled selected hidden>Ngành/Khoa...</option>
-                    <optgroup label="Khoa Âm nhạc">
-                        <option>Khoa Âm nhạc - Sư phạm Âm nhạc</option>
-                        <option>Khoa Âm nhạc - Thanh nhạc</option>
-                        <option>Khoa Âm nhạc - Biểu diễn Nhạc cụ truyền thống</option>
-                        <option>Khoa Âm nhạc - Nhạc Jazz</option>
-                    </optgroup>
-                    <optgroup label="Khoa Sân khấu - Điện ảnh & Múa">
-                        <option>Khoa SK-ĐA & Múa - Đạo diễn SK</option>
-                        <option>Khoa SK-ĐA & Múa - Diễn viên SK Kịch hát</option>
-                        <option>Khoa SK-ĐA & Múa - Biên đạo Múa</option>
-                    </optgroup>
-                    <optgroup label="Khoa Mỹ thuật">
-                        <option>Khoa Mỹ thuật - Hội họa</option>
-                        <option>Khoa Mỹ thuật - Sư phạm Mỹ thuật</option>
-                        <option>Khoa Mỹ thuật - Thiết kế Thời trang</option>
-                        <option>Khoa Mỹ thuật - Thiết kế Đồ họa</option>
-                    </optgroup>
-                    <optgroup label="Khoa Văn hóa & Du lịch">
-                        <option>Khoa VH & Du lịch - Quản lý Văn hóa</option>
-                        <option>Khoa VH & Du lịch - Du lịch</option>
-                        <option>Khoa VH & Du lịch - Việt Nam học</option>
-                    </optgroup>
-                    <optgroup label="Khoa Công nghệ truyền thông & CNTT">
-                        <option>Khoa CNTT - Công nghệ thông tin</option>
-                        <option>Khoa CNTT - Công nghệ truyền thông</option>
-                        <option>Khoa CNTT - Quay phim</option>
-                    </optgroup>
-                    <optgroup label="Khoa KT & QL">
-                        <option>Khoa KT & QL - Kế toán</option>
-                        <option>Khoa KT & QL - Quản trị kinh doanh</option>
-                    </optgroup>
+                    <optgroup label="Khoa Âm nhạc"><option>Khoa Âm nhạc - Sư phạm Âm nhạc</option><option>Khoa Âm nhạc - Thanh nhạc</option><option>Khoa Âm nhạc - Biểu diễn Nhạc cụ truyền thống</option><option>Khoa Âm nhạc - Nhạc Jazz</option></optgroup>
+                    <optgroup label="Khoa Sân khấu - Điện ảnh & Múa"><option>Khoa SK-ĐA & Múa - Đạo diễn SK</option><option>Khoa SK-ĐA & Múa - Diễn viên SK Kịch hát</option><option>Khoa SK-ĐA & Múa - Biên đạo Múa</option></optgroup>
+                    <optgroup label="Khoa Mỹ thuật"><option>Khoa Mỹ thuật - Hội họa</option><option>Khoa Mỹ thuật - Sư phạm Mỹ thuật</option><option>Khoa Mỹ thuật - Thiết kế Thời trang</option><option>Khoa Mỹ thuật - Thiết kế Đồ họa</option></optgroup>
+                    <optgroup label="Khoa Văn hóa & Du lịch"><option>Khoa VH & Du lịch - Quản lý Văn hóa</option><option>Khoa VH & Du lịch - Du lịch</option><option>Khoa VH & Du lịch - Việt Nam học</option></optgroup>
+                    <optgroup label="Khoa Công nghệ truyền thông & CNTT"><option>Khoa CNTT - Công nghệ thông tin</option><option>Khoa CNTT - Công nghệ truyền thông</option><option>Khoa CNTT - Quay phim</option></optgroup>
+                    <optgroup label="Khoa KT & QL"><option>Khoa KT & QL - Kế toán</option><option>Khoa KT & QL - Quản trị kinh doanh</option></optgroup>
                     <option value="Đa ngành">Đa ngành</option>
                 </select>
             </div>
@@ -1545,23 +1400,19 @@
       const predefinedSkills = [
         "Vocal",
         "Piano",
-        "FL Studio",
-        "Adobe Audition",
+        "Sáo trúc",
+        "Guitar",
         "Diễn xuất",
-        "Biên múa",
+        "Múa",
         "Sơn dầu",
-        "Acrylic",
-        "Figma",
         "Photoshop",
-        "React Native",
-        "Firebase",
-        "Tiếng Anh",
-        "Thuyết trình",
-        "Content",
+        "Figma",
+        "Marketing",
+        "Kế toán",
+        "Quay phim",
       ];
-      const profileSkills = [];
-      const projectSkills = [];
-
+      window.profileSkills = [];
+      window.projectSkills = [];
       function setupTagInput(
         inputId,
         containerId,
@@ -1572,18 +1423,17 @@
         const input = document.getElementById(inputId);
         const container = document.getElementById(containerId);
         const suggestions = document.getElementById(suggestionId);
-        window[globalRemoveName] = function (skill) {
-          const index = arrayRef.indexOf(skill);
-          if (index > -1) arrayRef.splice(index, 1);
+        window[globalRemoveName] = function (s) {
+          arrayRef.splice(arrayRef.indexOf(s), 1);
           render();
         };
         function render() {
           container.querySelectorAll(".skill-tag").forEach((t) => t.remove());
-          arrayRef.forEach((skill) => {
+          arrayRef.forEach((s) => {
             const span = document.createElement("span");
             span.className =
               "skill-tag bg-blue-100 text-blue-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center shadow-sm border border-blue-200 mt-1";
-            span.innerHTML = `${skill} <i class="fa-solid fa-xmark ml-2 text-blue-400 hover:text-red-500 cursor-pointer text-sm transition" onclick="${globalRemoveName}('${skill}')"></i>`;
+            span.innerHTML = `${s} <i class="fa-solid fa-xmark ml-2 text-blue-400 hover:text-red-500 cursor-pointer text-sm transition" onclick="${globalRemoveName}('${s}')"></i>`;
             container.insertBefore(span, input);
           });
         }
@@ -1601,24 +1451,17 @@
           const availableSkills = predefinedSkills.filter(
             (s) => !arrayRef.includes(s),
           );
-          if (availableSkills.length === 0) {
+          availableSkills.forEach((s) => {
             const li = document.createElement("li");
-            li.className = "px-5 py-3 text-sm text-gray-400 italic";
-            li.textContent = "Bạn đã chọn hết kỹ năng có sẵn!";
+            li.className =
+              "px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm text-gray-700 border-b border-gray-50 flex items-center";
+            li.innerHTML = `<i class="fa-solid fa-plus text-blue-400 mr-2 text-xs"></i> ${s}`;
+            li.onmousedown = (e) => {
+              e.preventDefault();
+              addSkill(s);
+            };
             suggestions.appendChild(li);
-          } else {
-            availableSkills.forEach((s) => {
-              const li = document.createElement("li");
-              li.className =
-                "px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm text-gray-700 border-b border-gray-50 flex items-center";
-              li.innerHTML = `<i class="fa-solid fa-plus text-blue-400 mr-2 text-xs"></i> ${s}`;
-              li.onmousedown = (e) => {
-                e.preventDefault();
-                addSkill(s);
-              };
-              suggestions.appendChild(li);
-            });
-          }
+          });
           suggestions.classList.remove("hidden");
         }
         input.addEventListener("input", function () {
@@ -1644,7 +1487,7 @@
               const li = document.createElement("li");
               li.className =
                 "px-5 py-3 hover:bg-gray-50 cursor-pointer text-sm text-gray-500 italic";
-              li.innerHTML = `Thêm kỹ năng mới: <strong class="text-blue-600">${this.value}</strong>`;
+              li.innerHTML = `Thêm: <strong class="text-blue-600">${this.value}</strong>`;
               li.onmousedown = (e) => {
                 e.preventDefault();
                 addSkill(this.value);
@@ -1678,14 +1521,6 @@
             arrayRef.push(...tags);
             render();
           },
-          toggle: function () {
-            if (suggestions.classList.contains("hidden")) {
-              input.focus();
-              showAll();
-            } else {
-              suggestions.classList.add("hidden");
-            }
-          },
         };
       }
 
@@ -1693,206 +1528,73 @@
         "profileSkillInput",
         "profileSkillContainer",
         "profileSkillSuggestions",
-        profileSkills,
+        window.profileSkills,
         "removeProfileSkill",
       );
       window.projectTagManager = setupTagInput(
         "projectSkillInput",
         "projectSkillContainer",
         "projectSkillSuggestions",
-        projectSkills,
+        window.projectSkills,
         "removeProjectSkill",
       );
 
-      window.handleApply = function (title) {
-        if (!hasCompletedProfile) {
-          alert(
-            "⚠️ Bạn chưa có ảnh đại diện! Vui lòng cập nhật ảnh đại diện trong Hồ sơ cá nhân để hoàn tất hồ sơ trước khi ứng tuyển.",
-          );
-          window.openProfileModal();
-          return;
-        }
-        currentProjectToApply = title;
-        document.getElementById("targetProject").innerText = title;
+      window.toggleUserDropdown = (e) => {
+        e.stopPropagation();
+        document.getElementById("userDropdown").classList.toggle("hidden");
+      };
+      window.clearTestData = () => {
+        localStorage.removeItem("userProfileData");
+        window.location.href = "index.html";
+      };
+      window.updateLeaderVisibility = function () {
+        if (
+          window.customProjects.some(
+            (p) => p.leaderName === window.loggedInUserName && p.isOwner,
+          )
+        )
+          document.getElementById("leaderAreaBtn").classList.remove("hidden");
+      };
 
-        const p = [...defaultProjects, ...customProjects].find(
-          (x) => x.title === title,
-        );
-        const select = document.getElementById("applyRoleSelect");
-        select.innerHTML =
-          '<option value="" disabled selected>Chọn vị trí ứng tuyển...</option>';
-        if (p && p.roles && p.roles.length > 0) {
-          p.roles.forEach(
-            (r) =>
-              (select.innerHTML += `<option value="${r.role}">${r.role}</option>`),
-          );
-        } else {
-          select.innerHTML += `<option value="Thành viên">Thành viên</option>`;
-        }
-
+      window.openSavedModal = function () {
         document.body.classList.add("modal-active");
-        document.getElementById("applyModal").classList.remove("hidden");
-        document.getElementById("applyModal").classList.add("flex");
+        document.getElementById("savedModal").classList.remove("hidden");
+        document.getElementById("savedModal").classList.add("flex");
+        window.renderSavedList();
         setTimeout(
           () =>
             document
-              .getElementById("applyModal")
-              .children[0].classList.remove("scale-95", "opacity-0"),
+              .getElementById("savedSidebarContent")
+              .classList.remove("translate-x-full"),
           10,
         );
       };
-
-      window.closeApplyModal = function () {
+      window.closeSavedModal = function () {
         document.body.classList.remove("modal-active");
         document
-          .getElementById("applyModal")
-          .children[0].classList.add("scale-95", "opacity-0");
+          .getElementById("savedSidebarContent")
+          .classList.add("translate-x-full");
         setTimeout(() => {
-          document.getElementById("applyModal").classList.add("hidden");
-          document.getElementById("applyModal").classList.remove("flex");
+          document.getElementById("savedModal").classList.add("hidden");
+          document.getElementById("savedModal").classList.remove("flex");
         }, 300);
       };
-
-      window.submitApplication = function (e) {
-        e.preventDefault();
-        const role = document.getElementById("applyRoleSelect").value;
-        const msg = document.getElementById("applyMessage").value;
-        if (!role) {
-          alert("Vui lòng chọn vị trí!");
-          return;
-        }
-
-        globalApps.push({
-          projectId: currentProjectToApply,
-          applicantId: loggedInUserId,
-          applicantName: loggedInUserName,
-          applicantAvatar: loggedInUserAvatarBase64,
-          role: role,
-          message: msg,
-          status: "pending",
-          time: new Date().toLocaleString("vi-VN"),
-        });
-        localStorage.setItem("globalApplications", JSON.stringify(globalApps));
-
-        alert("✅ Gửi đơn ứng tuyển thành công! Vui lòng chờ Leader phản hồi.");
-        window.closeApplyModal();
-        window.filterProjects();
-        window.updateAppliedCountMenu();
-      };
-
-      window.openDetailModal = function (title, leaderName) {
-        const p = [...defaultProjects, ...customProjects].find(
-          (x) => x.title === title,
-        );
-        if (p) {
-          document.getElementById("detailTitle").innerText = p.title;
-          document.getElementById("detailCategory").innerText =
-            p.category || "Đa ngành";
-          document.getElementById("detailDesc").innerText =
-            p.description || "Không có mô tả";
-          document.getElementById("detailLeaderName").innerText = p.leaderName;
-
-          const avatarEl = document.getElementById("detailLeaderAvatar");
-          let actualAvatar = p.leaderAvatar;
-          if (
-            p.isOwner &&
-            p.leaderName === loggedInUserName &&
-            loggedInUserAvatarBase64
-          ) {
-            actualAvatar = loggedInUserAvatarBase64;
-          }
-
-          if (actualAvatar) {
-            avatarEl.innerHTML = `<img src="${actualAvatar}" class="w-full h-full object-cover">`;
-            avatarEl.classList.remove("bg-blue-600");
-          } else {
-            avatarEl.innerHTML = p.leaderInitials || "L";
-            avatarEl.classList.add("bg-blue-600");
-          }
-
-          document.body.classList.add("modal-active");
-          document.getElementById("detailModal").classList.remove("hidden");
-          document.getElementById("detailModal").classList.add("flex");
-          setTimeout(
-            () =>
-              document
-                .getElementById("detailModal")
-                .children[0].classList.remove("scale-95", "opacity-0"),
-            10,
-          );
-        }
-      };
-
-      window.closeDetailModal = function () {
-        document.body.classList.remove("modal-active");
-        document
-          .getElementById("detailModal")
-          .children[0].classList.add("scale-95", "opacity-0");
-        setTimeout(() => {
-          document.getElementById("detailModal").classList.add("hidden");
-          document.getElementById("detailModal").classList.remove("flex");
-        }, 300);
-      };
-
       window.renderSavedList = function () {
         const container = document.getElementById("savedListContainer");
-        const myApps = globalApps.filter(
-          (app) => app.applicantId === loggedInUserId,
-        );
-
-        if (myApps.length === 0) {
-          container.innerHTML = `<div class="text-center py-10 text-gray-500 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">Bạn chưa ứng tuyển dự án nào.</div>`;
-          return;
-        }
-
         container.innerHTML = "";
+        const myApps = window.globalApps.filter(
+          (a) => a.applicantId === window.loggedInUserId,
+        );
+        if (myApps.length === 0)
+          return (container.innerHTML = `<div class="text-center py-10 text-gray-500 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">Bạn chưa ứng tuyển dự án nào.</div>`);
         myApps.forEach((app) => {
-          const proj = [...defaultProjects, ...customProjects].find(
-            (p) => p.title === app.projectId,
-          );
-          let leaderAvatar = proj ? proj.leaderAvatar : "";
-          let leaderInitials = proj ? proj.leaderInitials : "L";
-
-          if (
-            proj &&
-            proj.isOwner &&
-            proj.leaderName === loggedInUserName &&
-            loggedInUserAvatarBase64
-          ) {
-            leaderAvatar = loggedInUserAvatarBase64;
-          }
-
-          let statusBadge = "";
-          if (app.status === "pending")
-            statusBadge =
-              '<span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-[10px] font-bold">Đang chờ</span>';
-          else if (app.status === "accepted")
-            statusBadge =
-              '<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold">Được nhận</span>';
-          else if (app.status === "rejected")
-            statusBadge =
-              '<span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-[10px] font-bold">Từ chối</span>';
-
-          let avatarHtml = leaderAvatar
-            ? `<img src="${leaderAvatar}" class="w-10 h-10 object-cover rounded-full">`
-            : `<div class="w-10 h-10 bg-gray-200 text-gray-500 rounded-full flex items-center justify-center font-bold text-sm">${leaderInitials}</div>`;
-
-          container.innerHTML += `
-                  <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
-                      <div class="flex justify-between items-start mb-3">
-                          <h4 class="font-bold text-gray-800 text-base line-clamp-1">${app.projectId}</h4>
-                          ${statusBadge}
-                      </div>
-                      <p class="text-xs text-blue-600 font-bold mb-4">Vị trí: ${app.role}</p>
-                      <div class="flex justify-between items-center border-t border-gray-50 pt-4">
-                          <div class="flex items-center gap-3">
-                              ${avatarHtml}
-                              <span class="text-sm text-gray-600">${proj ? proj.leaderName : "Unknown"}</span>
-                          </div>
-                          <span class="text-[10px] text-gray-400 font-mono">${app.time.split(", ")[0]}</span>
-                      </div>
-                  </div>
-              `;
+          let statusBadge =
+            app.status === "pending"
+              ? '<span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-[10px] font-bold">Đang chờ</span>'
+              : app.status === "accepted"
+                ? '<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold">Được nhận</span>'
+                : '<span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-[10px] font-bold">Từ chối</span>';
+          container.innerHTML += `<div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm mb-3"><div class="flex justify-between items-start mb-3"><h4 class="font-bold text-gray-800 text-base">${app.projectId}</h4>${statusBadge}</div><p class="text-xs text-blue-600 font-bold mb-2">Vị trí: ${app.role}</p></div>`;
         });
       };
     </script>
