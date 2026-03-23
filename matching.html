@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UNICOLLAB - NAUE - Tìm Đồng Đội</title>
+    <title>UNICOLLAB - NAU - Tìm Đồng Đội</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -91,17 +91,18 @@
         class="max-w-[1500px] mx-auto px-5 py-3.5 flex items-center justify-between"
       >
         <div class="flex items-center gap-2">
-          <img
-            src="https://naue.edu.vn/uploads/logo-naue.png"
-            alt="NAUE Logo"
-            class="h-10"
-          />
+          <div
+            class="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center text-xl font-bold"
+          >
+            <i class="fa-brands fa-uniregistry"></i>
+          </div>
           <div class="flex flex-col">
             <span class="text-2xl font-black text-gray-900 tracking-tighter"
               >UNI<span class="text-blue-600">COLLAB</span></span
             >
-            <span class="text-[10px] text-blue-800 font-bold -mt-1"
-              >NAUE Edition</span
+            <span
+              class="text-[10px] text-blue-800 font-bold -mt-1 uppercase tracking-widest"
+              >NAU Edition</span
             >
           </div>
         </div>
@@ -186,12 +187,12 @@
                 <button
                   id="leaderAreaBtn"
                   onclick="window.location.href = 'kanban.html'"
-                  class="hidden w-full items-center gap-3.5 text-left px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition"
+                  class="hidden w-full flex items-center gap-3.5 text-left px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition"
                 >
                   <i
-                    class="fa-solid fa-crown text-orange-500 w-4 text-center"
+                    class="fa-solid fa-users text-orange-500 w-4 text-center"
                   ></i>
-                  Khu vực nhóm
+                  Dự án của tôi
                 </button>
                 <div class="border-t border-gray-100 my-2 pt-2">
                   <button
@@ -255,7 +256,7 @@
             type="text"
             id="searchInput"
             oninput="filterProjects()"
-            placeholder="Tìm tên dự án, kỹ năng (ví dụ: Thanh nhạc, Thiết kế...)"
+            placeholder="Tìm tên dự án, kỹ năng (VD: C#, Marketing, Thiết kế...)"
             class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"
           />
         </div>
@@ -265,20 +266,18 @@
             onchange="filterProjects()"
             class="px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 outline-none cursor-pointer hover:border-gray-300 transition"
           >
-            <option value="all">Tất cả ngành/khoa</option>
-            <option value="Âm nhạc">Khoa Âm nhạc</option>
-            <option value="Sân khấu">Khoa SK-ĐA & Múa</option>
-            <option value="Mỹ thuật">Khoa Mỹ thuật</option>
-            <option value="Văn hóa">Khoa VH & Du lịch</option>
-            <option value="Công nghệ">Khoa CNTT</option>
-            <option value="Kinh tế">Khoa KT & QL</option>
+            <option value="all">Tất cả lĩnh vực</option>
+            <option value="Công nghệ thông tin">Công nghệ thông tin</option>
+            <option value="Kinh tế - Quản trị">Kinh tế - Quản trị</option>
+            <option value="Nông nghiệp - Thú y">Nông nghiệp - Thú y</option>
+            <option value="Ngôn ngữ - Sư phạm">Ngôn ngữ - Sư phạm</option>
             <option value="Đa ngành">Đa ngành</option>
           </select>
           <button
             onclick="openCreateProjectModal(true)"
             class="bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3 px-6 rounded-xl text-sm transition shadow-md whitespace-nowrap"
           >
-            <i class="fa-solid fa-plus mr-2"></i>TẠO DỰ ÁN MỚI
+            <i class="fa-solid fa-plus mr-2"></i>TẠO DỰ ÁN
           </button>
         </div>
       </div>
@@ -304,10 +303,10 @@
           <i class="fa-solid fa-xmark text-2xl"></i>
         </button>
         <h2 class="text-3xl font-extrabold text-gray-900 mb-2 tracking-tighter">
-          Cập Nhật Hồ Sơ
+          Cập Nhật Hồ Sơ Năng Lực
         </h2>
         <p class="text-gray-500 mb-8 text-sm">
-          Thông tin này giúp các trưởng nhóm tìm thấy bạn phù hợp với dự án.
+          Thông tin này giúp các trưởng nhóm tìm thấy bạn dễ dàng hơn.
         </p>
 
         <form onsubmit="submitProfile(event)" class="space-y-6">
@@ -350,8 +349,7 @@
             <div>
               <label class="block text-sm font-bold text-gray-700 mb-1.5"
                 >Họ và tên *</label
-              >
-              <input
+              ><input
                 type="text"
                 id="profileFullName"
                 required
@@ -370,61 +368,53 @@
                 <option value="" disabled selected hidden>
                   Chọn Ngành/Khoa...
                 </option>
-                <optgroup label="Khoa Âm nhạc">
-                  <option>Sư phạm Âm nhạc</option>
-                  <option>Thanh nhạc</option>
-                  <option>Biểu diễn Nhạc cụ truyền thống</option>
-                  <option>Nhạc Jazz</option>
-                </optgroup>
-                <optgroup label="Khoa Sân khấu - Điện ảnh & Múa">
-                  <option>Đạo diễn SK</option>
-                  <option>Diễn viên SK Kịch hát</option>
-                  <option>Biên đạo Múa</option>
-                </optgroup>
-                <optgroup label="Khoa Mỹ thuật">
-                  <option>Hội họa</option>
-                  <option>Sư phạm Mỹ thuật</option>
-                  <option>Thiết kế Thời trang</option>
-                  <option>Thiết kế Đồ họa</option>
-                </optgroup>
-                <optgroup label="Khoa Văn hóa & Du lịch">
-                  <option>Quản lý Văn hóa</option>
-                  <option>Du lịch</option>
-                  <option>Việt Nam học</option>
-                </optgroup>
-                <optgroup label="Khoa Công nghệ truyền thông & CNTT">
+                <optgroup label="Công nghệ thông tin">
                   <option>Công nghệ thông tin</option>
-                  <option>Công nghệ truyền thông</option>
-                  <option>Quay phim</option>
                 </optgroup>
-                <optgroup label="Khoa KT & QL">
+                <optgroup label="Kinh tế & Quản trị">
                   <option>Kế toán</option>
+                  <option>Kinh tế</option>
+                  <option>Marketing</option>
                   <option>Quản trị kinh doanh</option>
+                  <option>Tài chính - Ngân hàng</option>
+                  <option>Logistics và Quản lý chuỗi cung ứng</option>
+                  <option>Thương mại điện tử</option>
+                  <option>Thạc sĩ Quản trị kinh doanh</option>
+                  <option>Thạc sĩ Quản lý kinh tế</option>
                 </optgroup>
-                <option value="Đa ngành">Đa ngành</option>
+                <optgroup label="Nông nghiệp & Thú y">
+                  <option>Nông nghiệp công nghệ cao</option>
+                  <option>Quản lý đất đai</option>
+                  <option>Thú y (Bác sĩ thú y)</option>
+                </optgroup>
+                <optgroup label="Ngôn ngữ & Sư phạm">
+                  <option>Ngôn ngữ Anh</option>
+                  <option>Ngôn ngữ Trung</option>
+                  <option>Sư phạm Khoa học Tự nhiên</option>
+                  <option>Sư phạm Tiểu học</option>
+                  <option>Cao đẳng Mầm non</option>
+                </optgroup>
               </select>
             </div>
             <div>
               <label class="block text-sm font-bold text-gray-700 mb-1.5"
-                >Khóa học (Năm nhập học) *</label
-              >
-              <input
-                type="number"
+                >Khóa học (Năm học) *</label
+              ><input
+                type="text"
                 id="profileYear"
                 required
-                placeholder="Ví dụ: 2023"
+                placeholder="Ví dụ: Năm 2"
                 class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
             <div>
               <label class="block text-sm font-bold text-gray-700 mb-1.5"
-                >Vai trò mong muốn *</label
-              >
-              <input
+                >Vị trí mong muốn *</label
+              ><input
                 type="text"
                 id="profileRole"
                 required
-                placeholder="Ví dụ: Ca sĩ, Designer..."
+                placeholder="Ví dụ: Coder, Designer..."
                 class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
@@ -441,7 +431,7 @@
               <input
                 type="text"
                 id="profileSkillInput"
-                placeholder="Ví dụ: Vocal, Piano, Photoshop..."
+                placeholder="Ví dụ: Tiếng Anh, Word, C++..."
                 class="flex-grow text-sm outline-none p-1.5"
               />
               <ul
@@ -453,24 +443,21 @@
 
           <div>
             <label class="block text-sm font-bold text-gray-700 mb-1.5"
-              >Link Portfolio / Sản phẩm (Nếu có)</label
-            >
-            <input
+              >Link Portfolio / Liên hệ</label
+            ><input
               type="url"
               id="profileLink"
               placeholder="https://..."
               class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
-
           <div>
             <label class="block text-sm font-bold text-gray-700 mb-1.5"
-              >Giới thiệu bản thân</label
-            >
-            <textarea
+              >Giới thiệu bản thân (Bio)</label
+            ><textarea
               id="profileBio"
               rows="3"
-              placeholder="Chia sẻ ngắn gọn về kinh nghiệm, phong cách nghệ thuật..."
+              placeholder="Chia sẻ ngắn gọn về kinh nghiệm, sở thích..."
               class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 custom-scrollbar"
             ></textarea>
           </div>
@@ -485,9 +472,9 @@
             </button>
             <button
               type="submit"
-              class="px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-extrabold transition shadow-md"
+              class="px-8 py-2.5 bg-[#ea580c] hover:bg-orange-600 text-white rounded-xl text-sm font-extrabold transition shadow-md"
             >
-              LƯU HỒ SƠ
+              <i class="fa-solid fa-floppy-disk mr-2"></i> LƯU HỒ SƠ
             </button>
           </div>
         </form>
@@ -523,20 +510,18 @@
             <div class="col-span-1 md:col-span-2">
               <label class="block text-sm font-bold text-gray-700 mb-1.5"
                 >Tên dự án *</label
-              >
-              <input
+              ><input
                 type="text"
                 id="newProjName"
                 required
-                placeholder="Ví dụ: Phim ngắn tốt nghiệp, Nhóm nhạc Acoustic..."
+                placeholder="Nhập tên đề tài / dự án..."
                 class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"
               />
             </div>
             <div>
               <label class="block text-sm font-bold text-gray-700 mb-1.5"
-                >Hạn chót tuyển (Deadline) *</label
-              >
-              <input
+                >Hạn chót ứng tuyển *</label
+              ><input
                 type="date"
                 id="projectDeadline"
                 required
@@ -548,19 +533,18 @@
           <div>
             <label class="block text-sm font-bold text-gray-700 mb-1.5"
               >Mô tả dự án *</label
-            >
-            <textarea
+            ><textarea
               id="projectDesc"
               rows="4"
               required
-              placeholder="Yêu cầu cụ thể, mục tiêu dự án, quyền lợi thành viên..."
+              placeholder="Gợi ý: Dự án giải quyết bài toán gì? Trách nhiệm của từng vai trò?..."
               class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 custom-scrollbar"
             ></textarea>
           </div>
 
           <div>
             <label class="block text-sm font-bold text-gray-700 mb-1.5"
-              >Kỹ năng dự án cần *</label
+              >Kỹ năng dự án yêu cầu *</label
             >
             <div
               id="projectSkillContainer"
@@ -569,7 +553,7 @@
               <input
                 type="text"
                 id="projectSkillInput"
-                placeholder="Nhập kỹ năng và nhấn Enter..."
+                placeholder="Thêm kỹ năng..."
                 class="flex-grow text-sm outline-none p-1 bg-transparent"
               />
               <ul
@@ -582,12 +566,12 @@
           <div class="bg-gray-50 p-6 rounded-2xl border border-gray-100">
             <div class="flex items-center justify-between mb-4">
               <label class="block text-sm font-bold text-blue-800"
-                >Cần tìm các vị trí (Vai trò) *</label
+                >Các vị trí cần tuyển *</label
               >
               <button
                 type="button"
                 onclick="addRoleRow()"
-                class="text-xs bg-blue-100 text-blue-700 font-bold px-3 py-1 rounded-lg hover:bg-blue-200 transition"
+                class="text-xs bg-white text-blue-600 font-bold px-3 py-1.5 rounded border border-blue-200 hover:bg-blue-50 transition"
               >
                 <i class="fa-solid fa-plus mr-1"></i>Thêm vị trí
               </button>
@@ -597,22 +581,14 @@
               class="space-y-3 custom-scrollbar max-h-60 overflow-y-auto pr-2"
             ></div>
             <datalist id="roleList">
-              <option>Ca sĩ chính</option>
-              <option>Rapper</option>
-              <option>Guitarist</option>
-              <option>Pianist</option>
-              <option>Trống</option>
-              <option>Đạo diễn</option>
-              <option>Biên kịch</option>
-              <option>Quay phim</option>
-              <option>Diễn viên chính</option>
-              <option>Biên đạo múa</option>
-              <option>Hội họa</option>
-              <option>Thiết kế Đồ họa</option>
-              <option>Thiết kế Thời trang</option>
-              <option>Marketing</option>
-              <option>Quản lý nhân sự</option>
-              <option>Kế toán</option>
+              <option>Frontend Developer</option>
+              <option>Backend Developer</option>
+              <option>UI/UX Designer</option>
+              <option>Marketing Specialist</option>
+              <option>Kế toán / Tài chính</option>
+              <option>Phiên dịch viên</option>
+              <option>Nghiên cứu Nông nghiệp</option>
+              <option>Bác sĩ thú y hỗ trợ</option>
             </datalist>
           </div>
 
@@ -660,8 +636,7 @@
           <div>
             <label class="block text-sm font-bold text-gray-700 mb-1.5"
               >Vị trí ứng tuyển *</label
-            >
-            <select
+            ><select
               id="applyRoleSelect"
               required
               class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer text-gray-700"
@@ -670,11 +645,10 @@
           <div>
             <label class="block text-sm font-bold text-gray-700 mb-1.5"
               >Lời nhắn đến Leader</label
-            >
-            <textarea
+            ><textarea
               id="applyMessage"
               rows="4"
-              placeholder="Giới thiệu ngắn gọn về bản thân và mong muốn góp sức cho dự án..."
+              placeholder="Giới thiệu ngắn gọn về bản thân..."
               class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 custom-scrollbar"
             ></textarea>
           </div>
@@ -684,9 +658,8 @@
               onclick="closeApplyModal()"
               class="px-6 py-2.5 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-100 transition"
             >
-              Hủy
-            </button>
-            <button
+              Hủy</button
+            ><button
               type="submit"
               class="px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-extrabold transition shadow-md"
             >
@@ -794,9 +767,6 @@
         apiKey: "AIzaSyDZckttPdycFw2zDsA4Zxbvj8EGRtoFHoU",
         authDomain: "unicollab-e81c0.firebaseapp.com",
         projectId: "unicollab-e81c0",
-        storageBucket: "unicollab-e81c0.firebasestorage.app",
-        messagingSenderId: "983588473001",
-        appId: "1:983588473001:web:0708bc4fe827e388f181b8",
       };
 
       const app = initializeApp(firebaseConfig);
@@ -813,51 +783,49 @@
 
       const defaultProjects = [
         {
-          title: "Band nhạc dân tộc hiện đại 'Hồn Việt'",
-          category: "Âm nhạc",
+          title: "Website bán Nông sản sạch NAU",
+          category: "Công nghệ thông tin",
           roles: [
-            { role: "Sáo trúc", count: 1 },
-            { role: "Phối khí", count: 1 },
+            { role: "Frontend", count: 2 },
+            { role: "Marketing", count: 1 },
           ],
           deadline: "15/05/2026",
           description:
-            "Kết hợp nhạc cụ truyền thống với EDM. Cần tìm đồng đội cùng chí hướng tại Khoa Âm nhạc.",
-          skills: ["Sáo trúc", "FL Studio", "Biểu diễn"],
+            "Xây dựng website thương mại điện tử kết nối bà con nông dân và người dùng.",
+          skills: ["React", "Bán hàng"],
           leaderName: "Trần Thế Phong",
           leaderInitials: "P",
           leaderAvatar: "",
           isOwner: false,
           currentMembers: 2,
-          slotsNeeded: 2,
+          slotsNeeded: 3,
         },
         {
-          title: "Vở kịch tốt nghiệp 'Mùa hè rực rỡ'",
-          category: "Sân khấu",
-          roles: [{ role: "Diễn viên chính (Nữ)", count: 1 }],
+          title: "Dự án Nông nghiệp tuần hoàn",
+          category: "Nông nghiệp - Thú y",
+          roles: [
+            { role: "Nghiên cứu giống", count: 1 },
+            { role: "Kế toán", count: 1 },
+          ],
           deadline: "20/06/2026",
-          description: "Dự án Khoa SK-ĐA & Múa. Tìm bạn diễn nữ.",
-          skills: ["Diễn xuất"],
+          description:
+            "Phát triển mô hình trồng rau thủy canh kết hợp nuôi cá.",
+          skills: ["Sinh học", "Excel"],
           leaderName: "Lâm Thị B",
           leaderInitials: "B",
           leaderAvatar: "",
           isOwner: false,
-          currentMembers: 5,
-          slotsNeeded: 1,
+          currentMembers: 1,
+          slotsNeeded: 2,
         },
       ];
 
       document.addEventListener("DOMContentLoaded", async () => {
         const savedUser = localStorage.getItem("userProfileData");
-        if (!savedUser) {
-          window.location.href = "index.html";
-          return;
-        }
+        if (!savedUser) return (window.location.href = "index.html");
         const localData = JSON.parse(savedUser);
-        if (localData.role === "teacher") {
-          window.location.href = "dashboard.html";
-          return;
-        }
-
+        if (localData.role === "teacher")
+          return (window.location.href = "dashboard.html");
         window.loggedInUserId = localData.id;
 
         try {
@@ -869,11 +837,8 @@
             window.loggedInUserName = fbUser.name;
             window.loggedInUserAvatarBase64 = fbUser.avatarBase64 || "";
             if (fbUser.avatarBase64) window.hasCompletedProfile = true;
-          } else {
-            window.loggedInUserName = localData.name;
-          }
+          } else window.loggedInUserName = localData.name;
         } catch (e) {
-          console.error(e);
           window.loggedInUserName = localData.name;
         }
 
@@ -886,15 +851,14 @@
           avatarEl.innerText = window.loggedInUserName.charAt(0).toUpperCase();
         }
 
-        if (window.hasCompletedProfile) {
+        if (window.hasCompletedProfile)
           document
             .getElementById("profileReminderBanner")
             .classList.add("hidden");
-        } else {
+        else
           document
             .getElementById("profileReminderBanner")
             .classList.remove("hidden");
-        }
 
         try {
           const projSnap = await getDocs(collection(db, "projects"));
@@ -902,7 +866,7 @@
           const appSnap = await getDocs(collection(db, "applications"));
           window.globalApps = appSnap.docs.map((doc) => doc.data());
         } catch (e) {
-          console.error("Lỗi Firebase:", e);
+          console.error(e);
         }
 
         window.filterProjects();
@@ -910,7 +874,6 @@
         window.updateAppliedCountMenu();
       });
 
-      // --- CÁC HÀM UI ---
       window.updateAppliedCountMenu = function () {
         const count = window.globalApps.filter(
           (app) => app.applicantId === window.loggedInUserId,
@@ -927,6 +890,23 @@
         const cat = document.getElementById("filterCategory").value;
         let filtered = [...window.customProjects, ...defaultProjects];
 
+        // 1. LỌC ẨN CÁC DỰ ÁN ĐÃ ĐÓNG (ĐỦ NGƯỜI) - Theo yêu cầu
+        filtered = filtered.filter((p) => {
+          let totalSlotsCount = p.slotsNeeded || 0;
+          if (p.roles && p.roles.length > 0)
+            totalSlotsCount = p.roles.reduce(
+              (sum, r) => sum + parseInt(r.count),
+              0,
+            );
+          let currentMems = p.currentMembers || 1;
+          return (
+            currentMems < totalSlotsCount ||
+            totalSlotsCount === 0 ||
+            (p.isOwner && p.leaderName === window.loggedInUserName)
+          );
+        });
+
+        // 2. Lọc Từ khóa & Danh mục
         if (keyword)
           filtered = filtered.filter(
             (p) =>
@@ -944,7 +924,7 @@
         const grid = document.getElementById("projectGrid");
         grid.innerHTML = "";
         if (filtered.length === 0)
-          grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500">Không tìm thấy kết quả.</div>`;
+          grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500">Không tìm thấy dự án phù hợp.</div>`;
         else filtered.forEach((p) => window.renderProjectCard(p));
       };
 
@@ -977,9 +957,12 @@
 
         let actionButton = "";
         if (p.isOwner && p.leaderName === window.loggedInUserName) {
-          actionButton = `<div class="flex space-x-2"><button onclick="editProject('${p.title}', event)" class="bg-yellow-50 text-yellow-600 w-9 h-9 rounded-full flex items-center justify-center"><i class="fa-solid fa-pen"></i></button><button onclick="deleteProject('${p.title}', event)" class="bg-red-50 text-red-500 w-9 h-9 rounded-full flex items-center justify-center"><i class="fa-solid fa-trash-can"></i></button><button onclick="window.location.href='kanban.html'" class="bg-white border-2 border-blue-600 text-blue-600 font-bold py-1.5 px-4 rounded-full text-sm">Quản lý</button></div>`;
+          actionButton = `<div class="flex space-x-2"><button onclick="editProject('${p.title}', event)" class="bg-yellow-50 text-yellow-600 w-9 h-9 rounded-full flex items-center justify-center"><i class="fa-solid fa-pen"></i></button><button onclick="deleteProject('${p.title}', event)" class="bg-red-50 text-red-500 w-9 h-9 rounded-full flex items-center justify-center"><i class="fa-solid fa-trash-can"></i></button><button onclick="window.location.href='kanban.html'" class="bg-white border-2 border-blue-600 text-blue-600 font-bold py-1.5 px-4 rounded-full text-sm">Dự án của bạn</button></div>`;
         } else if (myApp) {
-          actionButton = `<button class="bg-gray-100 text-gray-500 font-bold py-2 px-6 rounded-full text-sm cursor-not-allowed">Đã nộp đơn</button>`;
+          if (myApp.status === "accepted")
+            actionButton = `<button onclick="window.location.href='kanban.html'" class="bg-emerald-500 text-white font-bold py-2 px-6 rounded-full text-sm shadow-md"><i class="fa-solid fa-check mr-1"></i> Đã vào Nhóm</button>`;
+          else
+            actionButton = `<button class="bg-gray-100 text-gray-500 font-bold py-2 px-6 rounded-full text-sm cursor-not-allowed">Đã nộp đơn</button>`;
         } else if (isFull) {
           actionButton = `<button class="bg-gray-100 text-red-400 font-bold py-2 px-6 rounded-full text-sm cursor-not-allowed">Đủ người</button>`;
         } else {
@@ -1004,7 +987,46 @@
         document.getElementById("projectGrid").appendChild(card);
       };
 
-      // --- KẾT NỐI FIREBASE CRUD ---
+      // TỐI ƯU ẢNH TRÁNH LỖI OVERQUOTA CỦA FIREBASE
+      window.previewAvatar = function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.createElement("canvas");
+            const MAX_WIDTH = 250;
+            const MAX_HEIGHT = 250;
+            let width = img.width;
+            let height = img.height;
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.6); // Ép chất lượng 60%
+            document.getElementById("avatarPreview").src = dataUrl;
+            document.getElementById("avatarPreview").classList.remove("hidden");
+            document
+              .querySelector("#avatarPreviewContainer i")
+              .classList.add("hidden");
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      };
+
       window.submitProfile = async function (e) {
         e.preventDefault();
         const name = document.getElementById("profileFullName").value.trim();
@@ -1014,15 +1036,11 @@
         const link = document.getElementById("profileLink").value.trim();
         const bio = document.getElementById("profileBio").value.trim();
 
-        if (profileSkills.length === 0) {
-          alert("⚠️ Vui lòng chọn ít nhất 1 kỹ năng!");
-          return;
-        }
+        if (profileSkills.length === 0)
+          return alert("⚠️ Vui lòng chọn ít nhất 1 kỹ năng!");
         const imgEl = document.getElementById("avatarPreview");
-        if (imgEl.classList.contains("hidden")) {
-          alert("⚠️ Bắt buộc tải lên ảnh đại diện!");
-          return;
-        }
+        if (imgEl.classList.contains("hidden"))
+          return alert("⚠️ Bắt buộc tải lên ảnh đại diện hình thay chữ!");
 
         try {
           await updateDoc(doc(db, "users", window.loggedInUserId), {
@@ -1044,9 +1062,8 @@
           });
           alert("✅ Cập nhật hồ sơ thành công!");
           location.reload();
-        } catch (e) {
-          console.error(e);
-          alert("Lỗi mạng! Vui lòng thử lại.");
+        } catch (err) {
+          alert("Lỗi mạng! Thử lại bằng ảnh kích thước nhỏ hơn nhé.");
         }
       };
 
@@ -1077,8 +1094,43 @@
                 count: rCount,
               });
               totalSlots += rCount;
-              let khoaName = rMajor.split(" - ")[0].split("Khoa ")[1];
-              categoriesSet.add(khoaName || "Đa ngành");
+              // XÁC ĐỊNH LĨNH VỰC DỰA THEO NGÀNH
+              let group = "";
+              if (["Công nghệ thông tin"].includes(rMajor))
+                group = "Công nghệ thông tin";
+              else if (
+                [
+                  "Kế toán",
+                  "Kinh tế",
+                  "Marketing",
+                  "Quản trị kinh doanh",
+                  "Tài chính - Ngân hàng",
+                  "Logistics và Quản lý chuỗi cung ứng",
+                  "Thương mại điện tử",
+                  "Thạc sĩ Quản trị kinh doanh",
+                  "Thạc sĩ Quản lý kinh tế",
+                ].includes(rMajor)
+              )
+                group = "Kinh tế - Quản trị";
+              else if (
+                [
+                  "Nông nghiệp công nghệ cao",
+                  "Quản lý đất đai",
+                  "Thú y (Bác sĩ thú y)",
+                ].includes(rMajor)
+              )
+                group = "Nông nghiệp - Thú y";
+              else if (
+                [
+                  "Ngôn ngữ Anh",
+                  "Ngôn ngữ Trung",
+                  "Sư phạm Khoa học Tự nhiên",
+                  "Sư phạm Tiểu học",
+                  "Cao đẳng Mầm non",
+                ].includes(rMajor)
+              )
+                group = "Ngôn ngữ - Sư phạm";
+              if (group) categoriesSet.add(group);
             }
           });
 
@@ -1103,14 +1155,12 @@
             status: "pending",
           };
 
-          if (window.editingProjectTitle) {
+          if (window.editingProjectTitle)
             await deleteDoc(doc(db, "projects", window.editingProjectTitle));
-          }
           await setDoc(doc(db, "projects", projName), newProjectObj);
           alert(`🎉 TẠO DỰ ÁN THÀNH CÔNG VÀ ĐÃ ĐỒNG BỘ!`);
           window.location.href = "kanban.html";
         } catch (error) {
-          console.error(error);
           alert("Lỗi lưu dự án!");
         }
       };
@@ -1146,47 +1196,6 @@
           await deleteDoc(doc(db, "projects", title));
           location.reload();
         }
-      };
-
-      // CƠ CHẾ NÉN ẢNH CANVAS GIÚP TỐI ƯU DUNG LƯỢNG CHO FIREBASE
-      window.previewAvatar = function (e) {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function (event) {
-          const img = new Image();
-          img.onload = function () {
-            const canvas = document.createElement("canvas");
-            const MAX_WIDTH = 300;
-            const MAX_HEIGHT = 300;
-            let width = img.width;
-            let height = img.height;
-            if (width > height) {
-              if (width > MAX_WIDTH) {
-                height *= MAX_WIDTH / width;
-                width = MAX_WIDTH;
-              }
-            } else {
-              if (height > MAX_HEIGHT) {
-                width *= MAX_HEIGHT / height;
-                height = MAX_HEIGHT;
-              }
-            }
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, width, height);
-            const dataUrl = canvas.toDataURL("image/jpeg", 0.7); // Nén jpeg 70% chất lượng
-
-            document.getElementById("avatarPreview").src = dataUrl;
-            document.getElementById("avatarPreview").classList.remove("hidden");
-            document
-              .querySelector("#avatarPreviewContainer i")
-              .classList.add("hidden");
-          };
-          img.src = event.target.result;
-        };
-        reader.readAsDataURL(file);
       };
 
       window.openProfileModal = async function () {
@@ -1375,41 +1384,30 @@
         row.className =
           "role-row flex flex-col md:flex-row gap-3 items-end fade-in-section mb-2";
         row.innerHTML = `
-            <div class="w-full md:w-2/5 relative">
-                <input type="text" list="roleList" required placeholder="Vai trò (VD: Ca sĩ, Designer...)" class="role-name w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 transition">
-            </div>
+            <div class="w-full md:w-2/5 relative"><input type="text" list="roleList" required placeholder="Vai trò (VD: IT, Kế toán...)" class="role-name w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"></div>
             <div class="w-full md:w-2/5">
                 <select required class="role-major w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none cursor-pointer text-gray-600 focus:ring-1 focus:ring-blue-500 transition">
                     <option value="" disabled selected hidden>Ngành/Khoa...</option>
-                    <optgroup label="Khoa Âm nhạc"><option>Khoa Âm nhạc - Sư phạm Âm nhạc</option><option>Khoa Âm nhạc - Thanh nhạc</option><option>Khoa Âm nhạc - Biểu diễn Nhạc cụ truyền thống</option><option>Khoa Âm nhạc - Nhạc Jazz</option></optgroup>
-                    <optgroup label="Khoa Sân khấu - Điện ảnh & Múa"><option>Khoa SK-ĐA & Múa - Đạo diễn SK</option><option>Khoa SK-ĐA & Múa - Diễn viên SK Kịch hát</option><option>Khoa SK-ĐA & Múa - Biên đạo Múa</option></optgroup>
-                    <optgroup label="Khoa Mỹ thuật"><option>Khoa Mỹ thuật - Hội họa</option><option>Khoa Mỹ thuật - Sư phạm Mỹ thuật</option><option>Khoa Mỹ thuật - Thiết kế Thời trang</option><option>Khoa Mỹ thuật - Thiết kế Đồ họa</option></optgroup>
-                    <optgroup label="Khoa Văn hóa & Du lịch"><option>Khoa VH & Du lịch - Quản lý Văn hóa</option><option>Khoa VH & Du lịch - Du lịch</option><option>Khoa VH & Du lịch - Việt Nam học</option></optgroup>
-                    <optgroup label="Khoa Công nghệ truyền thông & CNTT"><option>Khoa CNTT - Công nghệ thông tin</option><option>Khoa CNTT - Công nghệ truyền thông</option><option>Khoa CNTT - Quay phim</option></optgroup>
-                    <optgroup label="Khoa KT & QL"><option>Khoa KT & QL - Kế toán</option><option>Khoa KT & QL - Quản trị kinh doanh</option></optgroup>
-                    <option value="Đa ngành">Đa ngành</option>
+                    <optgroup label="Công nghệ thông tin"><option>Công nghệ thông tin</option></optgroup>
+                    <optgroup label="Kinh tế & Quản trị"><option>Kế toán</option><option>Kinh tế</option><option>Marketing</option><option>Quản trị kinh doanh</option><option>Tài chính - Ngân hàng</option><option>Logistics và Quản lý chuỗi cung ứng</option><option>Thương mại điện tử</option><option>Thạc sĩ Quản trị kinh doanh</option><option>Thạc sĩ Quản lý kinh tế</option></optgroup>
+                    <optgroup label="Nông nghiệp & Thú y"><option>Nông nghiệp công nghệ cao</option><option>Quản lý đất đai</option><option>Thú y (Bác sĩ thú y)</option></optgroup>
+                    <optgroup label="Ngôn ngữ & Sư phạm"><option>Ngôn ngữ Anh</option><option>Ngôn ngữ Trung</option><option>Sư phạm Khoa học Tự nhiên</option><option>Sư phạm Tiểu học</option><option>Cao đẳng Mầm non</option></optgroup>
                 </select>
             </div>
-            <div class="w-full md:w-1/5 flex gap-2">
-                <input type="number" min="1" required placeholder="SL" class="role-count w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 transition">
-                <button type="button" onclick="this.parentElement.parentElement.remove()" class="w-10 shrink-0 bg-red-50 text-red-500 rounded-xl border border-red-100 hover:bg-red-500 hover:text-white transition flex items-center justify-center"><i class="fa-solid fa-trash-can text-sm"></i></button>
-            </div>`;
+            <div class="w-full md:w-1/5 flex gap-2"><input type="number" min="1" required placeholder="SL" class="role-count w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"><button type="button" onclick="this.parentElement.parentElement.remove()" class="w-10 shrink-0 bg-red-50 text-red-500 rounded-xl border border-red-100 hover:bg-red-500 hover:text-white transition flex items-center justify-center"><i class="fa-solid fa-trash-can text-sm"></i></button></div>`;
         container.appendChild(row);
       };
 
       const predefinedSkills = [
-        "Vocal",
-        "Piano",
-        "Sáo trúc",
-        "Guitar",
-        "Diễn xuất",
-        "Múa",
-        "Sơn dầu",
+        "Tiếng Anh",
+        "Word",
+        "Excel",
         "Photoshop",
-        "Figma",
+        "Giao tiếp",
         "Marketing",
-        "Kế toán",
-        "Quay phim",
+        "C++",
+        "Java",
+        "Phân tích số liệu",
       ];
       window.profileSkills = [];
       window.projectSkills = [];
@@ -1547,12 +1545,18 @@
         localStorage.removeItem("userProfileData");
         window.location.href = "index.html";
       };
+
+      // HIỂN THỊ NÚT DỰ ÁN CHO CẢ LEADER & THÀNH VIÊN ĐƯỢC DUYỆT
       window.updateLeaderVisibility = function () {
-        if (
-          window.customProjects.some(
-            (p) => p.leaderName === window.loggedInUserName && p.isOwner,
-          )
-        )
+        const isLeader = window.customProjects.some(
+          (p) => p.leaderName === window.loggedInUserName && p.isOwner,
+        );
+        const isMember = window.globalApps.some(
+          (app) =>
+            app.applicantId === window.loggedInUserId &&
+            app.status === "accepted",
+        );
+        if (isLeader || isMember)
           document.getElementById("leaderAreaBtn").classList.remove("hidden");
       };
 
