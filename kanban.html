@@ -122,20 +122,10 @@
           </div>
         </div>
         <div class="flex items-center space-x-5">
-          <button
-            onclick="showNotifications()"
-            class="text-gray-400 hover:text-white transition relative group"
-          >
-            <i class="fa-regular fa-bell text-xl"></i>
-            <span
-              id="bellBadge"
-              class="absolute -top-1 -right-2 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-gray-900 hidden animate-pulse"
-              >0</span
-            >
-          </button>
           <div
             class="flex items-center border border-gray-700 py-1.5 px-2 rounded-full bg-gray-800 shadow-sm cursor-pointer hover:bg-gray-700 transition"
             onclick="leaderLogout()"
+            title="Đăng xuất"
           >
             <div
               id="leaderAvatar"
@@ -162,12 +152,12 @@
         <div
           class="flex flex-col sm:flex-row sm:items-center gap-4 w-full md:w-1/2"
         >
-          <div class="w-full sm:w-auto">
+          <div class="w-full sm:w-auto relative">
             <div class="flex items-center space-x-3 mb-1">
               <span
                 id="projCategory"
                 class="text-xs font-bold text-[#2563eb] bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100 uppercase"
-                >Danh mục</span
+                >Đang tải...</span
               >
               <span
                 id="roleBadge"
@@ -175,36 +165,36 @@
                 >...</span
               >
             </div>
-            <h2
-              id="projTitle"
-              class="text-2xl sm:text-3xl font-extrabold text-gray-800 line-clamp-1"
-            >
-              Đang tải tên dự án...
-            </h2>
-          </div>
-          <div
-            class="sm:ml-6 pl-0 sm:pl-6 border-l-0 sm:border-l border-gray-200 flex items-center shrink-0"
-          >
-            <p
-              class="text-xs font-bold text-gray-400 uppercase tracking-wider mr-3"
-            >
-              Nhóm
-            </p>
-            <div
-              class="flex -space-x-2 overflow-hidden p-1"
-              id="teamMembersList"
-            ></div>
+            <div class="relative inline-block">
+              <select
+                id="projectSwitcher"
+                onchange="changeProject(this.value)"
+                class="text-2xl sm:text-3xl font-extrabold text-gray-800 bg-transparent border-none outline-none cursor-pointer hover:bg-gray-50 p-1 -ml-1 rounded-lg transition appearance-none pr-8 relative z-10 w-full max-w-[400px] truncate hidden"
+              ></select>
+              <h2
+                id="projTitleEmpty"
+                class="text-2xl sm:text-3xl font-extrabold text-gray-400"
+              >
+                Chưa tham gia dự án nào
+              </h2>
+              <i
+                id="switcherIcon"
+                class="fa-solid fa-chevron-down absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none hidden"
+              ></i>
+            </div>
           </div>
         </div>
 
         <div
           class="flex flex-wrap items-center justify-end gap-3 w-full md:w-auto shrink-0"
         >
-          <div class="flex bg-gray-100 p-1 rounded-xl w-full sm:w-auto">
+          <div
+            class="flex bg-gray-100 p-1 rounded-xl w-full sm:w-auto overflow-x-auto hide-scrollbar"
+          >
             <button
               onclick="switchTab('board')"
               id="tab-board"
-              class="tab-btn tab-active"
+              class="tab-btn tab-active whitespace-nowrap"
             >
               <i
                 class="fa-solid fa-table-columns mr-1.5 text-blue-600 hidden sm:inline"
@@ -212,9 +202,17 @@
               Kanban
             </button>
             <button
+              onclick="switchTab('members')"
+              id="tab-members"
+              class="tab-btn whitespace-nowrap"
+            >
+              <i class="fa-solid fa-address-book mr-1.5 hidden sm:inline"></i>
+              Thành viên
+            </button>
+            <button
               onclick="switchTab('candidates')"
               id="tab-candidates"
-              class="tab-btn relative"
+              class="tab-btn relative whitespace-nowrap"
             >
               <i class="fa-solid fa-users mr-1.5 hidden sm:inline"></i> Ứng
               viên<span
@@ -226,7 +224,7 @@
             <button
               onclick="switchTab('settings')"
               id="tab-settings"
-              class="tab-btn"
+              class="tab-btn whitespace-nowrap"
             >
               <i class="fa-solid fa-gear mr-1.5 hidden sm:inline"></i> Cài đặt
             </button>
@@ -260,7 +258,7 @@
           <button
             id="addCardBtnMain"
             onclick="window.openTaskModal('col-todo')"
-            class="bg-white border text-gray-600 px-4 py-2 rounded-xl text-sm font-bold shadow-sm flex items-center"
+            class="bg-white border text-gray-600 px-4 py-2 rounded-xl text-sm font-bold shadow-sm flex items-center hidden"
           >
             <i class="fa-solid fa-plus mr-1.5"></i> Việc mới
           </button>
@@ -268,6 +266,32 @@
         <div
           class="flex-1 flex gap-5 overflow-x-auto pb-4 custom-scrollbar items-start"
           id="kanbanContainer"
+        ></div>
+      </div>
+
+      <div
+        id="content-members"
+        class="hidden h-full flex flex-col p-6 max-w-[1000px] mx-auto w-full overflow-y-auto custom-scrollbar"
+      >
+        <div
+          class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4"
+        >
+          <div>
+            <h2 class="text-2xl font-bold text-gray-800">
+              Danh sách Thành viên
+            </h2>
+          </div>
+          <div class="bg-gray-100 rounded-lg p-1 flex text-sm font-bold">
+            <button
+              class="px-4 py-1.5 bg-white text-[#2563eb] shadow-sm rounded-md"
+            >
+              Tổng: <span id="memberCount">0</span>
+            </button>
+          </div>
+        </div>
+        <div
+          id="fullMemberList"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4"
         ></div>
       </div>
 
@@ -412,7 +436,7 @@
             </h3>
             <button
               onclick="closeChatModal()"
-              class="w-8 h-8 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center"
+              class="w-8 h-8 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition"
             >
               <i class="fa-solid fa-xmark text-lg"></i>
             </button>
@@ -431,10 +455,11 @@
                 id="chatInputMessage"
                 placeholder="Soạn tin nhắn..."
                 autocomplete="off"
-                class="flex-1 bg-transparent border-none px-2 py-2 text-sm outline-none text-gray-700"
-              /><button
+                class="flex-1 bg-transparent border-none px-4 py-2 text-sm outline-none text-gray-700"
+              />
+              <button
                 type="submit"
-                class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center"
+                class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition"
               >
                 <i class="fa-solid fa-paper-plane"></i>
               </button>
@@ -459,12 +484,24 @@
             required
             placeholder="Tên công việc cần làm..."
             class="w-full px-4 py-3 border rounded-xl mb-4 text-sm focus:ring-1 focus:ring-blue-500 outline-none"
-          /><button
-            type="submit"
-            class="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700"
-          >
-            Tạo thẻ
-          </button>
+          />
+          <div class="flex gap-2">
+            <button
+              type="button"
+              onclick="
+                document.getElementById('taskModal').classList.add('hidden')
+              "
+              class="flex-1 py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200"
+            >
+              Hủy
+            </button>
+            <button
+              type="submit"
+              class="flex-1 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700"
+            >
+              Tạo thẻ
+            </button>
+          </div>
         </form>
       </div>
     </div>
@@ -479,6 +516,7 @@
         updateDoc,
         collection,
         getDocs,
+        onSnapshot,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -495,76 +533,122 @@
       window.globalApps = [];
       window.loggedInUserId = "";
       window.loggedInUserName = "";
+      window.loggedInUserAvatar = "";
       window.isLeader = false;
       window.chatHistory = { team: [] };
+      window.myProjectsList = []; // Danh sách dự án tôi tham gia
 
-      // ĐỒNG BỘ DATA FIREBASE CHO KANBAN
       document.addEventListener("DOMContentLoaded", async () => {
         const savedUser = JSON.parse(localStorage.getItem("userProfileData"));
         if (!savedUser) return (window.location.href = "index.html");
+
         window.loggedInUserId = savedUser.id;
         window.loggedInUserName = savedUser.name;
-        document.getElementById("leaderAvatar").innerText =
-          window.loggedInUserName.charAt(0).toUpperCase();
+        window.loggedInUserAvatar = savedUser.avatarBase64 || "";
+
+        if (window.loggedInUserAvatar) {
+          document.getElementById("leaderAvatar").innerHTML =
+            `<img src="${window.loggedInUserAvatar}" class="w-full h-full object-cover">`;
+        } else {
+          document.getElementById("leaderAvatar").innerText =
+            window.loggedInUserName.charAt(0).toUpperCase();
+        }
         document.getElementById("leaderName").innerText =
           window.loggedInUserName;
 
         try {
+          const appSnap = await getDocs(collection(db, "applications"));
+          const allApps = appSnap.docs.map((d) => d.data());
+
           const projSnap = await getDocs(collection(db, "projects"));
           const allProjects = projSnap.docs.map((d) => d.data());
-          window.myProject = allProjects.find(
-            (p) => p.leaderId === window.loggedInUserId && p.isOwner === true,
-          );
 
-          if (window.myProject) {
-            window.isLeader = true;
-          } else {
-            const appSnap = await getDocs(collection(db, "applications"));
-            const apps = appSnap.docs.map((d) => d.data());
-            const myApp = apps.find(
-              (a) =>
-                a.applicantId === window.loggedInUserId &&
-                a.status === "accepted",
-            );
-            if (myApp) {
-              window.myProject = allProjects.find(
-                (p) => p.title === myApp.projectId,
+          // 1. TÌM TẤT CẢ DỰ ÁN MÀ TÔI LÀ LEADER HOẶC ĐÃ ĐƯỢC DUYỆT VÀO TEAM
+          window.myProjectsList = [];
+          allProjects.forEach((p) => {
+            if (p.leaderId === window.loggedInUserId && p.isOwner) {
+              window.myProjectsList.push({ ...p, isMyLeadership: true });
+            } else {
+              const myAcceptedApp = allApps.find(
+                (a) =>
+                  a.projectId === p.title &&
+                  a.applicantId === window.loggedInUserId &&
+                  a.status === "accepted",
               );
-              window.isLeader = false;
+              if (myAcceptedApp) {
+                window.myProjectsList.push({
+                  ...p,
+                  isMyLeadership: false,
+                  myRole: myAcceptedApp.role,
+                });
+              }
             }
-          }
+          });
 
-          if (window.myProject) {
-            window.currentProjTitle = window.myProject.title;
-            document.getElementById("projTitle").innerText =
-              window.myProject.title;
+          if (window.myProjectsList.length > 0) {
+            // Hiển thị Dropdown chọn dự án
+            const switcher = document.getElementById("projectSwitcher");
+            switcher.innerHTML = "";
+            window.myProjectsList.forEach((p) => {
+              switcher.innerHTML += `<option value="${p.title}">${p.title} ${p.isMyLeadership ? "(Leader)" : "(Thành viên)"}</option>`;
+            });
+            switcher.classList.remove("hidden");
+            document.getElementById("switcherIcon").classList.remove("hidden");
+            document.getElementById("projTitleEmpty").classList.add("hidden");
+
+            // Chọn dự án đang mở
+            let activeTitle =
+              localStorage.getItem("activeKanbanProject") ||
+              window.myProjectsList[0].title;
+            let pIndex = window.myProjectsList.findIndex(
+              (p) => p.title === activeTitle,
+            );
+            if (pIndex === -1) {
+              activeTitle = window.myProjectsList[0].title;
+              pIndex = 0;
+            }
+
+            switcher.value = activeTitle;
+            window.myProject = window.myProjectsList[pIndex];
+            window.currentProjTitle = activeTitle;
+            window.isLeader = window.myProject.isMyLeadership;
+
+            // Load thông tin dự án lên UI
             document.getElementById("projCategory").innerText =
               window.myProject.category || "Đa ngành";
             document.getElementById("chatGroupSidebarName").innerText =
               window.myProject.title;
-            document.getElementById("settingProjName").value =
-              window.myProject.title;
-            document.getElementById("settingProjDesc").value =
-              window.myProject.description;
-            document.getElementById("settingCategory").value =
-              window.myProject.category || "Đa ngành";
 
+            if (document.getElementById("settingProjName")) {
+              document.getElementById("settingProjName").value =
+                window.myProject.title;
+              document.getElementById("settingProjDesc").value =
+                window.myProject.description;
+              document.getElementById("settingCategory").value =
+                window.myProject.category || "Đa ngành";
+            }
+
+            // Gán members mặc định là leader
             window.teamMembers = [
               {
                 id: window.myProject.leaderId,
                 name: window.myProject.leaderName,
                 initial: window.myProject.leaderName.charAt(0).toUpperCase(),
+                avatar: window.myProject.leaderAvatar || "",
                 color: "green",
               },
             ];
 
             await loadTeamMembersFirebase();
-            await loadChatFirebase();
-            await loadBoardFirebase();
+            setupChatListener(); // CHAT REALTIME
+            setupKanbanListener(); // KANBAN REALTIME
 
             if (window.isLeader) {
               document.getElementById("roleBadge").innerHTML =
                 `<i class="fa-solid fa-crown mr-1.5"></i> Trưởng nhóm`;
+              document
+                .getElementById("addCardBtnMain")
+                .classList.remove("hidden");
               await loadApplicationsFirebase();
             } else {
               document.getElementById("roleBadge").innerHTML =
@@ -572,8 +656,7 @@
               applyPermissions();
             }
           } else {
-            document.getElementById("projTitle").innerText =
-              "Bạn chưa tham gia dự án nào.";
+            // Không có dự án nào
             applyPermissions();
           }
         } catch (e) {
@@ -581,13 +664,18 @@
         }
       });
 
+      // HÀM CHUYỂN ĐỔI DỰ ÁN
+      window.changeProject = function (projTitle) {
+        localStorage.setItem("activeKanbanProject", projTitle);
+        location.reload(); // Reload để reset lại dữ liệu listener
+      };
+
       function applyPermissions() {
         [
           "tab-candidates",
           "tab-settings",
-          "addColumnBtn",
-          "bellBadge",
           "addCardBtnMain",
+          "addColumnBtn",
         ].forEach((id) => {
           if (document.getElementById(id))
             document.getElementById(id).classList.add("hidden");
@@ -595,7 +683,7 @@
       }
 
       window.switchTab = function (tabName) {
-        ["board", "candidates", "settings"].forEach((id) => {
+        ["board", "members", "candidates", "settings"].forEach((id) => {
           const content = document.getElementById("content-" + id);
           const btn = document.getElementById("tab-" + id);
           if (content) content.classList.add("hidden");
@@ -607,7 +695,11 @@
         document.getElementById("tab-" + tabName).classList.add("tab-active");
       };
 
-      // BẢNG KANBAN
+      // =====================================
+      // KANBAN (KÉO THẢ & REALTIME)
+      // =====================================
+      window.isDragging = false; // Cờ chống lỗi giật màn hình khi đang kéo mà nhận update từ Firebase
+
       window.saveBoard = async function () {
         const container = document.getElementById("kanbanContainer");
         if (container && window.currentProjTitle) {
@@ -617,23 +709,23 @@
         }
       };
 
-      async function loadBoardFirebase() {
-        const container = document.getElementById("kanbanContainer");
-        try {
-          const docSnap = await getDoc(
-            doc(db, "kanban_boards", window.currentProjTitle),
-          );
-          if (docSnap.exists() && docSnap.data().html) {
-            container.innerHTML = docSnap.data().html;
-          } else {
-            renderDefaultBoard();
-          }
-          if (!document.getElementById("addColumnBtn") && window.isLeader) {
-            container.insertAdjacentHTML("beforeend", getAddColumnHTML());
-          }
-        } catch (error) {
-          renderDefaultBoard();
-        }
+      function setupKanbanListener() {
+        onSnapshot(
+          doc(db, "kanban_boards", window.currentProjTitle),
+          (docSnap) => {
+            const container = document.getElementById("kanbanContainer");
+            if (window.isDragging) return; // Nếu mình đang kéo thẻ, bỏ qua update từ mạng để khỏi giật
+
+            if (docSnap.exists() && docSnap.data().html) {
+              container.innerHTML = docSnap.data().html;
+            } else {
+              renderDefaultBoard();
+            }
+            if (!document.getElementById("addColumnBtn") && window.isLeader) {
+              container.insertAdjacentHTML("beforeend", getAddColumnHTML());
+            }
+          },
+        );
       }
 
       function renderDefaultBoard() {
@@ -678,6 +770,7 @@
 
       window.draggedItem = null;
       window.drag = function (e) {
+        window.isDragging = true;
         window.draggedItem = e.target;
         setTimeout(() => {
           window.draggedItem.classList.add("dragging");
@@ -699,6 +792,7 @@
         }
       };
       document.addEventListener("dragend", () => {
+        window.isDragging = false;
         if (window.draggedItem) window.draggedItem.classList.remove("dragging");
         document
           .querySelectorAll(".drag-over")
@@ -728,7 +822,9 @@
         window.saveBoard();
       };
 
-      // ĐỒNG BỘ ỨNG VIÊN
+      // =====================================
+      // ỨNG VIÊN & THÀNH VIÊN TEAM
+      // =====================================
       async function loadApplicationsFirebase() {
         try {
           const appSnap = await getDocs(collection(db, "applications"));
@@ -751,9 +847,6 @@
             .classList.toggle("hidden", pendingApps.length === 0);
           document.getElementById("candidateBadge").innerText =
             pendingApps.length;
-          document
-            .getElementById("bellBadge")
-            .classList.toggle("hidden", pendingApps.length === 0);
           document.getElementById("waitCount").innerText = pendingApps.length;
         }
         if (pendingApps.length > 0) {
@@ -781,18 +874,17 @@
             id: id,
             name: app.applicantName,
             initial: app.applicantName.charAt(0).toUpperCase(),
+            avatar: app.applicantAvatar || "",
             color: "indigo",
           });
 
-          // Trừ đi 1 slot trống của project
           let projDoc = await getDoc(
             doc(db, "projects", window.currentProjTitle),
           );
           if (projDoc.exists()) {
             let pData = projDoc.data();
-            let currentMems = pData.currentMembers || 1;
             await updateDoc(doc(db, "projects", window.currentProjTitle), {
-              currentMembers: currentMems + 1,
+              currentMembers: (pData.currentMembers || 1) + 1,
             });
           }
 
@@ -823,27 +915,49 @@
           if (docSnap.exists() && docSnap.data().members) {
             window.teamMembers = docSnap.data().members;
           }
-          document.getElementById("teamMembersList").innerHTML =
-            window.teamMembers
-              .map(
-                (m) =>
-                  `<div class="w-8 h-8 rounded-full ring-2 ring-white bg-${m.color || "blue"}-500 text-white flex items-center justify-center text-xs font-bold" title="${m.name}">${m.initial}</div>`,
-              )
-              .join("");
+          renderFullMemberList();
         } catch (error) {}
       }
 
-      // CHAT FIREBASE
-      async function loadChatFirebase() {
-        try {
-          const docSnap = await getDoc(
-            doc(db, "project_chats", window.currentProjTitle),
-          );
-          if (docSnap.exists() && docSnap.data().messages) {
-            window.chatHistory.team = docSnap.data().messages;
-          }
-        } catch (error) {}
+      function renderFullMemberList() {
+        document.getElementById("memberCount").innerText =
+          window.teamMembers.length;
+
+        const fullList = document.getElementById("fullMemberList");
+        if (fullList) {
+          fullList.innerHTML = window.teamMembers
+            .map((m) => {
+              let ava = m.avatar
+                ? `<img src="${m.avatar}" class="w-full h-full object-cover">`
+                : m.initial;
+              return `
+                  <div class="flex items-center gap-4 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                      <div class="w-12 h-12 rounded-full bg-${m.color || "blue"}-100 text-${m.color || "blue"}-600 flex items-center justify-center font-bold text-lg overflow-hidden border border-gray-100 shadow-inner">${ava}</div>
+                      <div>
+                          <h4 class="font-bold text-gray-800">${m.name}</h4>
+                          <p class="text-xs ${m.id === window.myProject.leaderId ? "text-orange-500 font-bold" : "text-gray-500"}">${m.id === window.myProject.leaderId ? '<i class="fa-solid fa-crown mr-1"></i> Trưởng nhóm' : "Thành viên"}</p>
+                      </div>
+                  </div>`;
+            })
+            .join("");
+        }
       }
+
+      // =====================================
+      // CHAT TEAM (REAL-TIME SNAPSHOT)
+      // =====================================
+      function setupChatListener() {
+        onSnapshot(
+          doc(db, "project_chats", window.currentProjTitle),
+          (docSnap) => {
+            if (docSnap.exists() && docSnap.data().messages) {
+              window.chatHistory.team = docSnap.data().messages;
+              renderChatMessages();
+            }
+          },
+        );
+      }
+
       window.sendChatMessage = async function (e) {
         e.preventDefault();
         const input = document.getElementById("chatInputMessage");
@@ -853,6 +967,7 @@
           ("0" + new Date().getHours()).slice(-2) +
           ":" +
           ("0" + new Date().getMinutes()).slice(-2);
+
         window.chatHistory.team.push({
           senderId: window.loggedInUserId,
           senderName: window.loggedInUserName,
@@ -861,22 +976,23 @@
           time: time,
         });
         input.value = "";
-        renderChatMessages();
+
         try {
           await setDoc(doc(db, "project_chats", window.currentProjTitle), {
             messages: window.chatHistory.team,
           });
         } catch (error) {}
       };
+
       function renderChatMessages() {
         const area = document.getElementById("chatMessagesArea");
         area.innerHTML = "";
         window.chatHistory.team.forEach((m) => {
           const isMe = m.senderId === window.loggedInUserId;
           if (isMe)
-            area.innerHTML += `<div class="flex items-end gap-2 justify-end mb-5"><div class="flex flex-col items-end"><span class="text-[11px] text-gray-500 font-bold mb-1">Bạn</span><div class="bg-blue-600 text-white p-3 rounded-xl rounded-br-none max-w-[85%] text-sm">${m.text}</div></div><div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0">${m.senderInitial}</div></div>`;
+            area.innerHTML += `<div class="flex items-end gap-2 justify-end mb-5"><div class="flex flex-col items-end"><span class="text-[11px] text-gray-500 font-bold mb-1">Bạn</span><div class="bg-blue-600 text-white py-2 px-3.5 rounded-2xl rounded-br-none max-w-[85%] text-sm shadow-sm">${m.text}</div></div><div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 border border-blue-200 shadow-sm">${m.senderInitial}</div></div>`;
           else
-            area.innerHTML += `<div class="flex items-end gap-2 mb-5"><div class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0">${m.senderInitial}</div><div class="flex flex-col items-start"><span class="text-[11px] text-gray-500 font-bold mb-1">${m.senderName}</span><div class="bg-white border text-gray-800 p-3 rounded-xl rounded-bl-none max-w-[85%] text-sm">${m.text}</div></div></div>`;
+            area.innerHTML += `<div class="flex items-end gap-2 mb-5"><div class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0 border border-gray-300 shadow-sm">${m.senderInitial}</div><div class="flex flex-col items-start"><span class="text-[11px] text-gray-500 font-bold mb-1">${m.senderName}</span><div class="bg-white border border-gray-200 text-gray-800 py-2 px-3.5 rounded-2xl rounded-bl-none max-w-[85%] text-sm shadow-sm">${m.text}</div></div></div>`;
         });
         area.scrollTop = area.scrollHeight;
       }
@@ -908,20 +1024,15 @@
       // SETTINGS
       window.saveProjectSettings = async function (e) {
         e.preventDefault();
-        const newName = document.getElementById("settingProjName").value;
-        const newDesc = document.getElementById("settingProjDesc").value;
-        const newCat = document.getElementById("settingCategory").value;
-
         try {
           await updateDoc(doc(db, "projects", window.currentProjTitle), {
-            title: newName,
-            description: newDesc,
-            category: newCat,
+            title: document.getElementById("settingProjName").value,
+            description: document.getElementById("settingProjDesc").value,
+            category: document.getElementById("settingCategory").value,
           });
           alert("Đã lưu thông tin mới!");
           location.reload();
         } catch (err) {
-          console.error(err);
           alert("Có lỗi xảy ra khi lưu thông tin.");
         }
       };
