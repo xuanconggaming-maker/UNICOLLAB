@@ -571,14 +571,13 @@
 
       window.handleLogin = async function (event) {
         event.preventDefault();
-        // THÊM LỆNH .TRIM() Ở MẬT KHẨU ĐỂ CHỐNG LỖI COPY DƯ DẤU CÁCH
+
         let accVal = document.getElementById("loginAccount").value.trim();
         const passVal = document.getElementById("loginPassword").value.trim();
         const errorDiv = document.getElementById("errorMsg");
 
         // ĐĂNG NHẬP MẶC ĐỊNH VÀO ADMIN TỐI CAO
         if (accVal.toLowerCase() === "admin" && passVal === "24442444aA@") {
-          // XÓA PHIÊN NGƯỜI DÙNG CŨ ĐỂ TRÁNH XUNG ĐỘT
           localStorage.removeItem("userProfileData");
           sessionStorage.setItem("isAdminAuthed", "true");
           window.location.href = "admin.html";
@@ -679,14 +678,13 @@
         }, 300);
       };
 
-      document.addEventListener("DOMContentLoaded", () => {
-        const savedUser = localStorage.getItem("userProfileData");
-        if (savedUser) {
-          const userData = JSON.parse(savedUser);
-          window.location.href =
-            userData.role === "student" ? "matching.html" : "dashboard.html";
-        }
-      });
+      // ĐOẠN NÀY ĐÃ ĐƯỢC CHUYỂN XUỐNG DƯỚI ĐỂ CHẠY NGAY LẬP TỨC
+      const savedUser = localStorage.getItem("userProfileData");
+      if (savedUser) {
+        const userData = JSON.parse(savedUser);
+        window.location.href =
+          userData.role === "student" ? "matching.html" : "dashboard.html";
+      }
     </script>
   </body>
 </html>
