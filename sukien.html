@@ -2,7 +2,10 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>UNICOLLAB - Sự Kiện Sinh Viên</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -64,6 +67,13 @@
       .custom-scrollbar::-webkit-scrollbar-thumb:hover {
         background: #9ca3af;
       }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
     </style>
   </head>
   <body class="bg-[#f8fafc]">
@@ -71,74 +81,58 @@
       class="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm"
     >
       <div
-        class="max-w-[1500px] mx-auto px-5 py-3.5 flex items-center justify-between"
+        class="max-w-[1500px] mx-auto px-4 sm:px-5 py-3 flex flex-wrap items-center justify-between gap-y-3"
       >
         <div
-          class="flex items-center gap-2 cursor-pointer"
+          class="flex items-center gap-2 cursor-pointer shrink-0"
           onclick="window.location.href = 'matching.html'"
         >
           <div
-            class="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center text-xl font-bold"
+            class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center text-lg sm:text-xl font-bold"
           >
             <i class="fa-brands fa-uniregistry"></i>
           </div>
           <div class="flex flex-col">
-            <span class="text-2xl font-black text-gray-900 tracking-tighter"
+            <span
+              class="text-xl sm:text-2xl font-black text-gray-900 tracking-tighter"
               >UNI<span class="text-blue-600">COLLAB</span></span
             >
             <span
-              class="text-[10px] text-blue-800 font-bold -mt-1 uppercase tracking-widest"
+              class="text-[8px] sm:text-[10px] text-blue-800 font-bold -mt-1 uppercase tracking-widest"
               >NAU Edition</span
             >
           </div>
         </div>
-        <nav class="flex items-center gap-7">
-          <a
-            href="matching.html"
-            class="nav-link text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
-            >Tìm đồng đội</a
-          >
-          <a
-            href="#"
-            class="nav-link text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
-            >Ý tưởng mới</a
-          >
-          <a
-            href="#"
-            class="nav-link text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
-            >Cẩm nang</a
-          >
-          <a
-            href="events.html"
-            class="nav-link active text-sm font-semibold text-blue-600"
-            >Sự kiện</a
-          >
-        </nav>
-        <div class="flex items-center gap-4">
+
+        <div
+          class="flex items-center gap-2 sm:gap-4 ml-auto md:order-3 shrink-0"
+        >
           <div id="userProfileContainer" class="relative">
             <button
-              class="flex items-center gap-3 p-1.5 pl-3 border border-gray-200 rounded-full hover:border-blue-200 hover:bg-blue-50/50 transition"
+              class="flex items-center gap-2 sm:gap-3 p-1 sm:p-1.5 pl-2 sm:pl-3 border border-gray-200 rounded-full hover:border-blue-200 hover:bg-blue-50/50 transition"
               onclick="toggleUserDropdown(event)"
             >
-              <span id="userName" class="text-sm font-bold text-gray-700"
+              <span
+                id="userName"
+                class="text-xs sm:text-sm font-bold text-gray-700 hidden sm:block"
                 >Đang tải...</span
               >
               <div
                 id="userAvatar"
-                class="w-9 h-9 bg-gray-300 rounded-full flex items-center justify-center font-bold text-white text-sm border-2 border-white shadow-sm ring-1 ring-gray-100 overflow-hidden"
+                class="w-7 h-7 sm:w-9 sm:h-9 bg-gray-300 rounded-full flex items-center justify-center font-bold text-white text-xs sm:text-sm border border-white shadow-sm overflow-hidden"
               ></div>
               <i
-                class="fa-solid fa-chevron-down text-xs text-gray-400 mr-1"
+                class="fa-solid fa-chevron-down text-[10px] sm:text-xs text-gray-400 mr-1"
               ></i>
             </button>
             <div
               id="userDropdown"
-              class="hidden absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 p-3 z-50 fade-in-section"
+              class="hidden absolute right-0 mt-3 w-56 sm:w-64 bg-white rounded-2xl shadow-xl border border-gray-100 p-3 z-50 fade-in-section"
             >
               <div class="space-y-1">
                 <button
                   onclick="window.location.href = 'kanban.html'"
-                  class="w-full flex items-center gap-3.5 text-left px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition"
+                  class="w-full flex items-center gap-3.5 text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition"
                 >
                   <i
                     class="fa-solid fa-users text-orange-500 w-4 text-center"
@@ -148,7 +142,7 @@
                 <div class="border-t border-gray-100 my-2 pt-2">
                   <button
                     onclick="userLogout()"
-                    class="w-full flex items-center gap-3.5 text-left px-3 py-2.5 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 transition"
+                    class="w-full flex items-center gap-3.5 text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-red-600 hover:bg-red-50 transition"
                   >
                     <i
                       class="fa-solid fa-right-from-bracket w-4 text-center"
@@ -160,31 +154,64 @@
             </div>
           </div>
         </div>
+
+        <nav
+          class="flex items-center gap-5 sm:gap-7 overflow-x-auto hide-scrollbar w-full md:w-auto md:order-2 pb-1 md:pb-0 whitespace-nowrap"
+        >
+          <a
+            href="matching.html"
+            class="nav-link text-xs sm:text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
+            >Tìm đồng đội</a
+          >
+          <a
+            href="#"
+            onclick="alert('Tính năng đang được phát triển!')"
+            class="nav-link text-xs sm:text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
+            >Ý tưởng mới</a
+          >
+          <a
+            href="#"
+            onclick="alert('Tính năng đang được phát triển!')"
+            class="nav-link text-xs sm:text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
+            >Cẩm nang</a
+          >
+          <a
+            href="sukien.html"
+            class="nav-link active text-xs sm:text-sm font-semibold text-blue-600"
+            >Sự kiện</a
+          >
+        </nav>
       </div>
     </header>
 
     <div
-      class="bg-gradient-to-r from-blue-700 to-indigo-600 py-16 relative overflow-hidden"
+      class="bg-gradient-to-r from-blue-700 to-indigo-600 py-10 sm:py-16 relative overflow-hidden"
     >
       <div
         class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"
       ></div>
-      <div class="max-w-[1500px] mx-auto px-5 relative z-10 text-center">
+      <div
+        class="max-w-[1500px] mx-auto px-4 sm:px-5 relative z-10 text-center"
+      >
         <h1
-          class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight shadow-sm"
+          class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-3 sm:mb-4 tracking-tight shadow-sm"
         >
           BẢNG TIN SỰ KIỆN
         </h1>
-        <p class="text-blue-100 text-lg max-w-2xl mx-auto font-medium">
-          Cập nhật nhanh nhất các cuộc thi, hội thảo và hoạt động ngoại khóa
-          dành riêng cho sinh viên Đại học Nghệ An.
+        <p
+          class="text-blue-100 text-sm sm:text-lg max-w-2xl mx-auto font-medium"
+        >
+          Cập nhật các cuộc thi, hội thảo và hoạt động ngoại khóa dành riêng cho
+          sinh viên.
         </p>
       </div>
     </div>
 
-    <section class="max-w-[1500px] mx-auto px-5 py-8 -mt-8 relative z-20">
+    <section
+      class="max-w-[1500px] mx-auto px-4 sm:px-5 py-6 sm:py-8 -mt-6 sm:-mt-8 relative z-20"
+    >
       <div
-        class="bg-white p-4 rounded-2xl shadow-lg border border-gray-100 mb-10 max-w-3xl mx-auto flex items-center gap-3"
+        class="bg-white p-3 sm:p-4 rounded-2xl shadow-lg border border-gray-100 mb-8 sm:mb-10 max-w-3xl mx-auto flex items-center gap-3"
       >
         <div class="relative flex-1">
           <i
@@ -195,14 +222,14 @@
             id="searchEventInput"
             oninput="filterEvents()"
             placeholder="Tìm kiếm sự kiện, hội thảo..."
-            class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"
+            class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"
           />
         </div>
       </div>
 
       <div
         id="eventsGrid"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6"
       >
         <div
           class="col-span-full text-center py-20 text-gray-500 flex flex-col items-center"
@@ -217,21 +244,24 @@
 
     <div
       id="eventDetailModal"
-      class="hidden fixed inset-0 bg-black/70 z-50 items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300"
+      class="hidden fixed inset-0 bg-black/70 z-50 items-center justify-center p-3 sm:p-4 backdrop-blur-sm transition-opacity duration-300"
       onclick="closeEventModal()"
     >
       <div
-        class="bg-white rounded-3xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar p-0 relative scale-95 opacity-0 transition-all duration-300 transform"
+        class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full sm:w-[95%] max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar p-0 relative scale-95 opacity-0 transition-all duration-300 transform"
         onclick="event.stopPropagation()"
       >
         <button
           onclick="closeEventModal()"
-          class="absolute top-4 right-4 w-10 h-10 bg-black/30 hover:bg-red-500 text-white rounded-full flex items-center justify-center transition z-10 backdrop-blur-md"
+          class="absolute top-3 sm:top-4 right-3 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 bg-black/30 hover:bg-red-500 text-white rounded-full flex items-center justify-center transition z-10 backdrop-blur-md"
         >
-          <i class="fa-solid fa-xmark text-lg"></i>
+          <i class="fa-solid fa-xmark text-sm sm:text-lg"></i>
         </button>
 
-        <div id="modalEvCover" class="w-full h-64 md:h-80 bg-gray-200 relative">
+        <div
+          id="modalEvCover"
+          class="w-full h-48 sm:h-64 md:h-80 bg-gray-200 relative"
+        >
           <img
             id="modalEvImg"
             src=""
@@ -239,32 +269,33 @@
           />
           <div
             id="modalEvPlaceholder"
-            class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 text-white text-5xl"
+            class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600 text-white text-4xl sm:text-5xl"
           >
             <i class="fa-solid fa-calendar-star"></i>
           </div>
           <div
-            class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/80 to-transparent"
+            class="absolute bottom-0 left-0 w-full h-24 sm:h-32 bg-gradient-to-t from-black/80 to-transparent"
           ></div>
-          <div class="absolute bottom-5 left-6 flex gap-2">
+          <div
+            class="absolute bottom-4 sm:bottom-5 left-4 sm:left-6 flex gap-2"
+          >
             <span
               id="modalEvDate"
-              class="bg-white/20 backdrop-blur-md text-white border border-white/30 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center"
+              class="bg-white/20 backdrop-blur-md text-white border border-white/30 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-bold flex items-center"
               ><i class="fa-regular fa-calendar mr-2"></i> ...</span
             >
           </div>
         </div>
 
-        <div class="p-6 md:p-8">
+        <div class="p-5 sm:p-6 md:p-8">
           <h2
             id="modalEvTitle"
-            class="text-2xl md:text-3xl font-black text-gray-800 mb-6 leading-tight"
+            class="text-xl sm:text-2xl md:text-3xl font-black text-gray-800 mb-4 sm:mb-6 leading-tight"
           >
             ...
           </h2>
-
           <div
-            class="prose max-w-none text-gray-600 text-sm leading-relaxed mb-8 whitespace-pre-line"
+            class="prose max-w-none text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 sm:mb-8 whitespace-pre-line"
             id="modalEvDesc"
           >
             ...
@@ -272,9 +303,11 @@
 
           <div
             id="modalEvVideoBox"
-            class="hidden border-t border-gray-100 pt-6 mt-6"
+            class="hidden border-t border-gray-100 pt-5 mt-5 sm:pt-6 sm:mt-6"
           >
-            <h4 class="font-bold text-gray-800 mb-3">
+            <h4
+              class="font-bold text-gray-800 mb-2 sm:mb-3 text-sm sm:text-base"
+            >
               <i class="fa-brands fa-youtube text-red-500 mr-2"></i>Video Tham
               khảo
             </h4>
@@ -282,11 +315,11 @@
               id="modalEvVideoLink"
               href="#"
               target="_blank"
-              class="inline-flex items-center bg-red-50 text-red-600 font-bold px-5 py-3 rounded-xl border border-red-100 hover:bg-red-500 hover:text-white transition shadow-sm"
+              class="inline-flex items-center justify-center w-full sm:w-auto bg-red-50 text-red-600 font-bold px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-red-100 hover:bg-red-500 hover:text-white transition shadow-sm text-xs sm:text-sm"
             >
               Xem Video Sự kiện
               <i
-                class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"
+                class="fa-solid fa-arrow-up-right-from-square ml-2 text-[10px] sm:text-xs"
               ></i>
             </a>
           </div>
@@ -309,14 +342,12 @@
         authDomain: "unicollab-e81c0.firebaseapp.com",
         projectId: "unicollab-e81c0",
       };
-
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
       window.allEvents = [];
 
       document.addEventListener("DOMContentLoaded", async () => {
-        // KIỂM TRA ĐĂNG NHẬP
         const savedUser = localStorage.getItem("userProfileData");
         if (!savedUser) {
           window.location.href = "index.html";
@@ -344,7 +375,6 @@
           avatarEl.innerText = userName.charAt(0).toUpperCase();
         }
 
-        // TẢI SỰ KIỆN TỪ FIREBASE (REAL-TIME)
         loadEvents();
       });
 
@@ -355,12 +385,9 @@
           snapshot.forEach((doc) => {
             window.allEvents.push(doc.data());
           });
-
-          // Sắp xếp sự kiện mới nhất lên đầu
           window.allEvents.sort(
             (a, b) => b.createdAt.seconds - a.createdAt.seconds,
           );
-
           renderEventsGrid();
         });
       }
@@ -388,30 +415,17 @@
         grid.innerHTML = "";
 
         if (filtered.length === 0) {
-          grid.innerHTML = `
-                <div class="col-span-full text-center py-20 text-gray-400 flex flex-col items-center bg-white rounded-3xl border border-gray-100 shadow-sm">
-                    <i class="fa-solid fa-calendar-xmark text-6xl mb-4 opacity-50"></i>
-                    <p class="font-bold text-lg text-gray-500">Chưa có sự kiện nào được đăng tải.</p>
-                    <p class="text-sm mt-1">Hãy quay lại sau để cập nhật thông tin mới nhất nhé!</p>
-                </div>`;
+          grid.innerHTML = `<div class="col-span-full text-center py-16 sm:py-20 text-gray-400 flex flex-col items-center bg-white rounded-2xl sm:rounded-3xl border border-gray-100 shadow-sm mx-auto w-full"><i class="fa-solid fa-calendar-xmark text-5xl sm:text-6xl mb-3 sm:mb-4 opacity-50"></i><p class="font-bold text-base sm:text-lg text-gray-500">Chưa có sự kiện nào.</p></div>`;
           return;
         }
 
         filtered.forEach((ev) => {
-          // Xử lý hiển thị ảnh cover
-          let coverHtml = "";
-          if (ev.image) {
-            coverHtml = `<img src="${ev.image}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">`;
-          } else {
-            coverHtml = `<div class="w-full h-full flex items-center justify-center bg-gradient-to-tr from-blue-100 to-indigo-100 text-blue-300 text-5xl transition duration-500 group-hover:scale-105"><i class="fa-solid fa-image"></i></div>`;
-          }
-
-          // Xử lý icon video
+          let coverHtml = ev.image
+            ? `<img src="${ev.image}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">`
+            : `<div class="w-full h-full flex items-center justify-center bg-gradient-to-tr from-blue-100 to-indigo-100 text-blue-300 text-4xl sm:text-5xl transition duration-500 group-hover:scale-105"><i class="fa-solid fa-image"></i></div>`;
           let videoBadge = ev.videoUrl
-            ? `<div class="absolute top-3 right-3 bg-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg z-10"><i class="fa-solid fa-play text-xs ml-0.5"></i></div>`
+            ? `<div class="absolute top-2 sm:top-3 right-2 sm:right-3 bg-red-500 text-white w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-lg z-10"><i class="fa-solid fa-play text-[10px] sm:text-xs ml-0.5"></i></div>`
             : "";
-
-          // Tách ngày tháng cho đẹp (VD: 2026-12-31 -> 31/12/2026)
           let formattedDate = ev.date;
           if (ev.date && ev.date.includes("-")) {
             formattedDate = ev.date.split("-").reverse().join("/");
@@ -419,21 +433,21 @@
 
           const card = document.createElement("div");
           card.className =
-            "bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group cursor-pointer";
+            "bg-white rounded-2xl sm:rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col group cursor-pointer w-full";
           card.onclick = () => openEventModal(ev.id);
 
           card.innerHTML = `
-                  <div class="h-48 bg-gray-100 relative overflow-hidden shrink-0">
+                  <div class="h-40 sm:h-48 bg-gray-100 relative overflow-hidden shrink-0">
                       ${videoBadge}
                       ${coverHtml}
                       <div class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black/60 to-transparent"></div>
-                      <div class="absolute bottom-3 left-4"><span class="bg-white/20 backdrop-blur-md text-white border border-white/30 px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider"><i class="fa-regular fa-calendar mr-1.5"></i> ${formattedDate}</span></div>
+                      <div class="absolute bottom-2 sm:bottom-3 left-3 sm:left-4"><span class="bg-white/20 backdrop-blur-md text-white border border-white/30 px-2 sm:px-2.5 py-1 rounded-lg text-[9px] sm:text-[10px] font-bold uppercase tracking-wider"><i class="fa-regular fa-calendar mr-1.5"></i> ${formattedDate}</span></div>
                   </div>
-                  <div class="p-6 flex-1 flex flex-col">
-                      <h3 class="text-lg font-bold text-gray-800 mb-3 line-clamp-2 group-hover:text-blue-600 transition leading-snug">${ev.title}</h3>
-                      <p class="text-sm text-gray-500 mb-5 line-clamp-3 leading-relaxed">${ev.description}</p>
-                      <div class="mt-auto pt-4 border-t border-gray-50 flex justify-end">
-                          <button class="text-blue-600 font-bold text-xs hover:text-blue-800 transition flex items-center uppercase tracking-wider">Xem chi tiết <i class="fa-solid fa-arrow-right ml-2"></i></button>
+                  <div class="p-4 sm:p-6 flex-1 flex flex-col">
+                      <h3 class="text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3 line-clamp-2 group-hover:text-blue-600 transition leading-snug">${ev.title}</h3>
+                      <p class="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-5 line-clamp-3 leading-relaxed">${ev.description}</p>
+                      <div class="mt-auto pt-3 sm:pt-4 border-t border-gray-50 flex justify-end">
+                          <button class="text-blue-600 font-bold text-[10px] sm:text-xs hover:text-blue-800 transition flex items-center uppercase tracking-wider">Xem chi tiết <i class="fa-solid fa-arrow-right ml-1 sm:ml-2"></i></button>
                       </div>
                   </div>
               `;
@@ -441,21 +455,17 @@
         });
       }
 
-      // --- XỬ LÝ MODAL CHI TIẾT ---
       window.openEventModal = function (id) {
         const ev = window.allEvents.find((e) => e.id === id);
         if (!ev) return;
-
         document.getElementById("modalEvTitle").innerText = ev.title;
         document.getElementById("modalEvDesc").innerText = ev.description;
-
         let formattedDate = ev.date;
         if (ev.date && ev.date.includes("-"))
           formattedDate = ev.date.split("-").reverse().join("/");
         document.getElementById("modalEvDate").innerHTML =
           `<i class="fa-regular fa-clock mr-2"></i> ${formattedDate}`;
 
-        // Xử lý Ảnh
         const imgEl = document.getElementById("modalEvImg");
         const placeholderEl = document.getElementById("modalEvPlaceholder");
         if (ev.image) {
@@ -467,7 +477,6 @@
           placeholderEl.classList.remove("hidden");
         }
 
-        // Xử lý Video Link
         const videoBox = document.getElementById("modalEvVideoBox");
         const videoLink = document.getElementById("modalEvVideoLink");
         if (ev.videoUrl) {
@@ -496,7 +505,6 @@
         }, 300);
       };
 
-      // --- MENU GÓC PHẢI ---
       window.toggleUserDropdown = (e) => {
         e.stopPropagation();
         document.getElementById("userDropdown").classList.toggle("hidden");
@@ -505,7 +513,6 @@
         if (!document.getElementById("userProfileContainer").contains(e.target))
           document.getElementById("userDropdown").classList.add("hidden");
       });
-
       window.userLogout = function () {
         if (confirm("Đăng xuất khỏi hệ thống?")) {
           localStorage.removeItem("userProfileData");

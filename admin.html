@@ -2,8 +2,11 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UNICOLLAB - QUẢN TRỊ VIÊN TỐI CAO</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>UNICOLLAB - Giảng viên Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -12,7 +15,7 @@
     <style>
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f1f5f9;
+        background-color: #f8fafc;
       }
       .custom-scrollbar::-webkit-scrollbar {
         width: 6px;
@@ -26,429 +29,341 @@
         background: #cbd5e1;
         border-radius: 8px;
       }
-      .tab-active {
-        background-color: #ef4444 !important;
-        color: white !important;
+      .fade-in {
+        animation: fadeIn 0.4s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .nav-item.active {
+        background-color: #2563eb;
+        color: white;
+        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);
+      }
+      .nav-item {
+        color: #94a3b8;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      .nav-item:hover:not(.active) {
+        background-color: #1e293b;
+        color: white;
       }
     </style>
   </head>
   <body class="h-screen flex overflow-hidden">
     <div
-      id="adminLogin"
-      class="fixed inset-0 bg-slate-900 z-[100] flex items-center justify-center"
+      id="sidebarOverlay"
+      onclick="toggleSidebar()"
+      class="fixed inset-0 bg-black/50 z-40 hidden md:hidden transition-opacity"
+    ></div>
+
+    <aside
+      id="gvSidebar"
+      class="fixed inset-y-0 left-0 w-64 bg-slate-900 text-white flex flex-col z-50 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 shadow-2xl md:shadow-none"
     >
-      <div class="bg-white p-8 rounded-2xl shadow-2xl w-96 text-center">
-        <i class="fa-solid fa-user-shield text-5xl text-red-500 mb-4"></i>
-        <h2 class="text-2xl font-black text-gray-800 mb-6">Xác thực Admin</h2>
-        <input
-          type="password"
-          id="adminPass"
-          placeholder="Nhập mã bí mật..."
-          class="w-full px-4 py-3 border border-gray-300 rounded-xl mb-4 text-center font-bold tracking-widest outline-none focus:border-red-500"
-        />
+      <div
+        class="h-16 flex items-center px-6 border-b border-slate-800 bg-slate-950 justify-between shrink-0"
+      >
+        <div class="flex items-center">
+          <div class="text-blue-500 text-2xl font-bold mr-3">
+            <i class="fa-brands fa-uniregistry"></i>
+          </div>
+          <h1 class="text-lg font-black tracking-widest uppercase">
+            UNICOLLAB
+          </h1>
+        </div>
         <button
-          onclick="checkAdmin()"
-          class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl transition"
+          onclick="toggleSidebar()"
+          class="md:hidden text-gray-400 hover:text-white text-xl"
         >
-          Đăng nhập Quản trị
+          <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-    </div>
 
-    <aside class="w-64 bg-slate-950 text-slate-300 flex flex-col shrink-0">
-      <div
-        class="h-16 flex items-center px-6 border-b border-slate-800 bg-black"
-      >
-        <div class="text-red-500 text-2xl font-bold mr-3">
-          <i class="fa-solid fa-shield-halved"></i>
-        </div>
-        <h1 class="text-lg font-black tracking-widest uppercase text-white">
-          ADMIN CP
-        </h1>
-      </div>
-      <div class="p-4 flex-1">
+      <div class="p-6 flex-1 overflow-y-auto custom-scrollbar">
         <p
-          class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3 px-2"
+          class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4"
         >
-          Điều hành hệ thống
+          Menu Quản lý
         </p>
-        <div class="space-y-1">
-          <button
-            onclick="switchTab('payment')"
-            id="tab-payment"
-            class="w-full flex items-center px-4 py-3 rounded-xl font-bold transition hover:bg-slate-800 tab-active"
-          >
-            <i class="fa-solid fa-money-bill-transfer w-6"></i> Duyệt Lệ phí
-            <span
-              id="pendingCountBadge"
-              class="ml-auto bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full hidden"
-              >0</span
-            >
-          </button>
-          <button
-            onclick="switchTab('users')"
-            id="tab-users"
-            class="w-full flex items-center px-4 py-3 rounded-xl font-bold transition hover:bg-slate-800"
-          >
-            <i class="fa-solid fa-users w-6"></i> Quản lý Users
-          </button>
-          <button
-            onclick="switchTab('projects')"
+        <nav class="space-y-2">
+          <a
+            onclick="
+              switchTab('projects');
+              toggleSidebar();
+            "
             id="tab-projects"
-            class="w-full flex items-center px-4 py-3 rounded-xl font-bold transition hover:bg-slate-800"
+            class="nav-item active flex items-center space-x-3 px-4 py-3 rounded-xl font-medium"
           >
-            <i class="fa-solid fa-layer-group w-6"></i> Quản lý Dự án
-          </button>
-          <button
-            onclick="switchTab('events')"
-            id="tab-events"
-            class="w-full flex items-center px-4 py-3 rounded-xl font-bold transition hover:bg-slate-800"
+            <i class="fa-solid fa-layer-group w-5 text-center"></i
+            ><span>Quản lý Dự án</span>
+          </a>
+          <a
+            onclick="
+              switchTab('students');
+              toggleSidebar();
+            "
+            id="tab-students"
+            class="nav-item flex items-center space-x-3 px-4 py-3 rounded-xl font-medium"
           >
-            <i class="fa-solid fa-calendar-days w-6"></i> Quản lý Sự kiện
-          </button>
-        </div>
+            <i class="fa-solid fa-users w-5 text-center"></i
+            ><span>Quản lý Sinh viên</span>
+          </a>
+          <a
+            onclick="
+              switchTab('tracking');
+              toggleSidebar();
+            "
+            id="tab-tracking"
+            class="nav-item flex items-center space-x-3 px-4 py-3 rounded-xl font-medium"
+          >
+            <i class="fa-solid fa-chart-pie w-5 text-center"></i
+            ><span>Báo cáo Tiến độ</span>
+          </a>
+        </nav>
       </div>
-      <div class="mt-auto p-4 border-t border-slate-800">
+
+      <div class="mt-auto p-6 border-t border-slate-800 shrink-0">
         <button
-          onclick="adminLogout()"
-          class="w-full flex items-center px-4 py-3 rounded-xl font-bold transition text-red-400 hover:bg-red-500/10 hover:text-red-300"
+          onclick="teacherLogout()"
+          class="flex items-center space-x-3 px-4 py-3 w-full text-red-400 hover:bg-red-500/10 hover:text-red-300 rounded-xl font-medium transition"
         >
-          <i class="fa-solid fa-right-from-bracket w-6"></i> Đăng xuất
+          <i class="fa-solid fa-right-from-bracket w-5 text-center"></i
+          ><span>Đăng xuất</span>
         </button>
       </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+    <div
+      class="flex-1 flex flex-col h-screen w-full overflow-hidden bg-slate-50 relative"
+    >
       <header
-        class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 shrink-0 shadow-sm"
+        class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 shrink-0 shadow-sm z-10 w-full"
       >
-        <h2
-          class="text-xl font-extrabold text-gray-800 uppercase"
-          id="topbarTitle"
-        >
-          XÁC NHẬN THANH TOÁN
-        </h2>
         <div class="flex items-center gap-3">
-          <span
-            class="text-sm font-bold text-red-600 bg-red-50 px-3 py-1 rounded-full border border-red-100"
-            >Quyền Tối Cao</span
+          <button
+            onclick="toggleSidebar()"
+            class="md:hidden text-slate-500 hover:text-blue-600 text-xl transition"
           >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <h2
+            class="text-base sm:text-xl font-extrabold text-slate-800 truncate max-w-[180px] sm:max-w-none"
+            id="topbarTitle"
+          >
+            Hệ Thống Phê Duyệt Đồ Án
+          </h2>
+        </div>
+
+        <div class="flex items-center space-x-4 shrink-0">
+          <div
+            class="flex items-center space-x-2 sm:space-x-3 cursor-pointer hover:bg-slate-50 p-1.5 rounded-lg transition"
+            title="Tài khoản Giảng viên"
+          >
+            <div class="text-right hidden sm:block">
+              <p class="text-sm font-bold text-slate-700" id="teacherName">
+                Đang tải...
+              </p>
+              <p class="text-[10px] font-bold text-blue-600 uppercase">
+                Giảng viên Hướng dẫn
+              </p>
+            </div>
+            <div
+              class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-tr from-blue-600 to-indigo-500 text-white rounded-full flex items-center justify-center font-bold shadow-sm text-xs sm:text-base"
+            >
+              GV
+            </div>
+          </div>
         </div>
       </header>
 
-      <div class="flex-1 overflow-y-auto p-6 custom-scrollbar bg-slate-50">
-        <div id="content-payment" class="block">
+      <main
+        class="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 custom-scrollbar w-full"
+      >
+        <div id="content-projects" class="block fade-in w-full">
           <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
+            class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8"
           >
-            <div class="p-5 border-b border-gray-100 bg-red-50/30">
-              <h3 class="font-bold text-red-700">
-                <i class="fa-solid fa-clock-rotate-left mr-2"></i>Sinh viên đang
-                chờ duyệt tiền
-              </h3>
-            </div>
-            <table class="w-full text-left">
-              <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
-                <tr>
-                  <th class="p-4">Thời gian tạo</th>
-                  <th class="p-4">Mã SV</th>
-                  <th class="p-4">Họ và tên</th>
-                  <th class="p-4 text-right">Thao tác</th>
-                </tr>
-              </thead>
-              <tbody
-                id="pendingTableBody"
-                class="divide-y divide-gray-100 text-sm"
-              ></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div id="content-users" class="hidden">
-          <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-6"
-          >
-            <div class="p-5 border-b border-gray-100 bg-blue-50/50">
-              <h3 class="font-bold text-blue-800">
-                <i class="fa-solid fa-user-plus mr-2"></i>Cấp tài khoản mới
-              </h3>
-            </div>
-            <form
-              onsubmit="createNewUser(event)"
-              class="p-5 grid grid-cols-1 sm:grid-cols-5 gap-4 items-end"
+            <div
+              class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between hover:shadow-md transition"
             >
               <div>
-                <label class="block text-xs font-bold text-gray-600 mb-1"
-                  >Mã SV / ID *</label
-                ><input
-                  type="text"
-                  id="newUserId"
-                  required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-gray-600 mb-1"
-                  >Họ và Tên *</label
-                ><input
-                  type="text"
-                  id="newUserName"
-                  required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-gray-600 mb-1"
-                  >Mật khẩu *</label
-                ><input
-                  type="text"
-                  id="newUserPass"
-                  required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-gray-600 mb-1"
-                  >Vai trò *</label
+                <p class="text-xs sm:text-sm font-bold text-slate-500 mb-1">
+                  Tổng Dự án
+                </p>
+                <h3
+                  class="text-2xl sm:text-3xl font-black text-slate-800"
+                  id="statTotal"
                 >
-                <select
-                  id="newUserRole"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
-                >
-                  <option value="student">Sinh viên</option>
-                  <option value="teacher">Giảng viên</option>
-                </select>
+                  0
+                </h3>
               </div>
-              <button
-                type="submit"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg text-sm transition shadow-sm"
+              <div
+                class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xl sm:text-2xl"
               >
-                Tạo Tài Khoản
-              </button>
-            </form>
-          </div>
-
-          <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
-          >
-            <div class="p-5 border-b border-gray-100">
-              <h3 class="font-bold text-gray-800">
-                Tất cả tài khoản trên hệ thống
-              </h3>
-            </div>
-            <table class="w-full text-left">
-              <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
-                <tr>
-                  <th class="p-4">ID</th>
-                  <th class="p-4">Họ và Tên</th>
-                  <th class="p-4">Vai trò</th>
-                  <th class="p-4 text-right">Hành động</th>
-                </tr>
-              </thead>
-              <tbody
-                id="usersTableBody"
-                class="divide-y divide-gray-100 text-sm"
-              ></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div id="content-projects" class="hidden">
-          <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
-          >
-            <div class="p-5 border-b border-gray-100">
-              <h3 class="font-bold text-gray-800">Tất cả Dự án</h3>
-            </div>
-            <table class="w-full text-left">
-              <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
-                <tr>
-                  <th class="p-4">Tên Dự án</th>
-                  <th class="p-4">Leader</th>
-                  <th class="p-4">Trạng thái</th>
-                  <th class="p-4 text-right">Hành động</th>
-                </tr>
-              </thead>
-              <tbody
-                id="projectsTableBody"
-                class="divide-y divide-gray-100 text-sm"
-              ></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div id="content-events" class="hidden">
-          <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-6"
-          >
-            <div class="p-5 border-b border-gray-100 bg-purple-50/50">
-              <h3 class="font-bold text-purple-800">
-                <i class="fa-solid fa-bullhorn mr-2"></i>Đăng Sự Kiện Mới
-              </h3>
-            </div>
-            <form onsubmit="createEvent(event)" class="p-5 space-y-4">
-              <input
-                type="text"
-                id="evTitle"
-                required
-                placeholder="Tiêu đề sự kiện *"
-                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500"
-              />
-              <textarea
-                id="evDesc"
-                required
-                placeholder="Nội dung chi tiết..."
-                rows="4"
-                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 custom-scrollbar"
-              ></textarea>
-              <div class="grid grid-cols-2 gap-4">
-                <input
-                  type="date"
-                  id="evDate"
-                  required
-                  class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 text-gray-600"
-                />
-                <input
-                  type="url"
-                  id="evVideoUrl"
-                  placeholder="Link Video (Tùy chọn: Youtube, Drive...)"
-                  class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500"
-                />
+                <i class="fa-solid fa-cubes"></i>
               </div>
-
-              <div class="flex flex-col sm:flex-row gap-3">
-                <label
-                  class="bg-blue-50 text-blue-600 px-4 py-3 rounded-lg cursor-pointer border border-blue-200 hover:bg-blue-100 transition flex-1 text-center font-bold text-sm shadow-sm"
+            </div>
+            <div
+              class="bg-white p-5 sm:p-6 rounded-2xl border border-orange-200 shadow-sm flex items-center justify-between hover:shadow-md transition"
+            >
+              <div>
+                <p class="text-xs sm:text-sm font-bold text-orange-600 mb-1">
+                  Chờ Duyệt
+                </p>
+                <h3
+                  class="text-2xl sm:text-3xl font-black text-orange-700"
+                  id="statPending"
                 >
-                  <i class="fa-solid fa-image mr-1"></i> Chọn Ảnh/Video từ Máy
-                  <input
-                    type="file"
-                    id="evGallery"
-                    accept="image/*,video/*"
-                    class="hidden"
-                    onchange="previewEvMedia(event)"
-                  />
-                </label>
-                <label
-                  class="bg-green-50 text-green-600 px-4 py-3 rounded-lg cursor-pointer border border-green-200 hover:bg-green-100 transition flex-1 text-center font-bold text-sm shadow-sm"
-                >
-                  <i class="fa-solid fa-camera mr-1"></i> Chụp ảnh trực tiếp
-                  <input
-                    type="file"
-                    id="evCamera"
-                    accept="image/*"
-                    capture="environment"
-                    class="hidden"
-                    onchange="previewEvMedia(event)"
-                  />
-                </label>
+                  0
+                </h3>
               </div>
-              <img
-                id="evPreviewImg"
-                class="hidden w-full max-h-64 object-cover rounded-xl shadow-sm border border-gray-200"
-              />
-
-              <button
-                type="submit"
-                class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-4 py-3 rounded-lg w-full transition shadow-md"
+              <div
+                class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-xl sm:text-2xl"
               >
-                ĐĂNG SỰ KIỆN
-              </button>
-            </form>
+                <i class="fa-solid fa-hourglass-half"></i>
+              </div>
+            </div>
+            <div
+              class="bg-white p-5 sm:p-6 rounded-2xl border border-emerald-200 shadow-sm flex items-center justify-between hover:shadow-md transition"
+            >
+              <div>
+                <p class="text-xs sm:text-sm font-bold text-emerald-600 mb-1">
+                  Đang làm
+                </p>
+                <h3
+                  class="text-2xl sm:text-3xl font-black text-emerald-700"
+                  id="statActive"
+                >
+                  0
+                </h3>
+              </div>
+              <div
+                class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl sm:text-2xl"
+              >
+                <i class="fa-solid fa-check-double"></i>
+              </div>
+            </div>
           </div>
 
           <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
+            class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden w-full flex flex-col"
           >
-            <div class="p-5 border-b border-gray-100">
-              <h3 class="font-bold text-gray-800">Danh sách Sự kiện</h3>
+            <div
+              class="p-4 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4"
+            >
+              <h3 class="text-base sm:text-lg font-bold text-slate-800">
+                Danh sách Dự án
+              </h3>
+              <div class="relative w-full sm:w-64">
+                <i
+                  class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm"
+                ></i>
+                <input
+                  type="text"
+                  id="searchTable"
+                  oninput="renderProjectTable()"
+                  placeholder="Tìm tên dự án, leader..."
+                  class="pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full transition"
+                />
+              </div>
             </div>
-            <table class="w-full text-left">
-              <thead class="bg-gray-50 text-gray-500 text-xs uppercase">
-                <tr>
-                  <th class="p-4">Tiêu đề</th>
-                  <th class="p-4">Thời gian</th>
-                  <th class="p-4 text-right">Thao tác</th>
-                </tr>
-              </thead>
-              <tbody
-                id="eventsTableBody"
-                class="divide-y divide-gray-100 text-sm"
-              ></tbody>
-            </table>
+            <div class="overflow-x-auto w-full">
+              <table class="w-full text-left min-w-[700px]">
+                <thead
+                  class="bg-slate-50 text-slate-500 text-[10px] sm:text-xs uppercase tracking-wider font-bold"
+                >
+                  <tr>
+                    <th class="p-3 sm:p-4">Tên dự án</th>
+                    <th class="p-3 sm:p-4">Lĩnh vực</th>
+                    <th class="p-3 sm:p-4">Leader</th>
+                    <th class="p-3 sm:p-4 text-center">Trạng thái</th>
+                    <th class="p-3 sm:p-4 text-center">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="projectTableBody"
+                  class="text-xs sm:text-sm divide-y divide-slate-100"
+                ></tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
 
-    <div
-      id="editUserModal"
-      class="fixed inset-0 bg-black/60 z-[110] hidden items-center justify-center p-4"
-    >
-      <div class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl relative">
-        <h3 class="font-black text-xl text-gray-800 mb-6 border-b pb-3">
-          <i class="fa-solid fa-pen-to-square text-blue-600 mr-2"></i>Sửa thông
-          tin Tài khoản
-        </h3>
-        <input type="hidden" id="editUserId" />
-        <div class="mb-4">
-          <label class="block text-xs font-bold text-gray-600 mb-1"
-            >Mã SV / ID (Không thể đổi)</label
+        <div id="content-students" class="hidden fade-in w-full">
+          <div
+            class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col w-full"
           >
-          <input
-            type="text"
-            id="editUserIdDisplay"
-            disabled
-            class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-100 font-bold text-gray-500"
-          />
+            <div
+              class="p-4 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4"
+            >
+              <h3 class="text-base sm:text-lg font-bold text-slate-800">
+                Tài khoản Sinh viên
+              </h3>
+              <div class="relative w-full sm:w-64">
+                <i
+                  class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm"
+                ></i>
+                <input
+                  type="text"
+                  id="searchStudent"
+                  oninput="renderStudentTable()"
+                  placeholder="Tìm sinh viên..."
+                  class="pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 w-full transition"
+                />
+              </div>
+            </div>
+            <div class="overflow-x-auto w-full">
+              <table class="w-full text-left min-w-[500px]">
+                <thead
+                  class="bg-slate-50 text-slate-500 text-[10px] sm:text-xs uppercase tracking-wider font-bold"
+                >
+                  <tr>
+                    <th class="p-3 sm:p-4">Sinh viên</th>
+                    <th class="p-3 sm:p-4">Mã SV</th>
+                    <th class="p-3 sm:p-4 text-center">Trạng thái</th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="studentTableBody"
+                  class="text-xs sm:text-sm divide-y divide-slate-100"
+                ></tbody>
+              </table>
+            </div>
+          </div>
         </div>
-        <div class="mb-4">
-          <label class="block text-xs font-bold text-gray-600 mb-1"
-            >Họ và Tên *</label
+
+        <div id="content-tracking" class="hidden fade-in w-full">
+          <div
+            class="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-6 w-full"
           >
-          <input
-            type="text"
-            id="editUserName"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
-          />
+            <div
+              class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4"
+            >
+              <div>
+                <h3 class="text-lg sm:text-xl font-bold text-gray-800">
+                  Tiến độ các nhóm
+                </h3>
+                <p class="text-xs sm:text-sm text-gray-500">
+                  Theo dõi kết quả các dự án.
+                </p>
+              </div>
+            </div>
+            <div
+              class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6"
+              id="trackingList"
+            ></div>
+          </div>
         </div>
-        <div class="mb-4">
-          <label class="block text-xs font-bold text-gray-600 mb-1"
-            >Mật khẩu *</label
-          >
-          <input
-            type="text"
-            id="editUserPass"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
-          />
-        </div>
-        <div class="mb-6">
-          <label class="block text-xs font-bold text-gray-600 mb-1"
-            >Vai trò *</label
-          >
-          <select
-            id="editUserRole"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
-          >
-            <option value="student">Sinh viên</option>
-            <option value="teacher">Giảng viên</option>
-          </select>
-        </div>
-        <div class="flex gap-3">
-          <button
-            onclick="closeEditUserModal()"
-            class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 rounded-lg transition"
-          >
-            Hủy
-          </button>
-          <button
-            onclick="saveEditUser()"
-            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition shadow-md"
-          >
-            Lưu Cập Nhật
-          </button>
-        </div>
-      </div>
+      </main>
     </div>
 
     <script type="module">
@@ -456,12 +371,10 @@
       import {
         getFirestore,
         collection,
+        getDocs,
         doc,
-        setDoc,
         updateDoc,
         deleteDoc,
-        onSnapshot,
-        getDoc,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -472,319 +385,166 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
-      // --- LOGIN ADMIN ---
-      window.checkAdmin = function () {
-        if (document.getElementById("adminPass").value === "24442444aA@") {
-          document.getElementById("adminLogin").classList.add("hidden");
-          sessionStorage.setItem("isAdminAuthed", "true");
-          loadAdminData();
-        } else {
-          alert("Sai mật khẩu!");
-        }
+      window.allProjects = [];
+      window.allUsers = {};
+
+      // --- HAMBURGER MENU ---
+      window.toggleSidebar = function () {
+        const sidebar = document.getElementById("gvSidebar");
+        const overlay = document.getElementById("sidebarOverlay");
+        sidebar.classList.toggle("-translate-x-full");
+        overlay.classList.toggle("hidden");
       };
 
       document.addEventListener("DOMContentLoaded", () => {
-        if (sessionStorage.getItem("isAdminAuthed") === "true") {
-          document.getElementById("adminLogin").classList.add("hidden");
-          loadAdminData();
+        const savedUser = localStorage.getItem("userProfileData");
+        if (!savedUser) {
+          window.location.href = "index.html";
+          return;
         }
+        const userData = JSON.parse(savedUser);
+        if (userData.role === "student") {
+          alert("Cấm truy cập!");
+          window.location.href = "matching.html";
+          return;
+        }
+        document.getElementById("teacherName").innerText = userData.name;
+        window.loadProjectsData();
+        window.loadStudentsData();
       });
 
-      window.adminLogout = function () {
-        if (confirm("Bạn muốn đăng xuất khỏi quyền Admin?")) {
-          sessionStorage.removeItem("isAdminAuthed");
-          location.reload();
-        }
-      };
-
-      window.switchTab = function (tab) {
-        ["payment", "users", "projects", "events"].forEach((t) => {
+      window.switchTab = function (tabId) {
+        ["projects", "students", "tracking"].forEach((t) => {
           document.getElementById("content-" + t).classList.add("hidden");
-          document.getElementById("tab-" + t).classList.remove("tab-active");
-          document.getElementById("tab-" + t).classList.add("text-slate-300");
+          document.getElementById("tab-" + t).classList.remove("active");
         });
-        document.getElementById("content-" + tab).classList.remove("hidden");
-        document.getElementById("tab-" + tab).classList.add("tab-active");
-        document
-          .getElementById("tab-" + tab)
-          .classList.remove("text-slate-300");
-
-        if (tab === "payment")
-          document.getElementById("topbarTitle").innerText =
-            "XÁC NHẬN THANH TOÁN LỆ PHÍ";
-        if (tab === "users")
-          document.getElementById("topbarTitle").innerText =
-            "QUẢN LÝ TÀI KHOẢN (USERS)";
-        if (tab === "projects")
-          document.getElementById("topbarTitle").innerText =
-            "QUẢN LÝ TOÀN BỘ DỰ ÁN";
-        if (tab === "events")
-          document.getElementById("topbarTitle").innerText =
-            "ĐIỀU HÀNH SỰ KIỆN";
-      };
-
-      // --- TẢI DATA TỪ FIREBASE ---
-      function loadAdminData() {
-        // 1. Duyệt lệ phí
-        onSnapshot(collection(db, "pending_users"), (snapshot) => {
-          const tbody = document.getElementById("pendingTableBody");
-          tbody.innerHTML = "";
-          let count = 0;
-          snapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            if (data.paymentStatus === "waiting") {
-              count++;
-              const time = data.createdAt
-                ? new Date(data.createdAt.seconds * 1000).toLocaleString(
-                    "vi-VN",
-                  )
-                : "Vừa xong";
-              tbody.innerHTML += `<tr class="hover:bg-red-50/20 border-b border-gray-100"><td class="p-4 text-gray-500">${time}</td><td class="p-4 font-bold text-gray-800">${docSnap.id}</td><td class="p-4 font-bold text-blue-600">${data.name}</td><td class="p-4 text-right"><button onclick="approvePayment('${docSnap.id}')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-bold text-xs transition shadow-sm"><i class="fa-solid fa-check mr-1"></i> Đã nhận tiền</button><button onclick="rejectPayment('${docSnap.id}')" class="bg-white border border-gray-200 text-gray-500 hover:text-red-500 px-3 py-2 rounded-lg font-bold text-xs ml-2 transition shadow-sm" title="Xóa bỏ"><i class="fa-solid fa-trash"></i></button></td></tr>`;
-            }
-          });
-          if (count === 0)
-            tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-400 font-medium">Không có ai đang chờ thanh toán.</td></tr>`;
-          const badge = document.getElementById("pendingCountBadge");
-          if (count > 0) {
-            badge.innerText = count;
-            badge.classList.remove("hidden");
-          } else badge.classList.add("hidden");
-        });
-
-        // 2. Users (Kèm nút Sửa)
-        onSnapshot(collection(db, "users"), (snapshot) => {
-          const tbody = document.getElementById("usersTableBody");
-          tbody.innerHTML = "";
-          snapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            let roleHtml =
-              data.role === "teacher"
-                ? '<span class="text-orange-500">Giảng viên</span>'
-                : '<span class="text-blue-500">Sinh viên</span>';
-            tbody.innerHTML += `<tr class="border-b border-gray-100"><td class="p-4 font-bold">${docSnap.id}</td><td class="p-4">${data.name}</td><td class="p-4 uppercase text-xs font-bold">${roleHtml}</td><td class="p-4 text-right">
-                <button onclick="openEditUser('${docSnap.id}', '${data.name}', '${data.role}', '${data.password}')" class="text-blue-600 hover:text-blue-800 bg-blue-50 px-3 py-1.5 rounded-lg text-xs font-bold mr-2 transition shadow-sm"><i class="fa-solid fa-pen"></i> Sửa</button>
-                <button onclick="deleteUserAdmin('${docSnap.id}')" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-sm"><i class="fa-solid fa-trash"></i></button>
-            </td></tr>`;
-          });
-        });
-
-        // 3. Projects
-        onSnapshot(collection(db, "projects"), (snapshot) => {
-          const tbody = document.getElementById("projectsTableBody");
-          tbody.innerHTML = "";
-          snapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            let st =
-              data.status === "approved"
-                ? '<span class="text-green-500">Đã duyệt</span>'
-                : data.status === "pending"
-                  ? '<span class="text-orange-500">Chờ duyệt</span>'
-                  : '<span class="text-red-500">Đã hủy</span>';
-            tbody.innerHTML += `<tr class="border-b border-gray-100"><td class="p-4 font-bold text-blue-600 line-clamp-1 mt-3 border-none">${data.title}</td><td class="p-4">${data.leaderName}</td><td class="p-4 font-bold text-xs">${st}</td><td class="p-4 text-right"><button onclick="deleteProjectAdmin('${docSnap.id}')" class="text-red-500 hover:underline text-xs font-bold">Xóa</button></td></tr>`;
-          });
-        });
-
-        // 4. Events
-        onSnapshot(collection(db, "events"), (snapshot) => {
-          const tbody = document.getElementById("eventsTableBody");
-          tbody.innerHTML = "";
-          if (snapshot.empty) {
-            tbody.innerHTML = `<tr><td colspan="3" class="p-6 text-center text-gray-500">Chưa có sự kiện nào.</td></tr>`;
-            return;
-          }
-          snapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            tbody.innerHTML += `<tr class="border-b border-gray-100"><td class="p-4 font-bold text-blue-600">${data.title}</td><td class="p-4 text-xs text-gray-500">${data.date}</td><td class="p-4 text-right"><button onclick="deleteEvent('${docSnap.id}')" class="text-red-500 hover:underline text-xs font-bold">Xóa</button></td></tr>`;
-          });
-        });
-      }
-
-      // --- SỬA USER ---
-      window.openEditUser = function (id, name, role, pass) {
-        document.getElementById("editUserId").value = id;
-        document.getElementById("editUserIdDisplay").value = id;
-        document.getElementById("editUserName").value = name;
-        document.getElementById("editUserRole").value = role;
-        document.getElementById("editUserPass").value = pass;
-        document.getElementById("editUserModal").classList.remove("hidden");
-        document.getElementById("editUserModal").classList.add("flex");
-      };
-      window.closeEditUserModal = function () {
-        document.getElementById("editUserModal").classList.add("hidden");
-        document.getElementById("editUserModal").classList.remove("flex");
-      };
-      window.saveEditUser = async function () {
-        const id = document.getElementById("editUserId").value;
-        const name = document.getElementById("editUserName").value;
-        const role = document.getElementById("editUserRole").value;
-        const pass = document.getElementById("editUserPass").value;
-        try {
-          await updateDoc(doc(db, "users", id), {
-            name: name,
-            role: role,
-            password: pass,
-          });
-          alert("Cập nhật thành công!");
-          closeEditUserModal();
-        } catch (e) {
-          alert("Lỗi: " + e.message);
-        }
-      };
-
-      // --- DUYỆT LỆ PHÍ ---
-      window.approvePayment = async function (id) {
-        if (
-          !confirm(
-            `Xác nhận ĐÃ NHẬN TIỀN từ sinh viên ${id}?\nHệ thống sẽ tự động tạo tài khoản và chuyển họ vào trang chủ.`,
-          )
-        )
-          return;
-        try {
-          const pendingRef = doc(db, "pending_users", id);
-          const snap = await getDoc(pendingRef);
-          if (snap.exists()) {
-            const userData = snap.data();
-            await setDoc(doc(db, "users", id), {
-              id: userData.id,
-              name: userData.name,
-              role: userData.role || "student",
-              password: userData.password,
-              createdAt: userData.createdAt || new Date(),
-            });
-            await updateDoc(pendingRef, { paymentStatus: "approved" });
-            setTimeout(async () => {
-              await deleteDoc(pendingRef);
-            }, 3000);
-          }
-        } catch (e) {
-          alert("Lỗi: " + e.message);
-        }
-      };
-
-      window.rejectPayment = async function (id) {
-        if (confirm("Xóa bỏ yêu cầu đăng ký này?")) {
-          await deleteDoc(doc(db, "pending_users", id));
-        }
-      };
-
-      // --- CẤP TÀI KHOẢN MỚI ---
-      window.createNewUser = async function (e) {
-        e.preventDefault();
-        const id = document
-          .getElementById("newUserId")
-          .value.trim()
-          .toUpperCase();
-        const name = document.getElementById("newUserName").value.trim();
-        const pass = document.getElementById("newUserPass").value;
-        const role = document.getElementById("newUserRole").value;
-        try {
-          const snap = await getDoc(doc(db, "users", id));
-          if (snap.exists()) {
-            alert("⚠️ Tài khoản có ID này đã tồn tại!");
-            return;
-          }
-          await setDoc(doc(db, "users", id), {
-            id: id,
-            name: name,
-            password: pass,
-            role: role,
-            createdAt: new Date(),
-          });
-          alert(`✅ Đã tạo thành công tài khoản cho ${name}!`);
-          e.target.reset();
-        } catch (err) {
-          alert("Lỗi: " + err.message);
-        }
-      };
-
-      // --- XÓA AN TOÀN ---
-      window.deleteUserAdmin = async function (id) {
-        if (confirm(`CẢNH BÁO: Xóa vĩnh viễn tài khoản ${id}?`)) {
-          await deleteDoc(doc(db, "users", id));
-        }
-      };
-      window.deleteProjectAdmin = async function (id) {
-        if (confirm(`CẢNH BÁO: Xóa vĩnh viễn dự án "${id}"?`)) {
-          await deleteDoc(doc(db, "projects", id));
-        }
-      };
-      window.deleteEvent = async function (id) {
-        if (confirm(`Xóa bỏ sự kiện này khỏi hệ thống?`)) {
-          await deleteDoc(doc(db, "events", id));
-        }
-      };
-
-      // --- QUẢN LÝ SỰ KIỆN ---
-      window.evImageBase64 = "";
-      window.previewEvMedia = function (e) {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        if (file.type.startsWith("video/")) {
-          alert(
-            "⚠️ Gợi ý: Với video, hãy upload lên Youtube/Drive rồi dán link vào ô bên cạnh để đảm bảo tốc độ tải trang nhé!",
-          );
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function (event) {
-          const img = new Image();
-          img.onload = function () {
-            const canvas = document.createElement("canvas");
-            const MAX_WIDTH = 800;
-            const MAX_HEIGHT = 800;
-            let width = img.width;
-            let height = img.height;
-            if (width > height) {
-              if (width > MAX_WIDTH) {
-                height *= MAX_WIDTH / width;
-                width = MAX_WIDTH;
-              }
-            } else {
-              if (height > MAX_HEIGHT) {
-                width *= MAX_HEIGHT / height;
-                height = MAX_HEIGHT;
-              }
-            }
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, width, height);
-            window.evImageBase64 = canvas.toDataURL("image/jpeg", 0.7);
-            document.getElementById("evPreviewImg").src = window.evImageBase64;
-            document.getElementById("evPreviewImg").classList.remove("hidden");
-          };
-          img.src = event.target.result;
+        document.getElementById("content-" + tabId).classList.remove("hidden");
+        document.getElementById("tab-" + tabId).classList.add("active");
+        const titles = {
+          projects: "Hệ Thống Phê Duyệt Đồ Án",
+          students: "Quản Lý Danh Sách Sinh Viên",
+          tracking: "Báo Cáo Tiến Độ Các Nhóm",
         };
-        reader.readAsDataURL(file);
+        document.getElementById("topbarTitle").innerText = titles[tabId];
       };
 
-      window.createEvent = async function (e) {
-        e.preventDefault();
-        const title = document.getElementById("evTitle").value;
-        const desc = document.getElementById("evDesc").value;
-        const date = document.getElementById("evDate").value;
-        const vLink = document.getElementById("evVideoUrl").value;
-        const evId = "EV_" + Date.now();
-
+      // ĐỒNG BỘ: TẢI DATA SINH VIÊN
+      window.loadStudentsData = async function () {
         try {
-          await setDoc(doc(db, "events", evId), {
-            id: evId,
-            title: title,
-            description: desc,
-            date: date,
-            image: window.evImageBase64,
-            videoUrl: vLink,
-            createdAt: new Date(),
+          const querySnapshot = await getDocs(collection(db, "users"));
+          window.allUsers = {};
+          querySnapshot.forEach((doc) => {
+            window.allUsers[doc.id] = doc.data();
           });
-          alert("✅ Đăng sự kiện thành công!");
-          e.target.reset();
-          document.getElementById("evPreviewImg").classList.add("hidden");
-          window.evImageBase64 = "";
-        } catch (err) {
-          alert("Lỗi khi đăng sự kiện: " + err.message);
+          window.renderStudentTable();
+        } catch (error) {
+          console.error("Lỗi:", error);
         }
+      };
+
+      window.renderStudentTable = function () {
+        const tbody = document.getElementById("studentTableBody");
+        const searchQuery = document.getElementById("searchStudent")
+          ? document.getElementById("searchStudent").value.toLowerCase().trim()
+          : "";
+        tbody.innerHTML = "";
+        for (const [userId, userObj] of Object.entries(window.allUsers)) {
+          if (userObj.role === "student") {
+            if (
+              searchQuery &&
+              !userObj.name.toLowerCase().includes(searchQuery) &&
+              !userId.toLowerCase().includes(searchQuery)
+            )
+              continue;
+            tbody.innerHTML += `<tr class="hover:bg-slate-50"><td class="p-3 sm:p-4"><div class="flex items-center space-x-3"><div class="w-8 h-8 sm:w-9 sm:h-9 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 border border-indigo-200">${userObj.name.charAt(0).toUpperCase()}</div><div><p class="font-bold text-slate-800 text-sm whitespace-nowrap">${userObj.name}</p><p class="text-[10px] sm:text-xs text-slate-500 mt-0.5 line-clamp-1">${userObj.major || "Đã đồng bộ Database"}</p></div></div></td><td class="p-3 sm:p-4 font-mono text-xs sm:text-sm text-slate-600 font-bold uppercase">${userId}</td><td class="p-3 sm:p-4 text-center"><span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap">Hoạt động</span></td></tr>`;
+          }
+        }
+      };
+
+      // ĐỒNG BỘ: TẢI DỰ ÁN
+      window.loadProjectsData = async function () {
+        try {
+          const querySnapshot = await getDocs(collection(db, "projects"));
+          window.allProjects = [];
+          querySnapshot.forEach((doc) => {
+            window.allProjects.push(doc.data());
+          });
+          window.renderProjectTable();
+          window.renderTrackingTab();
+        } catch (e) {}
+      };
+
+      window.renderProjectTable = function () {
+        const tbody = document.getElementById("projectTableBody");
+        const searchQuery = document.getElementById("searchTable")
+          ? document.getElementById("searchTable").value.toLowerCase().trim()
+          : "";
+        tbody.innerHTML = "";
+        let pendingCount = 0,
+          activeCount = 0;
+        const filteredProjects = window.allProjects.filter(
+          (p) =>
+            p.title.toLowerCase().includes(searchQuery) ||
+            (p.leaderName && p.leaderName.toLowerCase().includes(searchQuery)),
+        );
+        filteredProjects.forEach((proj) => {
+          const status = proj.status || "pending";
+          if (status === "pending") pendingCount++;
+          if (status === "approved") activeCount++;
+          let statusHtml = "",
+            actionHtml = "";
+          if (status === "pending") {
+            statusHtml = `<span class="bg-orange-100 text-orange-700 px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap">Chờ duyệt</span>`;
+            actionHtml = `<button onclick="window.approveProject('${proj.title}')" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-700 mr-2 shadow-sm">Duyệt</button><button onclick="window.rejectProject('${proj.title}')" class="bg-white border border-red-200 text-red-500 px-2.5 py-1.5 rounded-lg text-xs font-bold hover:bg-red-50 shadow-sm">Từ chối</button>`;
+          } else if (status === "approved") {
+            statusHtml = `<span class="bg-emerald-100 text-emerald-700 px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap">Đang làm</span>`;
+            actionHtml = `<button onclick="window.deleteProject('${proj.title}')" class="bg-white border border-red-200 text-red-500 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-50 shadow-sm">Xóa</button>`;
+          } else {
+            statusHtml = `<span class="bg-red-100 text-red-700 px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap">Đã hủy</span>`;
+            actionHtml = `<button onclick="window.deleteProject('${proj.title}')" class="bg-white border border-red-200 text-red-500 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-red-50 shadow-sm">Xóa</button>`;
+          }
+          tbody.innerHTML += `<tr class="hover:bg-slate-50 border-b border-slate-100"><td class="p-3 sm:p-4"><p class="font-bold text-slate-800 text-xs sm:text-sm line-clamp-1 max-w-[150px] sm:max-w-xs">${proj.title}</p><p class="text-[10px] sm:text-xs text-slate-500 mt-0.5 line-clamp-1 max-w-[150px] sm:max-w-xs">${proj.description}</p></td><td class="p-3 sm:p-4"><span class="bg-slate-100 text-slate-600 px-2 py-1 rounded text-[10px] sm:text-xs font-semibold whitespace-nowrap">${proj.category || "Đa ngành"}</span></td><td class="p-3 sm:p-4"><div class="flex items-center space-x-2"><div class="w-6 h-6 sm:w-8 sm:h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold shrink-0">${proj.leaderInitials || "U"}</div><span class="font-medium text-xs sm:text-sm line-clamp-1 max-w-[80px] sm:max-w-[120px]">${proj.leaderName}</span></div></td><td class="p-3 sm:p-4 text-center">${statusHtml}</td><td class="p-3 sm:p-4 text-center whitespace-nowrap">${actionHtml}</td></tr>`;
+        });
+        document.getElementById("statTotal").innerText =
+          window.allProjects.length;
+        document.getElementById("statPending").innerText = pendingCount;
+        document.getElementById("statActive").innerText = activeCount;
+      };
+
+      // ĐỒNG BỘ: UPDATE LÊN FIREBASE
+      window.approveProject = async function (title) {
+        if (confirm(`Phê duyệt dự án "${title}"?`)) {
+          await updateDoc(doc(db, "projects", title), { status: "approved" });
+          window.loadProjectsData();
+        }
+      };
+      window.rejectProject = async function (title) {
+        if (confirm(`Từ chối dự án "${title}"?`)) {
+          await updateDoc(doc(db, "projects", title), { status: "rejected" });
+          window.loadProjectsData();
+        }
+      };
+      window.deleteProject = async function (title) {
+        if (confirm(`Xóa vĩnh viễn dự án "${title}"?`)) {
+          await deleteDoc(doc(db, "projects", title));
+          window.loadProjectsData();
+        }
+      };
+
+      window.renderTrackingTab = function () {
+        const trackingList = document.getElementById("trackingList");
+        const activeProjects = window.allProjects.filter(
+          (p) => p.status === "approved",
+        );
+        trackingList.innerHTML = "";
+        activeProjects.forEach((p) => {
+          trackingList.innerHTML += `<div class="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 shadow-sm"><h4 class="text-base sm:text-xl font-extrabold text-gray-800 mb-1 line-clamp-1">${p.title}</h4><div class="flex items-center gap-2 mb-4"><span class="text-xs sm:text-sm font-bold text-gray-600 line-clamp-1">Trưởng nhóm: ${p.leaderName}</span></div><div class="w-full bg-gray-200 rounded-full h-1.5 sm:h-2 overflow-hidden"><div class="bg-emerald-500 h-1.5 sm:h-2 rounded-full" style="width: 50%"></div></div></div>`;
+        });
+      };
+
+      window.teacherLogout = function () {
+        localStorage.removeItem("userProfileData");
+        window.location.href = "index.html";
       };
     </script>
   </body>
