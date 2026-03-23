@@ -51,10 +51,6 @@
       .modal-active {
         overflow: hidden;
       }
-      .captcha-bg {
-        background-image: radial-gradient(#666 1px, transparent 1px);
-        background-size: 5px 5px;
-      }
     </style>
   </head>
   <body
@@ -82,11 +78,9 @@
               UNICOLLAB
             </h1>
           </div>
-          <p
-            data-i18n="desc"
-            class="text-blue-100 text-[15px] leading-relaxed font-medium"
-          >
-            Nền tảng kết nối và điều hành nhóm dự án rèn nghề liên ngành.
+          <p class="text-blue-100 text-[15px] leading-relaxed font-medium">
+            Nền tảng kết nối và điều hành nhóm dự án rèn nghề liên ngành dành
+            cho Sinh viên.
           </p>
         </div>
       </div>
@@ -95,10 +89,9 @@
         class="w-full md:w-7/12 p-10 md:p-12 flex flex-col justify-center bg-white relative z-10"
       >
         <h2
-          data-i18n="auth_title"
           class="text-[22px] font-extrabold text-slate-500 text-center mb-8 tracking-wide"
         >
-          Hệ thống chung
+          ĐĂNG NHẬP HỆ THỐNG
         </h2>
 
         <form id="loginForm" onsubmit="handleLogin(event)">
@@ -111,7 +104,6 @@
             <input
               type="text"
               id="loginAccount"
-              data-placeholder="account"
               required
               autocomplete="off"
               placeholder="Mã SV / Tài khoản"
@@ -128,7 +120,6 @@
             <input
               type="password"
               id="loginPassword"
-              data-placeholder="password"
               required
               placeholder="Mật khẩu"
               class="w-full pl-12 pr-12 py-3.5 bg-transparent rounded-full text-sm font-bold text-gray-800 outline-none placeholder-gray-400"
@@ -143,17 +134,14 @@
           <div class="flex items-center justify-between mb-8 px-2">
             <label
               class="flex items-center text-sm text-gray-600 cursor-pointer hover:text-gray-900 transition"
-            >
-              <input
+              ><input
                 type="checkbox"
                 class="mr-2 rounded border-gray-300 text-[#2563eb] focus:ring-[#2563eb] w-4 h-4 cursor-pointer"
-              />
-              <span data-i18n="remember" class="ml-2">Duy trì đăng nhập</span>
-            </label>
+              /><span class="ml-2">Duy trì đăng nhập</span></label
+            >
             <a
               href="javascript:void(0)"
-              id="openForgotBtn"
-              data-i18n="forgot"
+              onclick="openAdminModal()"
               class="text-sm font-bold text-[#2563eb] hover:text-blue-800 transition"
               >Quên mật khẩu?</a
             >
@@ -163,25 +151,30 @@
             id="errorMsg"
             class="hidden mb-5 p-3 bg-red-50 border border-red-100 text-red-500 text-sm font-bold rounded-xl text-center items-center justify-center animate-pulse"
           >
-            <i class="fa-solid fa-circle-exclamation mr-2"></i>
-            <span id="errorText">Sai tài khoản hoặc mật khẩu!</span>
+            <i class="fa-solid fa-circle-exclamation mr-2"></i
+            ><span id="errorText">Sai tài khoản hoặc mật khẩu!</span>
           </div>
 
           <button
             type="submit"
-            data-i18n="login_btn"
             class="w-full bg-[#2563eb] hover:bg-blue-700 text-white font-bold text-sm uppercase tracking-wider py-3.5 rounded-full transition-all shadow-md"
           >
             Đăng nhập
           </button>
 
+          <button
+            type="button"
+            onclick="openAboutModal()"
+            class="w-full mt-3 bg-white border-2 border-[#2563eb] text-[#2563eb] hover:bg-blue-50 font-bold text-sm uppercase tracking-wider py-3 rounded-full transition-all shadow-sm"
+          >
+            <i class="fa-solid fa-circle-info mr-2"></i> Giới thiệu về UNICOLLAB
+          </button>
+
           <div class="mt-8 text-center border-t border-gray-100 pt-6">
             <p class="text-sm text-gray-500">
-              <span data-i18n="no_acc">Chưa có tài khoản?</span>
-              <button
+              Chưa có tài khoản?<button
                 type="button"
-                id="openRegisterBtn"
-                data-i18n="reg_now"
+                onclick="openRegisterModal()"
                 class="text-[#2563eb] font-bold hover:underline ml-1 uppercase transition"
               >
                 Đăng ký ngay
@@ -189,34 +182,6 @@
             </p>
           </div>
         </form>
-
-        <div class="mt-8 pt-6 border-t border-gray-100 border-dashed">
-          <p
-            class="text-[11px] text-gray-400 text-center uppercase tracking-wider font-bold mb-4"
-          >
-            Truy cập nhanh (Dành cho báo cáo)
-          </p>
-          <div class="flex flex-col space-y-3">
-            <button
-              onclick="demoLogin('student')"
-              class="w-full flex justify-center items-center py-3 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-full text-sm font-bold transition border border-blue-100 shadow-sm"
-            >
-              <i class="fa-solid fa-user-graduate mr-2"></i> Sinh Viên
-            </button>
-            <button
-              onclick="demoLogin('leader')"
-              class="w-full flex justify-center items-center py-3 bg-orange-50 text-orange-600 hover:bg-orange-500 hover:text-white rounded-full text-sm font-bold transition border border-orange-100 shadow-sm"
-            >
-              <i class="fa-solid fa-crown mr-2"></i> Trưởng Nhóm
-            </button>
-            <button
-              onclick="demoLogin('teacher')"
-              class="w-full flex justify-center items-center py-3 bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white rounded-full text-sm font-bold transition border border-emerald-100 shadow-sm"
-            >
-              <i class="fa-solid fa-chalkboard-user mr-2"></i> Giảng Viên
-            </button>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -231,62 +196,20 @@
           <h2
             class="text-xl font-bold text-white text-center flex items-center justify-center tracking-wide"
           >
-            <i class="fa-solid fa-user-plus mr-2"></i> ĐĂNG KÝ TÀI KHOẢN
+            <i class="fa-solid fa-user-plus mr-2"></i> TẠO TÀI KHOẢN SINH VIÊN
           </h2>
           <button
-            id="closeRegisterBtn"
+            onclick="closeRegisterModal()"
             class="absolute right-5 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition shadow-sm"
           >
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
-
         <form
           id="registerForm"
           class="p-6 md:p-8 max-h-[80vh] overflow-y-auto custom-scrollbar"
-          onsubmit="submitRegister(event)"
+          onsubmit="handleRegisterSubmit(event)"
         >
-          <div class="mb-5 relative">
-            <label class="block text-sm font-bold text-gray-700 mb-2 ml-2"
-              >Bạn đăng ký với tư cách là? *</label
-            >
-            <div class="relative">
-              <select
-                id="roleSelect"
-                onchange="handleRoleChange()"
-                class="w-full px-5 py-4 bg-blue-50 border border-blue-200 rounded-full text-sm font-bold text-blue-700 outline-none focus:ring-2 focus:ring-blue-500 transition appearance-none cursor-pointer shadow-sm"
-              >
-                <option value="student">Tài khoản: SINH VIÊN</option>
-                <option value="teacher">Tài khoản: GIẢNG VIÊN</option>
-              </select>
-              <i
-                class="fa-solid fa-chevron-down absolute right-6 top-1/2 transform -translate-y-1/2 text-blue-500 pointer-events-none"
-              ></i>
-            </div>
-          </div>
-
-          <div
-            id="teacherAuthBox"
-            class="hidden bg-blue-50 border border-blue-200 p-5 rounded-2xl mb-5 shadow-sm flex items-start space-x-3 transition-all duration-300"
-          >
-            <i class="fa-solid fa-shield-check text-blue-600 mt-1 text-lg"></i>
-            <div class="flex-1">
-              <label class="block text-sm font-bold text-blue-800 mb-1 ml-1"
-                >Mã xác nhận do trường cấp *</label
-              >
-              <p class="text-xs text-blue-600 mb-3 ml-1">
-                Nhập mã bí mật để xác thực danh tính Giảng viên (Mã Demo:
-                <strong>GV2026</strong>)
-              </p>
-              <input
-                type="password"
-                id="teacherSecret"
-                placeholder="Nhập mã xác thực..."
-                class="w-full px-5 py-3 bg-white border border-blue-200 rounded-full text-sm outline-none focus:ring-2 focus:ring-blue-500 transition"
-              />
-            </div>
-          </div>
-
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
             <input
               type="text"
@@ -324,7 +247,7 @@
               />
               <i
                 class="fa-regular fa-eye-slash absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 cursor-pointer transition text-lg"
-                onclick="toggleRegPassword('regPassword', this)"
+                onclick="togglePasswordVisibility('regPassword', this)"
               ></i>
             </div>
             <div class="relative">
@@ -337,19 +260,196 @@
               />
               <i
                 class="fa-regular fa-eye-slash absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 cursor-pointer transition text-lg"
-                onclick="toggleRegPassword('regConfirmPassword', this)"
+                onclick="togglePasswordVisibility('regConfirmPassword', this)"
               ></i>
             </div>
           </div>
-
           <button
             type="submit"
-            id="btnSubmitReg"
             class="w-full bg-[#2563eb] text-white font-bold py-4 rounded-full hover:bg-blue-700 transition uppercase tracking-wider shadow-md"
           >
-            HOÀN TẤT ĐĂNG KÝ
+            ĐĂNG KÝ & THANH TOÁN LỆ PHÍ
           </button>
         </form>
+      </div>
+    </div>
+
+    <div
+      id="paymentModal"
+      class="fixed inset-0 bg-black/80 backdrop-blur-md z-[60] hidden items-center justify-center p-4"
+    >
+      <div
+        class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl relative transition-all duration-300 scale-95 opacity-0 flex flex-col items-center p-8"
+      >
+        <div
+          class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-3xl mb-4"
+        >
+          <i class="fa-solid fa-qrcode"></i>
+        </div>
+        <h2 class="text-2xl font-black text-gray-800 mb-2">
+          Thanh toán lệ phí
+        </h2>
+        <p class="text-sm text-gray-500 text-center mb-6">
+          Mở app Ngân hàng để quét mã QR. Tài khoản của bạn sẽ tự động tạo khi
+          hệ thống nhận được tiền.
+        </p>
+        <div
+          class="bg-gray-50 p-4 rounded-2xl border border-gray-200 shadow-inner mb-6 w-full flex justify-center relative"
+        >
+          <img
+            id="qrImage"
+            src=""
+            alt="QR Thanh Toán"
+            class="w-56 h-56 rounded-xl shadow-sm mix-blend-multiply"
+          />
+        </div>
+        <div
+          class="w-full bg-blue-50 p-4 rounded-xl border border-blue-100 mb-6"
+        >
+          <p class="text-xs text-blue-600 font-bold mb-1">
+            Chủ tài khoản: <span class="text-blue-800">VU XUAN CONG</span>
+          </p>
+          <p class="text-xs text-blue-600 font-bold mb-1">
+            Số tài khoản: <span class="text-blue-800">4619092006</span> (MBBank)
+          </p>
+          <p class="text-xs text-blue-600 font-bold">
+            Nội dung:
+            <span id="paymentMemo" class="text-blue-800 uppercase"
+              >LE PHI DANG KY</span
+            >
+          </p>
+        </div>
+        <div
+          class="w-full flex items-center justify-center space-x-3 bg-gray-100 py-3 rounded-full border border-gray-200"
+        >
+          <i class="fa-solid fa-circle-notch fa-spin text-blue-500"></i
+          ><span class="text-sm font-bold text-gray-600"
+            >Đang chờ hệ thống xác nhận...</span
+          >
+        </div>
+        <button
+          onclick="closePaymentModal()"
+          class="mt-6 text-sm font-bold text-gray-400 hover:text-red-500 transition"
+        >
+          Hủy đăng ký
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="adminInfoModal"
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4"
+      onclick="closeAdminModal()"
+    >
+      <div
+        class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl relative transition-all duration-300 scale-95 opacity-0 p-8 text-center"
+        onclick="event.stopPropagation()"
+      >
+        <button
+          onclick="closeAdminModal()"
+          class="absolute right-5 top-5 text-gray-400 hover:text-red-500 transition text-xl"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div
+          class="w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4"
+        >
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <h2 class="text-2xl font-black text-gray-800 mb-2">Liên hệ Admin</h2>
+        <p class="text-sm text-gray-500 mb-6">
+          Nếu bạn quên mật khẩu hoặc gặp lỗi, vui lòng liên hệ:
+        </p>
+        <div class="space-y-3">
+          <a
+            href="mailto:xuanconggaming@gmail.com"
+            class="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-blue-300 hover:bg-blue-50 transition group"
+          >
+            <i
+              class="fa-solid fa-envelope text-xl text-gray-400 group-hover:text-blue-500 w-8"
+            ></i>
+            <div class="text-left">
+              <p class="text-xs font-bold text-gray-500">Email Hỗ trợ</p>
+              <p class="text-sm font-bold text-gray-800">
+                xuanconggaming@gmail.com
+              </p>
+            </div>
+          </a>
+          <a
+            href="https://zalo.me/0971714681"
+            target="_blank"
+            class="flex items-center p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-blue-300 hover:bg-blue-50 transition group"
+          >
+            <i
+              class="fa-solid fa-comment-sms text-xl text-gray-400 group-hover:text-blue-500 w-8"
+            ></i>
+            <div class="text-left">
+              <p class="text-xs font-bold text-gray-500">Zalo Hotline</p>
+              <p class="text-sm font-bold text-gray-800">0971714681</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="aboutModal"
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4"
+      onclick="closeAboutModal()"
+    >
+      <div
+        class="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl relative transition-all duration-300 scale-95 opacity-0 p-8"
+        onclick="event.stopPropagation()"
+      >
+        <button
+          onclick="closeAboutModal()"
+          class="absolute right-5 top-5 text-gray-400 hover:text-red-500 transition text-xl"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="flex items-center gap-3 mb-6">
+          <i class="fa-brands fa-uniregistry text-4xl text-blue-600"></i>
+          <h2 class="text-3xl font-black text-gray-800 tracking-tighter">
+            UNICOLLAB
+          </h2>
+        </div>
+        <div class="space-y-4 text-sm text-gray-600 leading-relaxed">
+          <p>
+            <strong class="text-gray-800">UNICOLLAB</strong> là nền tảng Đồ án
+            Liên ngành được thiết kế độc quyền, giúp sinh viên phá bỏ rào cản
+            giữa các khoa, viện để cùng nhau tạo nên những dự án thực tế xuất
+            sắc.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+              <i
+                class="fa-solid fa-magnifying-glass text-blue-500 text-xl mb-2"
+              ></i>
+              <h4 class="font-bold text-gray-800 mb-1">Tìm Đồng Đội</h4>
+              <p class="text-xs">Dễ dàng tìm kiếm ứng viên.</p>
+            </div>
+            <div class="bg-orange-50 p-4 rounded-xl border border-orange-100">
+              <i
+                class="fa-solid fa-table-columns text-orange-500 text-xl mb-2"
+              ></i>
+              <h4 class="font-bold text-gray-800 mb-1">Kanban Board</h4>
+              <p class="text-xs">Quản lý và giao việc chuyên nghiệp.</p>
+            </div>
+            <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+              <i
+                class="fa-solid fa-comment-dots text-emerald-500 text-xl mb-2"
+              ></i>
+              <h4 class="font-bold text-gray-800 mb-1">Chat Real-time</h4>
+              <p class="text-xs">Trao đổi trực tiếp, báo cáo tiến độ.</p>
+            </div>
+          </div>
+        </div>
+        <button
+          onclick="closeAboutModal()"
+          class="w-full mt-8 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 rounded-xl transition"
+        >
+          Đã hiểu
+        </button>
       </div>
     </div>
 
@@ -360,23 +460,23 @@
         doc,
         setDoc,
         getDoc,
+        onSnapshot,
+        deleteDoc,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
       const firebaseConfig = {
         apiKey: "AIzaSyDZckttPdycFw2zDsA4Zxbvj8EGRtoFHoU",
         authDomain: "unicollab-e81c0.firebaseapp.com",
         projectId: "unicollab-e81c0",
-        storageBucket: "unicollab-e81c0.firebasestorage.app",
-        messagingSenderId: "983588473001",
-        appId: "1:983588473001:web:0708bc4fe827e388f181b8",
       };
-
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
-      window.submitRegister = async function (event) {
-        event.preventDefault();
-        const role = document.getElementById("roleSelect").value;
+      window.tempRegistrationId = null;
+      let unsubscribePayment = null;
+
+      window.handleRegisterSubmit = async function (e) {
+        e.preventDefault();
         const fullName = document.getElementById("regFullName").value.trim();
         const idInput = document
           .getElementById("idInput")
@@ -389,60 +489,99 @@
           alert("⚠️ Mật khẩu nhập lại không khớp!");
           return;
         }
-        if (
-          role === "teacher" &&
-          document.getElementById("teacherSecret").value !== "GV2026"
-        ) {
-          alert("❌ LỖI BẢO MẬT: Mã xác nhận Giảng viên không chính xác!");
-          return;
-        }
 
         try {
           const userRef = doc(db, "users", idInput);
           const docSnap = await getDoc(userRef);
-
           if (docSnap.exists()) {
             alert(`⚠️ Tài khoản ${idInput} đã tồn tại! Vui lòng Đăng nhập.`);
             return;
           }
 
-          // Ghi dữ liệu vào Firebase (Sau này có thể đổi URL post qua file PHP)
-          await setDoc(userRef, {
+          const pendingData = {
             id: idInput,
             name: fullName,
-            role: role,
+            role: "student",
             password: pass,
             createdAt: new Date(),
-          });
+            paymentStatus: "waiting",
+          };
+          await setDoc(doc(db, "pending_users", idInput), pendingData);
+          window.tempRegistrationId = idInput;
 
-          localStorage.setItem(
-            "userProfileData",
-            JSON.stringify({
-              id: idInput,
-              name: fullName,
-              role: role,
-              avatarBase64: "",
-            }),
+          const memo = `DK ${idInput}`;
+          document.getElementById("paymentMemo").innerText = memo;
+          const qrUrl = `https://img.vietqr.io/image/970422-4619092006-compact2.png?amount=100000&addInfo=${encodeURIComponent(memo)}&accountName=VU%20XUAN%20CONG`;
+          document.getElementById("qrImage").src = qrUrl;
+
+          closeRegisterModal();
+          document.body.classList.add("modal-active");
+          const payModal = document.getElementById("paymentModal");
+          payModal.classList.remove("hidden");
+          payModal.classList.add("flex");
+          setTimeout(() => {
+            payModal.children[0].classList.remove("scale-95", "opacity-0");
+          }, 10);
+
+          unsubscribePayment = onSnapshot(
+            doc(db, "pending_users", idInput),
+            (docSnapshot) => {
+              if (
+                docSnapshot.exists() &&
+                docSnapshot.data().paymentStatus === "approved"
+              ) {
+                unsubscribePayment();
+                alert(
+                  `🎉 Thanh toán thành công! Chào mừng ${fullName} đến với UNICOLLAB.`,
+                );
+                localStorage.setItem(
+                  "userProfileData",
+                  JSON.stringify({
+                    id: idInput,
+                    name: fullName,
+                    role: "student",
+                    avatarBase64: "",
+                  }),
+                );
+                window.location.href = "matching.html";
+              }
+            },
           );
-
-          alert(`🎉 Chúc mừng ${fullName} đã tạo tài khoản thành công!`);
-          window.location.href =
-            role === "teacher" ? "dashboard.html" : "matching.html";
         } catch (error) {
-          console.error("Lỗi: ", error);
+          console.error(error);
           alert("Lỗi kết nối cơ sở dữ liệu!");
         }
       };
 
+      window.closePaymentModal = async function () {
+        if (unsubscribePayment) unsubscribePayment();
+        if (window.tempRegistrationId) {
+          await deleteDoc(doc(db, "pending_users", window.tempRegistrationId));
+          window.tempRegistrationId = null;
+        }
+        const payModal = document.getElementById("paymentModal");
+        payModal.children[0].classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          payModal.classList.add("hidden");
+          payModal.classList.remove("flex");
+          document.body.classList.remove("modal-active");
+        }, 300);
+      };
+
       window.handleLogin = async function (event) {
         event.preventDefault();
-        let accVal = document
-          .getElementById("loginAccount")
-          .value.trim()
-          .toUpperCase();
+        let accVal = document.getElementById("loginAccount").value.trim();
         const passVal = document.getElementById("loginPassword").value;
         const errorDiv = document.getElementById("errorMsg");
 
+        // ĐĂNG NHẬP MẶC ĐỊNH VÀO ADMIN TỐI CAO
+        if (accVal.toLowerCase() === "admin" && passVal === "24442444aA@") {
+          sessionStorage.setItem("isAdminAuthed", "true");
+          window.location.href = "admin.html";
+          return;
+        }
+
+        accVal = accVal.toUpperCase();
         try {
           const docSnap = await getDoc(doc(db, "users", accVal));
           if (docSnap.exists() && docSnap.data().password === passVal) {
@@ -468,87 +607,73 @@
         }
       };
 
-      // Các hàm UI Demo
-      window.demoLogin = function (role) {
-        if (role === "student") {
-          localStorage.setItem(
-            "userProfileData",
-            JSON.stringify({
-              id: "SV_DEMO",
-              name: "Sinh viên Trải nghiệm",
-              role: "student",
-            }),
-          );
-          window.location.href = "matching.html";
-        } else if (role === "teacher") {
-          localStorage.setItem(
-            "userProfileData",
-            JSON.stringify({
-              id: "GV_DEMO",
-              name: "Giảng viên Chấm thi",
-              role: "teacher",
-            }),
-          );
-          window.location.href = "dashboard.html";
-        } else {
-          window.location.href = "kanban.html";
-        }
-      };
-
-      window.togglePasswordVisibility = function (inputId, iconElement) {
-        const input = document.getElementById(inputId);
+      window.togglePasswordVisibility = function (id, el) {
+        const input = document.getElementById(id);
         if (input.type === "password") {
           input.type = "text";
-          iconElement.classList.replace("fa-eye-slash", "fa-eye");
-          iconElement.classList.add("text-[#2563eb]");
+          el.classList.replace("fa-eye-slash", "fa-eye");
+          el.classList.add("text-[#2563eb]");
         } else {
           input.type = "password";
-          iconElement.classList.replace("fa-eye", "fa-eye-slash");
-          iconElement.classList.remove("text-[#2563eb]");
-        }
-      };
-      window.toggleRegPassword = function (id, el) {
-        window.togglePasswordVisibility(id, el);
-      };
-
-      window.handleRoleChange = function () {
-        const role = document.getElementById("roleSelect").value;
-        const authBox = document.getElementById("teacherAuthBox");
-        const secretInput = document.getElementById("teacherSecret");
-        if (role === "teacher") {
-          authBox.classList.remove("hidden");
-          secretInput.setAttribute("required", "true");
-        } else {
-          authBox.classList.add("hidden");
-          secretInput.removeAttribute("required");
+          el.classList.replace("fa-eye", "fa-eye-slash");
+          el.classList.remove("text-[#2563eb]");
         }
       };
 
-      // Xử lý Modal Đăng ký
-      const regModal = document.getElementById("registerModal");
-      const regContent = regModal.querySelector("div.rounded-3xl");
-      document
-        .getElementById("openRegisterBtn")
-        .addEventListener("click", () => {
-          document.body.classList.add("modal-active");
-          regModal.classList.remove("hidden");
-          regModal.classList.add("flex");
-          setTimeout(() => {
-            regContent.classList.remove("scale-95", "opacity-0");
-            regContent.classList.add("scale-100", "opacity-100");
-          }, 10);
-        });
-      document
-        .getElementById("closeRegisterBtn")
-        .addEventListener("click", () => {
+      window.openRegisterModal = function () {
+        document.body.classList.add("modal-active");
+        const m = document.getElementById("registerModal");
+        m.classList.remove("hidden");
+        m.classList.add("flex");
+        setTimeout(() => {
+          m.children[0].classList.remove("scale-95", "opacity-0");
+        }, 10);
+      };
+      window.closeRegisterModal = function () {
+        const m = document.getElementById("registerModal");
+        m.children[0].classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          m.classList.add("hidden");
+          m.classList.remove("flex");
           document.body.classList.remove("modal-active");
-          regContent.classList.remove("scale-100", "opacity-100");
-          regContent.classList.add("scale-95", "opacity-0");
-          setTimeout(() => {
-            regModal.classList.remove("flex");
-            regModal.classList.add("hidden");
-          }, 300);
-        });
+        }, 300);
+      };
+      window.openAdminModal = function () {
+        document.body.classList.add("modal-active");
+        const m = document.getElementById("adminInfoModal");
+        m.classList.remove("hidden");
+        m.classList.add("flex");
+        setTimeout(() => {
+          m.children[0].classList.remove("scale-95", "opacity-0");
+        }, 10);
+      };
+      window.closeAdminModal = function () {
+        const m = document.getElementById("adminInfoModal");
+        m.children[0].classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          m.classList.add("hidden");
+          m.classList.remove("flex");
+          document.body.classList.remove("modal-active");
+        }, 300);
+      };
+      window.openAboutModal = function () {
+        document.body.classList.add("modal-active");
+        const m = document.getElementById("aboutModal");
+        m.classList.remove("hidden");
+        m.classList.add("flex");
+        setTimeout(() => {
+          m.children[0].classList.remove("scale-95", "opacity-0");
+        }, 10);
+      };
+      window.closeAboutModal = function () {
+        const m = document.getElementById("aboutModal");
+        m.children[0].classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          m.classList.add("hidden");
+          m.classList.remove("flex");
+          document.body.classList.remove("modal-active");
+        }, 300);
+      };
 
       document.addEventListener("DOMContentLoaded", () => {
         const savedUser = localStorage.getItem("userProfileData");
