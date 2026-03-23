@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UNICOLLAB - Đăng nhập Hệ thống</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7fb;
+        background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+      .fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .sso-input {
+        transition: all 0.3s ease;
+      }
+      .sso-input:focus-within {
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        border-color: #93c5fd;
+        background-color: #fff;
+      }
+
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 8px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 8px;
+      }
+
+      .modal-active {
+        overflow: hidden;
+      }
+      .captcha-bg {
+        background-image: radial-gradient(#666 1px, transparent 1px);
+        background-size: 5px 5px;
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen flex flex-col items-center justify-center p-4 relative"
+  >
+    <div
+      class="w-full max-w-[850px] bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex flex-col md:flex-row overflow-hidden fade-in min-h-[450px]"
+    >
+      <div
+        class="w-full md:w-5/12 bg-gradient-to-b from-[#1e40af] to-[#2563eb] p-10 flex flex-col justify-center text-white relative overflow-hidden"
+      >
+        <i
+          class="fa-brands fa-uniregistry absolute text-[250px] text-white opacity-5 -right-10 -bottom-10 pointer-events-none"
+        ></i>
+        <div class="relative z-10">
+          <div class="mb-6 flex flex-col items-start">
+            <div
+              class="w-12 h-12 flex items-center justify-center text-4xl mb-4 text-white"
+            >
+              <i class="fa-brands fa-uniregistry"></i>
+            </div>
+            <h1
+              class="text-2xl font-black tracking-widest uppercase text-white shadow-sm"
+            >
+              UNICOLLAB
+            </h1>
+          </div>
+          <p
+            data-i18n="desc"
+            class="text-blue-100 text-[15px] leading-relaxed font-medium"
+          >
+            Nền tảng kết nối và điều hành nhóm dự án rèn nghề liên ngành.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="w-full md:w-7/12 p-10 md:p-12 flex flex-col justify-center bg-white relative z-10"
+      >
+        <h2
+          data-i18n="auth_title"
+          class="text-[22px] font-extrabold text-slate-500 text-center mb-8 tracking-wide"
+        >
+          Hệ thống chung
+        </h2>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+          <div
+            class="relative mb-5 sso-input bg-gray-50 border border-gray-200 rounded-full flex items-center"
+          >
+            <i
+              class="fa-regular fa-user absolute left-5 text-blue-400 text-lg"
+            ></i>
+            <input
+              type="text"
+              id="loginAccount"
+              data-placeholder="account"
+              required
+              autocomplete="off"
+              placeholder="Mã SV / Tài khoản"
+              class="w-full pl-12 pr-5 py-3.5 bg-transparent rounded-full text-sm font-bold text-gray-800 outline-none placeholder-gray-400"
+            />
+          </div>
+
+          <div
+            class="relative mb-6 sso-input bg-gray-50 border border-gray-200 rounded-full flex items-center"
+          >
+            <i
+              class="fa-solid fa-lock absolute left-5 text-blue-400 text-lg"
+            ></i>
+            <input
+              type="password"
+              id="loginPassword"
+              data-placeholder="password"
+              required
+              placeholder="Mật khẩu"
+              class="w-full pl-12 pr-12 py-3.5 bg-transparent rounded-full text-sm font-bold text-gray-800 outline-none placeholder-gray-400"
+            />
+            <i
+              id="togglePassword"
+              class="fa-regular fa-eye-slash absolute right-5 text-gray-400 cursor-pointer hover:text-blue-600 transition text-lg"
+              onclick="togglePasswordVisibility('loginPassword', this)"
+            ></i>
+          </div>
+
+          <div class="flex items-center justify-between mb-8 px-2">
+            <label
+              class="flex items-center text-sm text-gray-600 cursor-pointer hover:text-gray-900 transition"
+            >
+              <input
+                type="checkbox"
+                class="mr-2 rounded border-gray-300 text-[#2563eb] focus:ring-[#2563eb] w-4 h-4 cursor-pointer"
+              />
+              <span data-i18n="remember" class="ml-2">Duy trì đăng nhập</span>
+            </label>
+            <a
+              href="javascript:void(0)"
+              id="openForgotBtn"
+              data-i18n="forgot"
+              class="text-sm font-bold text-[#2563eb] hover:text-blue-800 transition"
+              >Quên mật khẩu?</a
+            >
+          </div>
+
+          <div
+            id="errorMsg"
+            class="hidden mb-5 p-3 bg-red-50 border border-red-100 text-red-500 text-sm font-bold rounded-xl text-center items-center justify-center animate-pulse"
+          >
+            <i class="fa-solid fa-circle-exclamation mr-2"></i>
+            <span id="errorText">Sai tài khoản hoặc mật khẩu!</span>
+          </div>
+
+          <button
+            type="submit"
+            data-i18n="login_btn"
+            class="w-full bg-[#2563eb] hover:bg-blue-700 text-white font-bold text-sm uppercase tracking-wider py-3.5 rounded-full transition-all shadow-md"
+          >
+            Đăng nhập
+          </button>
+
+          <div class="mt-8 text-center border-t border-gray-100 pt-6">
+            <p class="text-sm text-gray-500">
+              <span data-i18n="no_acc">Chưa có tài khoản?</span>
+              <button
+                type="button"
+                id="openRegisterBtn"
+                data-i18n="reg_now"
+                class="text-[#2563eb] font-bold hover:underline ml-1 uppercase transition"
+              >
+                Đăng ký ngay
+              </button>
+            </p>
+          </div>
+        </form>
+
+        <div class="mt-8 pt-6 border-t border-gray-100 border-dashed">
+          <p
+            class="text-[11px] text-gray-400 text-center uppercase tracking-wider font-bold mb-4"
+          >
+            Truy cập nhanh (Dành cho báo cáo)
+          </p>
+          <div class="flex flex-col space-y-3">
+            <button
+              onclick="demoLogin('student')"
+              class="w-full flex justify-center items-center py-3 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-full text-sm font-bold transition border border-blue-100 shadow-sm"
+            >
+              <i class="fa-solid fa-user-graduate mr-2"></i> Sinh Viên
+            </button>
+            <button
+              onclick="demoLogin('leader')"
+              class="w-full flex justify-center items-center py-3 bg-orange-50 text-orange-600 hover:bg-orange-500 hover:text-white rounded-full text-sm font-bold transition border border-orange-100 shadow-sm"
+            >
+              <i class="fa-solid fa-crown mr-2"></i> Trưởng Nhóm
+            </button>
+            <button
+              onclick="demoLogin('teacher')"
+              class="w-full flex justify-center items-center py-3 bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white rounded-full text-sm font-bold transition border border-emerald-100 shadow-sm"
+            >
+              <i class="fa-solid fa-chalkboard-user mr-2"></i> Giảng Viên
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-6 flex items-center justify-center space-x-3 text-sm text-gray-500 bg-white/80 px-6 py-2.5 rounded-full border border-gray-200 shadow-sm backdrop-blur-sm z-10 fade-in"
+    >
+      <i class="fa-solid fa-globe text-blue-500"></i>
+      <button
+        id="btn-vi"
+        onclick="switchLanguage('vi')"
+        class="font-bold text-blue-600 transition cursor-pointer"
+      >
+        Tiếng Việt
+      </button>
+      <span class="text-gray-300">|</span>
+      <button
+        id="btn-en"
+        onclick="switchLanguage('en')"
+        class="font-medium text-gray-500 hover:text-blue-600 transition cursor-pointer"
+      >
+        English
+      </button>
+    </div>
+
+    <div
+      id="registerModal"
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4"
+    >
+      <div
+        class="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl relative transition-all duration-300 scale-95 opacity-0"
+      >
+        <div class="bg-[#2563eb] py-5 relative">
+          <h2
+            class="text-xl font-bold text-white text-center flex items-center justify-center tracking-wide"
+          >
+            <i class="fa-solid fa-user-plus mr-2"></i> ĐĂNG KÝ TÀI KHOẢN
+          </h2>
+          <button
+            id="closeRegisterBtn"
+            class="absolute right-5 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition shadow-sm"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <form
+          id="registerForm"
+          class="p-6 md:p-8 max-h-[80vh] overflow-y-auto custom-scrollbar"
+          onsubmit="submitRegister(event)"
+        >
+          <div class="mb-5 relative">
+            <label class="block text-sm font-bold text-gray-700 mb-2 ml-2"
+              >Bạn đăng ký với tư cách là? *</label
+            >
+            <div class="relative">
+              <select
+                id="roleSelect"
+                onchange="handleRoleChange()"
+                class="w-full px-5 py-4 bg-blue-50 border border-blue-200 rounded-full text-sm font-bold text-blue-700 outline-none focus:ring-2 focus:ring-blue-500 transition appearance-none cursor-pointer shadow-sm"
+              >
+                <option value="student">Tài khoản: SINH VIÊN</option>
+                <option value="teacher">Tài khoản: GIẢNG VIÊN</option>
+              </select>
+              <i
+                class="fa-solid fa-chevron-down absolute right-6 top-1/2 transform -translate-y-1/2 text-blue-500 pointer-events-none"
+              ></i>
+            </div>
+          </div>
+
+          <div
+            id="teacherAuthBox"
+            class="hidden bg-blue-50 border border-blue-200 p-5 rounded-2xl mb-5 shadow-sm flex items-start space-x-3 transition-all duration-300"
+          >
+            <i class="fa-solid fa-shield-check text-blue-600 mt-1 text-lg"></i>
+            <div class="flex-1">
+              <label class="block text-sm font-bold text-blue-800 mb-1 ml-1"
+                >Mã xác nhận do trường cấp *</label
+              >
+              <p class="text-xs text-blue-600 mb-3 ml-1">
+                Nhập mã bí mật để xác thực danh tính Giảng viên (Mã Demo:
+                <strong>GV2026</strong>)
+              </p>
+              <input
+                type="password"
+                id="teacherSecret"
+                placeholder="Nhập mã xác thực..."
+                class="w-full px-5 py-3 bg-white border border-blue-200 rounded-full text-sm outline-none focus:ring-2 focus:ring-blue-500 transition"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+            <input
+              type="text"
+              id="regFullName"
+              required
+              placeholder="Họ và tên *"
+              class="w-full px-5 py-3.5 bg-[#f8fafc] border border-gray-200 rounded-full text-sm outline-none focus:bg-white focus:ring-1 focus:ring-blue-500 transition font-bold text-gray-700"
+            />
+            <input
+              type="text"
+              id="idInput"
+              required
+              placeholder="Mã Sinh Viên *"
+              class="w-full px-5 py-3.5 bg-[#f8fafc] border border-gray-200 rounded-full text-sm outline-none focus:bg-white focus:ring-1 focus:ring-blue-500 transition font-bold text-gray-700"
+            />
+            <input
+              type="tel"
+              required
+              placeholder="Số điện thoại *"
+              class="w-full px-5 py-3.5 bg-[#f8fafc] border border-gray-200 rounded-full text-sm outline-none focus:bg-white focus:ring-1 focus:ring-blue-500 transition"
+            />
+            <input
+              type="email"
+              required
+              placeholder="Email *"
+              class="w-full px-5 py-3.5 bg-[#f8fafc] border border-gray-200 rounded-full text-sm outline-none focus:bg-white focus:ring-1 focus:ring-blue-500 transition"
+            />
+            <div class="relative">
+              <input
+                type="password"
+                id="regPassword"
+                required
+                placeholder="Mật khẩu *"
+                class="w-full pl-5 pr-12 py-3.5 bg-[#f8fafc] border border-gray-200 rounded-full text-sm outline-none focus:bg-white focus:ring-1 focus:ring-blue-500 transition font-bold text-gray-700"
+              />
+              <i
+                class="fa-regular fa-eye-slash absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 cursor-pointer transition text-lg"
+                onclick="toggleRegPassword('regPassword', this)"
+              ></i>
+            </div>
+            <div class="relative">
+              <input
+                type="password"
+                id="regConfirmPassword"
+                required
+                placeholder="Nhập lại mật khẩu *"
+                class="w-full pl-5 pr-12 py-3.5 bg-[#f8fafc] border border-gray-200 rounded-full text-sm outline-none focus:bg-white focus:ring-1 focus:ring-blue-500 transition font-bold text-gray-700"
+              />
+              <i
+                class="fa-regular fa-eye-slash absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 cursor-pointer transition text-lg"
+                onclick="toggleRegPassword('regConfirmPassword', this)"
+              ></i>
+            </div>
+          </div>
+
+          <div class="flex items-start mb-6 px-2">
+            <input
+              type="checkbox"
+              id="termsCheckbox"
+              required
+              class="mt-1.5 mr-3 w-4 h-4 text-[#2563eb] bg-gray-100 border-gray-300 rounded focus:ring-[#2563eb] cursor-pointer shrink-0"
+            />
+            <label
+              for="termsCheckbox"
+              class="text-sm text-gray-500 cursor-pointer leading-tight"
+            >
+              Tôi đồng ý với
+              <a href="#" class="text-[#2563eb] font-bold hover:underline"
+                >Điều khoản sử dụng</a
+              >
+              và
+              <a href="#" class="text-[#2563eb] font-bold hover:underline"
+                >Chính sách bảo mật</a
+              >
+              của UNICOLLAB.
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            id="btnSubmitReg"
+            class="w-full bg-[#2563eb] text-white font-bold py-4 rounded-full hover:bg-blue-700 transition uppercase tracking-wider shadow-md"
+          >
+            HOÀN TẤT ĐĂNG KÝ SINH VIÊN
+          </button>
+
+          <div class="mt-5 text-center">
+            <p class="text-sm text-gray-600">
+              Đã có tài khoản?
+              <button
+                type="button"
+                onclick="document.getElementById('closeRegisterBtn').click()"
+                class="text-[#2563eb] font-bold hover:underline ml-1 transition"
+              >
+                Đăng nhập tại đây
+              </button>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      id="forgotModal"
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4"
+    >
+      <div
+        class="bg-white rounded-3xl w-full max-w-xl overflow-hidden shadow-2xl relative transition-all duration-300 scale-95 opacity-0 p-8"
+      >
+        <button
+          id="closeForgotBtn"
+          class="absolute top-5 right-5 w-8 h-8 bg-gray-100 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-full flex items-center justify-center transition z-10 text-xl"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h2
+          class="text-[18px] font-bold text-gray-800 uppercase mb-5 tracking-wide text-center"
+        >
+          BẠN QUÊN MẬT KHẨU?
+        </h2>
+
+        <div class="border border-gray-200 rounded-2xl p-7 bg-gray-50/50">
+          <p class="text-gray-600 text-sm mb-6 text-center">
+            Vui lòng nhập Mã Sinh Viên / Tài khoản và địa chỉ Email để nhận liên
+            kết khôi phục.
+          </p>
+          <form
+            onsubmit="
+              event.preventDefault();
+              alert(
+                '✅ Đã gửi yêu cầu khôi phục thành công! Vui lòng kiểm tra email của bạn.',
+              );
+              document.getElementById('closeForgotBtn').click();
+            "
+          >
+            <div class="space-y-4 mb-6">
+              <div class="relative">
+                <i
+                  class="fa-regular fa-user absolute left-5 top-3.5 text-blue-400 text-lg"
+                ></i>
+                <input
+                  type="text"
+                  required
+                  placeholder="Mã SV / Tài khoản *"
+                  class="w-full pl-12 pr-5 py-3.5 bg-white border border-gray-200 rounded-full outline-none focus:ring-1 focus:ring-[#0ea5e9] transition text-sm shadow-sm font-bold text-gray-700"
+                />
+              </div>
+              <div class="relative">
+                <i
+                  class="fa-regular fa-envelope absolute left-5 top-3.5 text-blue-400 text-lg"
+                ></i>
+                <input
+                  type="email"
+                  required
+                  placeholder="Địa chỉ Email đã đăng ký *"
+                  class="w-full pl-12 pr-5 py-3.5 bg-white border border-gray-200 rounded-full outline-none focus:ring-1 focus:ring-[#0ea5e9] transition text-sm shadow-sm"
+                />
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-4 mb-8">
+              <div class="flex flex-col items-center">
+                <div
+                  onclick="generateCaptcha()"
+                  class="captcha-bg border border-gray-300 w-32 h-12 rounded-xl flex items-center justify-center relative select-none cursor-pointer shadow-sm bg-white"
+                  title="Bấm vào để đổi mã khác"
+                >
+                  <span
+                    id="captchaText"
+                    class="font-bold text-[20px] tracking-[0.2em] text-black relative z-10 italic mix-blend-multiply"
+                    style="font-family: &quot;Courier New&quot;, monospace"
+                  ></span>
+                </div>
+                <span class="text-[10px] text-gray-400 mt-1 italic"
+                  ><i class="fa-solid fa-arrows-rotate mr-1"></i> Bấm để đổi
+                  mã</span
+                >
+              </div>
+              <div class="flex-1">
+                <input
+                  type="text"
+                  required
+                  placeholder="Nhập mã hiển thị *"
+                  class="w-full px-5 py-3.5 bg-white border border-gray-200 rounded-full outline-none focus:ring-1 focus:ring-[#0ea5e9] transition text-sm shadow-sm font-bold text-gray-700"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-[#0ea5e9] hover:bg-[#0284c7] text-white font-bold py-3.5 rounded-full transition shadow-md uppercase tracking-wider text-sm"
+            >
+              Gửi yêu cầu khôi phục
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      // 1. Khởi tạo Firebase
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+        getDoc,
+      } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDZckttPdycFw2zDsA4Zxbvj8EGRtoFHoU",
+        authDomain: "unicollab-e81c0.firebaseapp.com",
+        projectId: "unicollab-e81c0",
+        storageBucket: "unicollab-e81c0.firebasestorage.app",
+        messagingSenderId: "983588473001",
+        appId: "1:983588473001:web:0708bc4fe827e388f181b8",
+        measurementId: "G-8PQ0CRQKRM",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // ==============================================================
+      // LOGIC FIREBASE: ĐĂNG KÝ
+      // ==============================================================
+      window.submitRegister = async function (event) {
+        event.preventDefault();
+        const role = document.getElementById("roleSelect").value;
+        const fullName = document.getElementById("regFullName").value.trim();
+        const idInput = document.getElementById("idInput").value.trim();
+        const pass = document.getElementById("regPassword").value;
+        const confirmPass = document.getElementById("regConfirmPassword").value;
+
+        if (pass !== confirmPass) {
+          alert("⚠️ Mật khẩu nhập lại không khớp!");
+          return;
+        }
+
+        if (
+          role === "teacher" &&
+          document.getElementById("teacherSecret").value !== "GV2026"
+        ) {
+          alert("❌ LỖI BẢO MẬT: Mã xác nhận Giảng viên không chính xác!");
+          return;
+        }
+
+        try {
+          // Kiểm tra xem ID đã tồn tại trên Firebase chưa
+          const userRef = doc(db, "users", idInput.toUpperCase());
+          const docSnap = await getDoc(userRef);
+
+          if (docSnap.exists()) {
+            alert(`⚠️ Tài khoản ${idInput} đã tồn tại! Vui lòng Đăng nhập.`);
+            return;
+          }
+
+          // Lưu lên Firebase
+          await setDoc(userRef, {
+            id: idInput.toUpperCase(),
+            name: fullName,
+            role: role,
+            password: pass,
+            createdAt: new Date(),
+          });
+
+          // Lưu LocalStorage để giữ phiên làm việc
+          localStorage.setItem(
+            "userProfileData",
+            JSON.stringify({
+              id: idInput.toUpperCase(),
+              name: fullName,
+              role: role,
+              avatarBase64: "",
+            }),
+          );
+
+          alert(`🎉 Chúc mừng ${fullName} đã tạo tài khoản thành công!`);
+          window.location.href =
+            role === "teacher" ? "dashboard.html" : "matching.html";
+        } catch (error) {
+          console.error("Lỗi thêm user: ", error);
+          alert("Đã xảy ra lỗi khi kết nối với Database!");
+        }
+      };
+
+      // ==============================================================
+      // LOGIC FIREBASE: ĐĂNG NHẬP
+      // ==============================================================
+      window.handleLogin = async function (event) {
+        event.preventDefault();
+        let accVal = document
+          .getElementById("loginAccount")
+          .value.trim()
+          .toUpperCase();
+        const passVal = document.getElementById("loginPassword").value;
+        const errorDiv = document.getElementById("errorMsg");
+
+        if (!accVal || !passVal) {
+          errorDiv.classList.remove("hidden");
+          errorDiv.classList.add("flex");
+          return;
+        }
+
+        try {
+          const docSnap = await getDoc(doc(db, "users", accVal));
+
+          if (docSnap.exists() && docSnap.data().password === passVal) {
+            const user = docSnap.data();
+            errorDiv.classList.add("hidden");
+
+            localStorage.setItem(
+              "userProfileData",
+              JSON.stringify({
+                id: user.id,
+                name: user.name,
+                role: user.role,
+                avatarBase64: user.avatarBase64 || "",
+              }),
+            );
+
+            window.location.href =
+              user.role === "teacher" ? "dashboard.html" : "matching.html";
+          } else {
+            errorDiv.classList.remove("hidden");
+            errorDiv.classList.add("flex");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("Lỗi kết nối cơ sở dữ liệu!");
+        }
+      };
+
+      // ==============================================================
+      // CÁC CHỨC NĂNG GIAO DIỆN CỦA TRANG (UI)
+      // Chú ý: Cần thêm chữ "window." vì đang dùng <script type="module">
+      // ==============================================================
+
+      window.demoLogin = function (role) {
+        let userData = {};
+        if (role === "student") {
+          userData = {
+            id: "SV_DEMO",
+            name: "Sinh viên Trải nghiệm",
+            role: "student",
+          };
+          localStorage.setItem("userProfileData", JSON.stringify(userData));
+          window.location.href = "matching.html";
+        } else if (role === "leader") {
+          userData = {
+            id: "LD_DEMO",
+            name: "Leader Siêu Cấp",
+            role: "student",
+          };
+          localStorage.setItem("userProfileData", JSON.stringify(userData));
+          window.location.href = "kanban.html";
+        } else if (role === "teacher") {
+          userData = {
+            id: "GV_DEMO",
+            name: "Giảng viên Chấm thi",
+            role: "teacher",
+          };
+          localStorage.setItem("userProfileData", JSON.stringify(userData));
+          window.location.href = "dashboard.html";
+        }
+      };
+
+      const dict = {
+        vi: {
+          desc: "Nền tảng kết nối và điều hành nhóm dự án rèn nghề liên ngành.",
+          auth_title: "Hệ thống chung",
+          remember: "Duy trì đăng nhập",
+          forgot: "Quên mật khẩu?",
+          login_btn: "ĐĂNG NHẬP",
+          no_acc: "Chưa có tài khoản?",
+          reg_now: "Đăng ký ngay",
+        },
+        en: {
+          desc: "Platform for connecting and managing interdisciplinary practicum projects.",
+          auth_title: "Centralized Authentication",
+          remember: "Remember me",
+          forgot: "Forgot password?",
+          login_btn: "SIGN IN",
+          no_acc: "Don't have an account?",
+          reg_now: "Register now",
+        },
+      };
+      const placeholders = {
+        vi: { account: "Mã SV / Tài khoản", password: "Mật khẩu" },
+        en: { account: "Student ID / Username", password: "Password" },
+      };
+
+      window.switchLanguage = function (lang) {
+        const btnVi = document.getElementById("btn-vi");
+        const btnEn = document.getElementById("btn-en");
+        if (lang === "en") {
+          btnEn.className = "font-bold text-blue-600 transition cursor-pointer";
+          btnVi.className =
+            "font-medium text-gray-500 hover:text-blue-600 transition cursor-pointer";
+        } else {
+          btnVi.className = "font-bold text-blue-600 transition cursor-pointer";
+          btnEn.className =
+            "font-medium text-gray-500 hover:text-blue-600 transition cursor-pointer";
+        }
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (dict[lang][key]) el.innerText = dict[lang][key];
+        });
+        document.querySelectorAll("[data-placeholder]").forEach((el) => {
+          const key = el.getAttribute("data-placeholder");
+          if (placeholders[lang][key]) el.placeholder = placeholders[lang][key];
+        });
+        document.getElementById("errorText").innerText =
+          lang === "en"
+            ? "Invalid account or password!"
+            : "Sai tài khoản hoặc mật khẩu!";
+      };
+
+      window.togglePasswordVisibility = function (inputId, iconElement) {
+        const input = document.getElementById(inputId);
+        if (input.type === "password") {
+          input.type = "text";
+          iconElement.classList.replace("fa-eye-slash", "fa-eye");
+          iconElement.classList.add("text-[#2563eb]");
+        } else {
+          input.type = "password";
+          iconElement.classList.replace("fa-eye", "fa-eye-slash");
+          iconElement.classList.remove("text-[#2563eb]");
+        }
+      };
+
+      window.toggleRegPassword = function (inputId, icon) {
+        window.togglePasswordVisibility(inputId, icon);
+      };
+
+      window.handleRoleChange = function () {
+        const role = document.getElementById("roleSelect").value;
+        const authBox = document.getElementById("teacherAuthBox");
+        const secretInput = document.getElementById("teacherSecret");
+        const idInput = document.getElementById("idInput");
+        const nameInput = document.getElementById("regFullName");
+        const btnSubmit = document.getElementById("btnSubmitReg");
+
+        if (role === "teacher") {
+          authBox.classList.remove("hidden");
+          secretInput.setAttribute("required", "true");
+          idInput.placeholder = "Mã Giảng Viên *";
+          nameInput.placeholder = "Tên Giảng Viên *";
+          btnSubmit.innerText = "HOÀN TẤT ĐĂNG KÝ GIẢNG VIÊN";
+        } else {
+          authBox.classList.add("hidden");
+          secretInput.removeAttribute("required");
+          secretInput.value = "";
+          idInput.placeholder = "Mã Sinh Viên *";
+          nameInput.placeholder = "Họ và tên *";
+          btnSubmit.innerText = "HOÀN TẤT ĐĂNG KÝ SINH VIÊN";
+        }
+      };
+
+      window.generateCaptcha = function () {
+        const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        let captcha = "";
+        for (let i = 0; i < 4; i++) {
+          captcha += chars[Math.floor(Math.random() * chars.length)] + " ";
+        }
+        document.getElementById("captchaText").innerText = captcha.trim();
+      };
+
+      // ==============================================================
+      // XỬ LÝ ĐÓNG/MỞ MODAL
+      // ==============================================================
+      const regModal = document.getElementById("registerModal");
+      const regContent = regModal.querySelector("div.rounded-3xl");
+
+      document
+        .getElementById("openRegisterBtn")
+        .addEventListener("click", () => {
+          document.body.classList.add("modal-active");
+          regModal.classList.remove("hidden");
+          regModal.classList.add("flex");
+          setTimeout(() => {
+            regContent.classList.remove("scale-95", "opacity-0");
+            regContent.classList.add("scale-100", "opacity-100");
+          }, 10);
+          document.getElementById("roleSelect").value = "student";
+          window.handleRoleChange();
+        });
+
+      const closeReg = () => {
+        document.body.classList.remove("modal-active");
+        regContent.classList.remove("scale-100", "opacity-100");
+        regContent.classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          regModal.classList.remove("flex");
+          regModal.classList.add("hidden");
+        }, 300);
+      };
+      document
+        .getElementById("closeRegisterBtn")
+        .addEventListener("click", closeReg);
+      regModal.addEventListener("click", (e) => {
+        if (e.target === regModal) closeReg();
+      });
+
+      const forgotModal = document.getElementById("forgotModal");
+      const forgotContent = forgotModal.querySelector("#forgotModal > div");
+
+      document.getElementById("openForgotBtn").addEventListener("click", () => {
+        window.generateCaptcha();
+        document.body.classList.add("modal-active");
+        forgotModal.classList.remove("hidden");
+        forgotModal.classList.add("flex");
+        setTimeout(() => {
+          forgotContent.classList.remove("scale-95", "opacity-0");
+          forgotContent.classList.add("scale-100", "opacity-100");
+        }, 10);
+      });
+
+      const closeForgot = () => {
+        document.body.classList.remove("modal-active");
+        forgotContent.classList.remove("scale-100", "opacity-100");
+        forgotContent.classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          forgotModal.classList.remove("flex");
+          forgotModal.classList.add("hidden");
+        }, 300);
+      };
+      document
+        .getElementById("closeForgotBtn")
+        .addEventListener("click", closeForgot);
+      forgotModal.addEventListener("click", (e) => {
+        if (e.target === forgotModal) closeForgot();
+      });
+
+      // ==============================================================
+      // AUTO LOGIN (Nếu đã đăng nhập trước đó)
+      // ==============================================================
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedUser = localStorage.getItem("userProfileData");
+        if (savedUser) {
+          const userData = JSON.parse(savedUser);
+          if (userData.role === "student")
+            window.location.href = "matching.html";
+          if (userData.role === "teacher")
+            window.location.href = "dashboard.html";
+        }
+      });
+    </script>
+  </body>
+</html>
