@@ -72,24 +72,46 @@
         background: #d1d5db;
         border-radius: 10px;
       }
-      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #9ca3af;
-      }
-      .hide-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
       .hide-scrollbar::-webkit-scrollbar {
         display: none;
       }
-      optgroup {
-        font-weight: bold;
-        color: #111827;
+      #particles-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+        pointer-events: none;
       }
-      option {
-        font-weight: normal;
-        color: #4b5563;
-        padding-left: 10px;
+      .particle {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        animation: fall linear forwards;
+      }
+      @keyframes fall {
+        to {
+          transform: translateY(100vh);
+          opacity: 0;
+        }
+      }
+      .animate-tab {
+        animation: tabEnter 0.4s forwards;
+      }
+      @keyframes tabEnter {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .glossy-card {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       }
     </style>
   </head>
@@ -113,8 +135,7 @@
             <span
               class="text-xl sm:text-2xl font-black text-gray-900 tracking-tighter"
               >UNI<span class="text-blue-600">COLLAB</span></span
-            >
-            <span
+            ><span
               class="text-[8px] sm:text-[10px] text-blue-800 font-bold -mt-1 uppercase tracking-widest"
               >NAU Edition</span
             >
@@ -124,6 +145,14 @@
         <div
           class="flex items-center gap-2 sm:gap-4 ml-auto md:order-3 shrink-0"
         >
+          <button
+            onclick="openWalletModal('withdraw')"
+            class="text-yellow-500 hover:text-yellow-600 transition relative p-2"
+            title="Đổi thưởng / Rút tiền"
+          >
+            <i class="fa-solid fa-gift text-xl"></i>
+          </button>
+
           <div
             class="relative cursor-pointer text-gray-500 hover:text-blue-600 p-2 rounded-full hover:bg-blue-50 transition"
             onclick="openSavedModal()"
@@ -135,73 +164,119 @@
               >0</span
             >
           </div>
-          <div id="userProfileContainer" class="relative">
-            <button
-              class="flex items-center gap-2 sm:gap-3 p-1 sm:p-1.5 pl-2 sm:pl-3 border border-gray-200 rounded-full hover:border-blue-200 hover:bg-blue-50/50 transition"
+
+          <div class="relative" id="userProfileWrap">
+            <div
+              class="flex items-center cursor-pointer hover:bg-gray-100 transition p-1.5 rounded-full border border-gray-200 shadow-sm"
               onclick="toggleUserDropdown(event)"
             >
+              <div
+                id="leaderAvatar"
+                class="w-8 h-8 bg-gradient-to-tr from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xs overflow-hidden shrink-0 border border-gray-300"
+              >
+                U
+              </div>
               <span
                 id="userName"
-                class="text-xs sm:text-sm font-bold text-gray-700 hidden sm:block"
-                >Đang tải...</span
-              >
-              <div
-                id="userAvatar"
-                class="w-7 h-7 sm:w-9 sm:h-9 bg-gray-300 rounded-full flex items-center justify-center font-bold text-white text-xs sm:text-sm border border-white shadow-sm overflow-hidden"
-              ></div>
-              <i
-                class="fa-solid fa-chevron-down text-[10px] sm:text-xs text-gray-400 mr-1"
+                class="text-sm font-bold text-gray-700 hidden sm:block px-2"
+                >User</span
+              ><i
+                class="fa-solid fa-chevron-down text-gray-400 text-[10px] mr-2"
               ></i>
-            </button>
+            </div>
+
             <div
               id="userDropdown"
-              class="hidden absolute right-0 mt-3 w-56 sm:w-64 bg-white rounded-2xl shadow-xl border border-gray-100 p-3 z-50 fade-in-section"
+              class="hidden absolute right-0 mt-3 w-72 glossy-card rounded-2xl p-1 z-50 animate-tab shadow-2xl"
             >
               <div
-                class="flex items-center gap-3 p-2 mb-3 border-b border-gray-100 pb-3"
+                class="p-5 flex flex-col items-center border-b border-white/10 relative overflow-hidden rounded-t-xl"
               >
+                <div class="absolute inset-0 bg-blue-500/20 blur-2xl"></div>
                 <div
-                  class="dropdown-avatar w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-white text-lg sm:text-xl shadow-inner overflow-hidden"
-                  id="dropdownAvatar"
-                ></div>
+                  id="dropdownBigAvatar"
+                  class="w-16 h-16 rounded-full bg-indigo-500 flex items-center justify-center text-white font-black text-2xl border-2 border-white/20 shadow-lg relative z-10 overflow-hidden mb-3"
+                >
+                  U
+                </div>
+                <h3
+                  id="dropdownBigName"
+                  class="text-lg font-black text-white relative z-10 leading-tight"
+                >
+                  Name
+                </h3>
+                <p
+                  class="text-xs text-indigo-300 font-mono font-bold mt-1 relative z-10"
+                >
+                  ID: <span id="dropdownBigId">---</span>
+                </p>
+              </div>
+              <div
+                class="p-4 border-b border-white/10 flex justify-between items-center bg-black/20"
+              >
                 <div class="flex flex-col">
                   <span
-                    class="dropdown-name font-extrabold text-gray-800 text-sm sm:text-base line-clamp-1"
-                    id="dropdownName"
-                  ></span>
-                </div>
-              </div>
-              <div class="space-y-1">
-                <button
-                  onclick="openProfileModal()"
-                  class="w-full flex items-center gap-3.5 text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition"
-                >
-                  <i
-                    class="fa-solid fa-user-gear text-blue-500 w-4 text-center"
-                  ></i>
-                  Hồ sơ cá nhân
-                </button>
-                <button
-                  id="leaderAreaBtn"
-                  onclick="window.location.href = 'kanban.html'"
-                  class="hidden w-full flex items-center gap-3.5 text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition"
-                >
-                  <i
-                    class="fa-solid fa-users text-orange-500 w-4 text-center"
-                  ></i>
-                  Dự án của tôi
-                </button>
-                <div class="border-t border-gray-100 my-2 pt-2">
-                  <button
-                    onclick="clearTestData()"
-                    class="w-full flex items-center gap-3.5 text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-red-600 hover:bg-red-50 transition"
+                    class="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-0.5"
+                    >Số dư Khả dụng</span
+                  ><span
+                    id="userBalanceDisplay"
+                    class="text-lg font-black text-yellow-400 tracking-tight"
+                    >0 ₫</span
                   >
-                    <i
-                      class="fa-solid fa-right-from-bracket w-4 text-center"
-                    ></i>
-                    Đăng xuất
+                </div>
+                <button
+                  onclick="openWalletModal('deposit')"
+                  class="bg-yellow-500 text-black font-black px-3 py-1.5 rounded-lg text-xs shadow-[0_0_10px_rgba(234,179,8,0.3)] transition"
+                >
+                  NẠP
+                </button>
+              </div>
+              <div class="p-4 border-b border-white/10 bg-black/20">
+                <div class="flex justify-between items-end mb-2">
+                  <div class="flex flex-col">
+                    <span
+                      class="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-0.5"
+                      >Tổng Nạp Tích Lũy</span
+                    ><span
+                      id="userTotalDepositDisplay"
+                      class="text-sm font-bold text-white tracking-tight"
+                      >0 ₫</span
+                    >
+                  </div>
+                  <button
+                    onclick="openTopRechargeModal()"
+                    class="text-[10px] font-bold text-indigo-400 hover:text-indigo-300 border border-indigo-400/50 hover:bg-indigo-400/10 px-2 py-1 rounded transition"
+                  >
+                    TOP NẠP
                   </button>
                 </div>
+                <div class="w-full bg-gray-800 rounded-full h-1 mt-1">
+                  <div
+                    class="bg-gradient-to-r from-indigo-500 to-purple-500 h-1 rounded-full"
+                    style="width: 45%"
+                  ></div>
+                </div>
+              </div>
+              <div class="p-2 flex flex-col space-y-1">
+                <button
+                  onclick="openProfileModal()"
+                  class="w-full text-left px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-white/10 hover:text-white transition flex items-center font-bold"
+                >
+                  <i class="fa-solid fa-user-gear w-5 text-emerald-400"></i> Hồ
+                  sơ năng lực</button
+                ><button
+                  id="leaderAreaBtn"
+                  onclick="window.location.href = 'kanban.html'"
+                  class="hidden w-full text-left px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-white/10 hover:text-white transition flex items-center font-bold"
+                >
+                  <i class="fa-solid fa-users w-5 text-orange-400"></i> Dự án
+                  của tôi</button
+                ><button
+                  onclick="leaderLogout()"
+                  class="w-full text-left px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition flex items-center font-bold mt-2"
+                >
+                  <i class="fa-solid fa-right-from-bracket w-5"></i> Đăng xuất
+                </button>
               </div>
             </div>
           </div>
@@ -217,11 +292,14 @@
           >
           <a
             href="ideas.html"
-            onclick="alert('Tính năng Ý tưởng mới đang được phát triển!')"
             class="nav-link text-xs sm:text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
             >Ý tưởng mới</a
           >
-          <a href="guide.html">Cẩm nang</a>
+          <a
+            href="guide.html"
+            class="nav-link text-xs sm:text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
+            >Cẩm nang</a
+          >
           <a
             href="sukien.html"
             class="nav-link text-xs sm:text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
@@ -230,6 +308,40 @@
         </nav>
       </div>
     </header>
+
+    <div
+      class="bg-gradient-to-r from-indigo-900 to-slate-900 border-b border-indigo-800 shadow-inner relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"
+      ></div>
+      <div
+        class="max-w-[1500px] mx-auto px-4 sm:px-5 py-4 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10"
+      >
+        <div class="flex items-center gap-3">
+          <i
+            class="fa-solid fa-trophy text-4xl text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.8)]"
+          ></i>
+          <div class="text-left">
+            <h2
+              class="text-white font-black tracking-widest uppercase text-sm sm:text-base text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500"
+            >
+              Bảng Vàng Tháng 3
+            </h2>
+            <p class="text-indigo-200 text-xs font-medium">
+              Đua top nạp thẻ - Nhận quà lên tới 500K mỗi tháng!
+            </p>
+          </div>
+        </div>
+        <div class="flex items-end gap-3 sm:gap-6" id="topRechargeBanner">
+          <div class="text-center">
+            <div class="text-gray-400 font-bold mb-1 text-[10px]">
+              Đang tải...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div
       id="profileReminderBanner"
@@ -269,12 +381,12 @@
         <div class="relative flex-1 w-full max-w-xl">
           <i
             class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
-          ></i>
-          <input
+          ></i
+          ><input
             type="text"
             id="searchInput"
             oninput="filterProjects()"
-            placeholder="Tìm tên dự án, kỹ năng (VD: Marketing...)"
+            placeholder="Tìm tên dự án, kỹ năng..."
             class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"
           />
         </div>
@@ -308,12 +420,51 @@
     </section>
 
     <div
+      id="announcementModal"
+      class="fixed inset-0 bg-black/80 backdrop-blur-md z-[150] hidden items-center justify-center p-4"
+    >
+      <div id="particles-container"></div>
+      <div
+        class="bg-white/10 border border-white/20 backdrop-blur-xl rounded-3xl w-full max-w-xl p-8 sm:p-12 shadow-2xl relative text-center transform scale-95 opacity-0 transition-all duration-700"
+        id="announcementContent"
+      >
+        <i
+          class="fa-solid fa-satellite-dish text-6xl text-yellow-400 mb-6 drop-shadow-[0_0_20px_rgba(250,204,21,0.6)]"
+        ></i>
+        <h2
+          id="announcementTitle"
+          class="text-3xl sm:text-4xl font-black text-white mb-4 tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600"
+        >
+          THÔNG BÁO HỆ THỐNG
+        </h2>
+        <p
+          id="announcementMessage"
+          class="text-indigo-100 text-base sm:text-lg leading-relaxed mb-8 whitespace-pre-line"
+        ></p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <button
+            onclick="snoozeAnnouncement()"
+            class="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-full transition border border-white/30 text-sm"
+          >
+            Tắt trong 1 tiếng
+          </button>
+          <button
+            onclick="doneAnnouncement()"
+            class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold px-10 py-3 rounded-full transition shadow-[0_0_20px_rgba(79,70,229,0.4)] tracking-widest uppercase"
+          >
+            XONG
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
       id="profileModal"
       class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-3 sm:p-4 backdrop-blur-sm transition-opacity duration-300"
       onclick="closeProfileModal()"
     >
       <div
-        class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full sm:w-[95%] max-w-2xl max-h-[90vh] overflow-y-auto custom-scrollbar p-5 sm:p-8 relative scale-95 opacity-0 transition-all duration-300 transform"
+        class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full sm:w-[95%] max-w-2xl max-h-[90vh] overflow-y-auto custom-scrollbar p-5 sm:p-8 relative animate-tab"
         onclick="event.stopPropagation()"
       >
         <button
@@ -327,11 +478,10 @@
         >
           Cập Nhật Hồ Sơ Năng Lực
         </h2>
-        <p class="text-gray-500 mb-6 sm:mb-8 text-xs sm:text-sm">
-          Thông tin này giúp các trưởng nhóm tìm thấy bạn dễ dàng hơn.
-        </p>
-
-        <form onsubmit="submitProfile(event)" class="space-y-4 sm:space-y-6">
+        <form
+          onsubmit="submitProfile(event)"
+          class="space-y-4 sm:space-y-6 mt-6"
+        >
           <div
             class="flex flex-col items-center gap-3 sm:gap-4 bg-gray-50 p-4 sm:p-6 rounded-2xl border border-gray-100"
           >
@@ -344,33 +494,23 @@
                   id="avatarPreview"
                   src=""
                   class="w-full h-full object-cover hidden"
-                />
-                <i
+                /><i
                   class="fa-solid fa-user-circle text-5xl sm:text-6xl text-gray-400"
                 ></i>
               </div>
               <label
                 for="avatarInput"
                 class="absolute bottom-0 sm:bottom-1 right-0 sm:right-1 bg-blue-600 text-white p-2 rounded-full cursor-pointer shadow-lg hover:bg-blue-700 transition"
-              >
-                <i class="fa-solid fa-camera text-[10px] sm:text-xs"></i>
-                <input
+                ><i class="fa-solid fa-camera text-[10px] sm:text-xs"></i
+                ><input
                   type="file"
                   id="avatarInput"
                   accept="image/*"
                   class="hidden"
                   onchange="previewAvatar(event)"
-                />
-              </label>
+              /></label>
             </div>
-            <p
-              class="text-[10px] sm:text-xs text-orange-600 font-medium text-center"
-            >
-              <i class="fa-solid fa-info-circle mr-1"></i> Yêu cầu bắt buộc ảnh
-              hình thật.
-            </p>
           </div>
-
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <label
@@ -393,32 +533,38 @@
                 required
                 class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 bg-white"
               >
-                <option value="" disabled selected hidden>
-                  Chọn Ngành/Khoa...
-                </option>
+                <option value="" disabled selected hidden>Chọn Ngành...</option>
                 <optgroup label="Công nghệ thông tin">
-                  <option>Công nghệ thông tin</option>
+                  <option value="Công nghệ thông tin">
+                    Công nghệ thông tin
+                  </option>
+                  <option value="Kỹ thuật phần mềm">Kỹ thuật phần mềm</option>
+                  <option value="Khoa học máy tính">Khoa học máy tính</option>
+                  <option value="Hệ thống thông tin">Hệ thống thông tin</option>
                 </optgroup>
                 <optgroup label="Kinh tế & Quản trị">
-                  <option>Kế toán</option>
-                  <option>Kinh tế</option>
-                  <option>Marketing</option>
-                  <option>Quản trị kinh doanh</option>
-                  <option>Tài chính - Ngân hàng</option>
-                  <option>Logistics và QL chuỗi cung ứng</option>
-                  <option>Thương mại điện tử</option>
+                  <option value="Kế toán">Kế toán</option>
+                  <option value="Kinh tế">Kinh tế</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="Quản trị kinh doanh">
+                    Quản trị kinh doanh
+                  </option>
+                  <option value="Tài chính - Ngân hàng">
+                    Tài chính - Ngân hàng
+                  </option>
+                  <option value="Logistics">Logistics và chuỗi cung ứng</option>
+                  <option value="Thương mại điện tử">Thương mại điện tử</option>
                 </optgroup>
                 <optgroup label="Nông nghiệp & Thú y">
-                  <option>Nông nghiệp CNC</option>
-                  <option>Quản lý đất đai</option>
-                  <option>Thú y</option>
+                  <option value="Nông nghiệp CNC">Nông nghiệp CNC</option>
+                  <option value="Quản lý đất đai">Quản lý đất đai</option>
+                  <option value="Thú y">Thú y</option>
+                  <option value="Chăn nuôi">Chăn nuôi</option>
                 </optgroup>
                 <optgroup label="Ngôn ngữ & Sư phạm">
-                  <option>Ngôn ngữ Anh</option>
-                  <option>Ngôn ngữ Trung</option>
-                  <option>Sư phạm Khoa học Tự nhiên</option>
-                  <option>Sư phạm Tiểu học</option>
-                  <option>Cao đẳng Mầm non</option>
+                  <option value="Ngôn ngữ Anh">Ngôn ngữ Anh</option>
+                  <option value="Ngôn ngữ Trung">Ngôn ngữ Trung</option>
+                  <option value="Sư phạm">Sư phạm</option>
                 </optgroup>
               </select>
             </div>
@@ -442,15 +588,14 @@
                 type="text"
                 id="profileRole"
                 required
-                placeholder="Ví dụ: Coder, Designer..."
+                placeholder="Ví dụ: Coder..."
                 class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
           </div>
-
           <div>
             <label class="block text-xs sm:text-sm font-bold text-gray-700 mb-1"
-              >Kỹ năng cốt lõi * (Nhấn Enter để thêm)</label
+              >Kỹ năng cốt lõi *</label
             >
             <div
               id="profileSkillContainer"
@@ -464,11 +609,10 @@
               />
               <ul
                 id="profileSkillSuggestions"
-                class="hidden absolute left-0 top-full mt-1 w-full bg-white border border-gray-100 rounded-xl shadow-lg z-50 max-h-40 overflow-y-auto custom-scrollbar"
+                class="hidden absolute left-0 top-full mt-1 w-full bg-white border rounded-xl shadow-lg z-50 max-h-40 overflow-y-auto custom-scrollbar"
               ></ul>
             </div>
           </div>
-
           <div>
             <label class="block text-xs sm:text-sm font-bold text-gray-700 mb-1"
               >Link Portfolio / Liên hệ</label
@@ -481,7 +625,7 @@
           </div>
           <div>
             <label class="block text-xs sm:text-sm font-bold text-gray-700 mb-1"
-              >Giới thiệu bản thân (Bio)</label
+              >Giới thiệu bản thân</label
             ><textarea
               id="profileBio"
               rows="3"
@@ -489,18 +633,16 @@
               class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 custom-scrollbar"
             ></textarea>
           </div>
-
           <div class="pt-4 flex gap-3">
             <button
               type="button"
               onclick="closeProfileModal()"
-              class="flex-1 sm:flex-none px-6 py-2.5 rounded-xl text-sm font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 transition"
+              class="flex-1 sm:flex-none px-6 py-2.5 rounded-xl text-sm font-bold text-gray-600 bg-gray-100"
             >
-              Hủy
-            </button>
-            <button
+              Hủy</button
+            ><button
               type="submit"
-              class="flex-1 sm:flex-none px-8 py-2.5 bg-[#ea580c] hover:bg-orange-600 text-white rounded-xl text-sm font-extrabold transition shadow-md"
+              class="flex-1 sm:flex-none px-8 py-2.5 bg-[#ea580c] text-white rounded-xl text-sm font-extrabold shadow-md"
             >
               LƯU HỒ SƠ
             </button>
@@ -511,271 +653,298 @@
 
     <div
       id="createProjectModal"
-      class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-3 sm:p-4 backdrop-blur-sm transition-opacity duration-300"
+      class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-3 sm:p-4 backdrop-blur-sm"
       onclick="closeCreateProjectModal()"
     >
       <div
-        class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full sm:w-[95%] max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar p-5 sm:p-8 relative scale-95 opacity-0 transition-all duration-300 transform"
+        class="bg-white rounded-3xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto p-5 sm:p-8 animate-tab"
         onclick="event.stopPropagation()"
       >
         <button
           onclick="closeCreateProjectModal()"
-          class="absolute top-4 sm:top-6 right-4 sm:right-6 text-gray-400 hover:text-red-500 transition"
+          class="absolute top-4 right-4 text-gray-400"
         >
-          <i class="fa-solid fa-xmark text-xl sm:text-2xl"></i>
+          <i class="fa-solid fa-xmark text-2xl"></i>
         </button>
-        <h2
-          id="createModalTitle"
-          class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6 sm:mb-8 tracking-tighter flex items-center"
-        ></h2>
-
-        <form
-          id="projectForm"
-          onsubmit="submitCreateProject(event)"
-          class="space-y-5 sm:space-y-6"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-            <div class="col-span-1 md:col-span-2">
-              <label
-                class="block text-xs sm:text-sm font-bold text-gray-700 mb-1"
-                >Tên dự án *</label
-              ><input
+        <h2 id="createModalTitle" class="text-2xl font-extrabold mb-6">
+          TẠO DỰ ÁN MỚI
+        </h2>
+        <form id="projectForm" onsubmit="submitCreateProject(event)">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="md:col-span-2">
+              <input
                 type="text"
                 id="newProjName"
                 required
-                placeholder="Nhập tên đề tài..."
-                class="w-full px-4 py-2.5 sm:py-3 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"
+                placeholder="Tên dự án *"
+                class="w-full px-4 py-3 border rounded-xl text-sm"
               />
             </div>
             <div>
-              <label
-                class="block text-xs sm:text-sm font-bold text-gray-700 mb-1"
-                >Hạn chót ứng tuyển *</label
-              ><input
+              <input
                 type="date"
                 id="projectDeadline"
                 required
-                class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 bg-white"
+                class="w-full px-4 py-3 border rounded-xl text-sm"
               />
             </div>
           </div>
-
-          <div>
-            <label class="block text-xs sm:text-sm font-bold text-gray-700 mb-1"
-              >Mô tả dự án *</label
-            ><textarea
-              id="projectDesc"
-              rows="3"
-              required
-              placeholder="Dự án giải quyết bài toán gì?..."
-              class="w-full px-4 py-2.5 sm:py-3 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 custom-scrollbar"
-            ></textarea>
+          <textarea
+            id="projectDesc"
+            rows="3"
+            required
+            placeholder="Mô tả dự án *"
+            class="w-full px-4 py-3 border rounded-xl text-sm mb-4"
+          ></textarea>
+          <div
+            id="projectSkillContainer"
+            class="flex flex-wrap gap-2 p-2 border rounded-xl mb-4"
+          >
+            <input
+              type="text"
+              id="projectSkillInput"
+              placeholder="Kỹ năng yêu cầu..."
+              class="outline-none p-1 text-sm flex-grow"
+            />
           </div>
-
-          <div>
-            <label class="block text-xs sm:text-sm font-bold text-gray-700 mb-1"
-              >Kỹ năng dự án yêu cầu *</label
-            >
-            <div
-              id="projectSkillContainer"
-              class="flex flex-wrap gap-2 p-2 min-h-[45px] border border-gray-200 rounded-xl bg-gray-50 relative focus-within:ring-1 focus-within:ring-blue-500 transition focus-within:bg-white"
-            >
-              <input
-                type="text"
-                id="projectSkillInput"
-                placeholder="Thêm kỹ năng..."
-                class="flex-grow text-sm outline-none p-1 bg-transparent"
-              />
-              <ul
-                id="projectSkillSuggestions"
-                class="hidden absolute left-0 top-full mt-1 w-full bg-white border border-gray-100 rounded-xl shadow-lg z-50 max-h-40 overflow-y-auto custom-scrollbar"
-              ></ul>
-            </div>
-          </div>
-
-          <div class="bg-gray-50 p-4 sm:p-6 rounded-2xl border border-gray-100">
-            <div class="flex items-center justify-between mb-4">
-              <label class="block text-xs sm:text-sm font-bold text-blue-800"
-                >Các vị trí cần tuyển *</label
-              >
-              <button
+          <div class="bg-gray-50 p-4 rounded-xl mb-4">
+            <div class="flex justify-between mb-3">
+              <span class="text-sm font-bold text-blue-800"
+                >Vị trí cần tuyển *</span
+              ><button
                 type="button"
                 onclick="addRoleRow()"
-                class="text-[10px] sm:text-xs bg-white text-blue-600 font-bold px-3 py-1.5 rounded border border-blue-200 hover:bg-blue-50 transition"
+                class="text-xs bg-white text-blue-600 border border-blue-200 px-3 py-1 rounded"
               >
-                <i class="fa-solid fa-plus mr-1"></i>Thêm vị trí
+                <i class="fa-solid fa-plus"></i> Thêm
               </button>
             </div>
-            <div
-              id="dynamicRolesContainer"
-              class="space-y-3 custom-scrollbar max-h-60 overflow-y-auto pr-1 sm:pr-2"
-            ></div>
-            <datalist id="roleList">
-              <option>Frontend Developer</option>
-              <option>Backend Developer</option>
-              <option>UI/UX Designer</option>
-              <option>Marketing</option>
-              <option>Kế toán</option>
-              <option>Phiên dịch viên</option>
-            </datalist>
+            <div id="dynamicRolesContainer" class="space-y-3"></div>
           </div>
-
-          <div class="pt-4 flex gap-3 border-t border-gray-100">
-            <button
-              type="button"
-              onclick="closeCreateProjectModal()"
-              class="flex-1 sm:flex-none px-6 py-2.5 rounded-xl text-sm font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 transition"
-            >
-              Hủy
-            </button>
-            <button
-              type="submit"
-              id="btnSubmitProject"
-              class="flex-1 sm:flex-none px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-extrabold transition shadow-md"
-            ></button>
-          </div>
+          <button
+            type="submit"
+            id="btnSubmitProject"
+            class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl shadow-md"
+          >
+            TẠO DỰ ÁN
+          </button>
         </form>
       </div>
     </div>
 
     <div
       id="applyModal"
-      class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300"
+      class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-4"
       onclick="closeApplyModal()"
     >
       <div
-        class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-xl p-5 sm:p-8 relative scale-95 opacity-0 transition-all duration-300 transform"
+        class="bg-white rounded-3xl w-full max-w-xl p-8 animate-tab"
         onclick="event.stopPropagation()"
       >
-        <button
-          onclick="closeApplyModal()"
-          class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
-        >
-          <i class="fa-solid fa-xmark text-xl sm:text-2xl"></i>
-        </button>
-        <h2
-          class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2 tracking-tighter"
-        >
-          Gửi Đơn Ứng Tuyển
-        </h2>
-        <p class="text-gray-500 mb-6 text-xs sm:text-sm">
+        <h2 class="text-2xl font-extrabold mb-2">Gửi Đơn Ứng Tuyển</h2>
+        <p class="text-gray-500 mb-6 text-sm">
           Dự án:
           <span id="targetProject" class="font-bold text-blue-600"></span>
         </p>
         <form onsubmit="submitApplication(event)" class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold text-gray-700 mb-1"
-              >Vị trí ứng tuyển *</label
-            ><select
-              id="applyRoleSelect"
-              required
-              class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 bg-white"
-            ></select>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-gray-700 mb-1"
-              >Lời nhắn</label
-            ><textarea
-              id="applyMessage"
-              rows="3"
-              placeholder="Giới thiệu bản thân..."
-              class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500 custom-scrollbar"
-            ></textarea>
-          </div>
-          <div class="pt-2 flex gap-3">
-            <button
-              type="button"
-              onclick="closeApplyModal()"
-              class="flex-1 bg-gray-100 font-bold py-2.5 rounded-xl text-sm transition"
-            >
-              Hủy</button
-            ><button
-              type="submit"
-              class="flex-1 bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm transition"
-            >
-              GỬI ĐƠN
-            </button>
-          </div>
+          <select
+            id="applyRoleSelect"
+            required
+            class="w-full px-4 py-3 border rounded-xl text-sm"
+          ></select
+          ><textarea
+            id="applyMessage"
+            rows="3"
+            placeholder="Lời nhắn..."
+            class="w-full px-4 py-3 border rounded-xl text-sm"
+          ></textarea
+          ><button
+            type="submit"
+            class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl"
+          >
+            GỬI ĐƠN
+          </button>
         </form>
       </div>
     </div>
-
     <div
       id="detailModal"
-      class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300"
+      class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-4"
       onclick="closeDetailModal()"
     >
       <div
-        class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto custom-scrollbar p-5 sm:p-8 relative scale-95 opacity-0 transition-all duration-300 transform"
+        class="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8 animate-tab"
         onclick="event.stopPropagation()"
       >
-        <button
-          onclick="closeDetailModal()"
-          class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
-        >
-          <i class="fa-solid fa-xmark text-xl"></i>
-        </button>
-        <div class="flex items-center gap-3 mb-3">
-          <span
-            id="detailCategory"
-            class="text-[10px] sm:text-xs font-black text-blue-600 uppercase"
-          ></span>
-        </div>
-        <h2
-          id="detailTitle"
-          class="text-xl sm:text-3xl font-extrabold text-gray-900 mb-4 sm:mb-6 tracking-tighter leading-tight"
-        ></h2>
-        <div
-          class="bg-gray-50 p-4 sm:p-6 rounded-2xl border border-gray-100 mb-6 space-y-3"
-        >
-          <h4
-            class="text-xs sm:text-sm font-bold text-gray-800 border-b border-gray-200 pb-2"
-          >
-            Mô tả chi tiết
-          </h4>
-          <p
-            id="detailDesc"
-            class="text-xs sm:text-sm text-gray-600 leading-relaxed whitespace-pre-line"
-          ></p>
-        </div>
-        <div class="flex items-center gap-3 border-t border-gray-100 pt-4">
+        <h2 id="detailTitle" class="text-3xl font-extrabold mb-6"></h2>
+        <p
+          id="detailDesc"
+          class="text-sm text-gray-600 whitespace-pre-line mb-6"
+        ></p>
+        <div class="flex items-center gap-3 border-t pt-4">
           <div
             id="detailLeaderAvatar"
-            class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-lg shadow-inner overflow-hidden"
+            class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-700 overflow-hidden"
           ></div>
-          <div class="flex flex-col">
-            <span class="text-[10px] text-gray-500">Trưởng nhóm</span
-            ><span
-              id="detailLeaderName"
-              class="font-bold text-gray-800 text-sm sm:text-base"
-            ></span>
-          </div>
+          <span id="detailLeaderName" class="font-bold text-gray-800"></span>
         </div>
       </div>
     </div>
-
     <div
       id="savedModal"
-      class="hidden fixed inset-0 bg-black/60 z-50 justify-end backdrop-blur-sm transition-opacity duration-300"
+      class="hidden fixed inset-0 bg-black/60 z-50 justify-end"
       onclick="closeSavedModal()"
     >
       <div
         id="savedSidebarContent"
-        class="bg-white h-full w-full sm:w-80 lg:w-96 shadow-2xl p-6 sm:p-8 overflow-y-auto custom-scrollbar translate-x-full transition-transform duration-300 relative"
+        class="bg-white h-full w-full sm:w-80 shadow-2xl p-6 overflow-y-auto animate-tab"
         onclick="event.stopPropagation()"
       >
-        <button
-          onclick="closeSavedModal()"
-          class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
-        >
-          <i class="fa-solid fa-xmark text-xl"></i>
-        </button>
-        <h2
-          class="text-xl sm:text-2xl font-extrabold text-gray-900 mb-6 tracking-tighter flex items-center gap-2"
-        >
+        <h2 class="text-xl font-extrabold mb-6">
           <i class="fa-regular fa-bookmark text-blue-600"></i> Đã Ứng Tuyển
         </h2>
         <div id="savedListContainer" class="space-y-4"></div>
+      </div>
+    </div>
+    <div
+      id="walletModal"
+      class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[110] hidden items-center justify-center p-4"
+      onclick="closeWalletModal()"
+    >
+      <div
+        class="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-0 shadow-2xl flex flex-col animate-tab"
+        onclick="event.stopPropagation()"
+      >
+        <div class="p-6 border-b flex justify-between items-center">
+          <h2 class="text-xl font-black">
+            <i class="fa-solid fa-wallet text-blue-600 mr-2"></i> Ví Của Tôi
+          </h2>
+          <button
+            onclick="closeWalletModal()"
+            class="w-8 h-8 bg-gray-200 rounded-full"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div
+          class="bg-gradient-to-r from-gray-900 to-gray-800 p-6 text-center text-white"
+        >
+          <p class="text-xs font-bold text-gray-400 uppercase">
+            Số dư hiện tại
+          </p>
+          <h3 id="walletBigBalance" class="text-4xl font-black text-yellow-400">
+            0 ₫
+          </h3>
+        </div>
+        <div class="flex bg-white border-b">
+          <button
+            onclick="switchWalletTab('deposit')"
+            id="wtab-deposit"
+            class="flex-1 py-3 text-sm font-bold border-b-2 border-blue-600 text-blue-600 transition"
+          >
+            Nạp Tiền</button
+          ><button
+            onclick="switchWalletTab('withdraw')"
+            id="wtab-withdraw"
+            class="flex-1 py-3 text-sm font-bold border-b-2 border-transparent text-gray-500"
+          >
+            Rút Tiền</button
+          ><button
+            onclick="switchWalletTab('history')"
+            id="wtab-history"
+            class="flex-1 py-3 text-sm font-bold border-b-2 border-transparent text-gray-500"
+          >
+            Lịch sử
+          </button>
+        </div>
+        <div class="p-6 bg-white flex-1 min-h-[300px]">
+          <div id="wcontent-deposit" class="block animate-tab">
+            <input
+              type="number"
+              id="depositAmount"
+              placeholder="Số tiền..."
+              class="w-full px-4 py-3 border rounded-xl text-sm mb-4"
+            /><button
+              onclick="generateDepositQR()"
+              class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl mb-4"
+            >
+              Tạo mã QR
+            </button>
+            <div id="depositQRBox" class="hidden flex-col items-center">
+              <img
+                id="depositQRImg"
+                class="w-48 h-48 rounded-xl mb-4 border"
+              /><button
+                onclick="submitDepositRequest()"
+                class="w-full bg-green-500 text-white font-bold py-3 rounded-xl"
+              >
+                Đã chuyển khoản
+              </button>
+            </div>
+          </div>
+          <div id="wcontent-withdraw" class="hidden">
+            <form onsubmit="submitWithdrawRequest(event)" class="space-y-4">
+              <input
+                type="text"
+                id="withdrawBank"
+                required
+                placeholder="Ngân hàng"
+                class="w-full px-4 py-3 border rounded-xl text-sm"
+              /><input
+                type="text"
+                id="withdrawAcc"
+                required
+                placeholder="Số tài khoản"
+                class="w-full px-4 py-3 border rounded-xl text-sm"
+              /><input
+                type="text"
+                id="withdrawName"
+                required
+                placeholder="Tên chủ tài khoản"
+                class="w-full px-4 py-3 border rounded-xl text-sm"
+              /><input
+                type="number"
+                id="withdrawAmount"
+                required
+                min="50000"
+                placeholder="Số tiền"
+                class="w-full px-4 py-3 border rounded-xl text-sm text-red-600 font-bold"
+              /><button
+                type="submit"
+                class="w-full bg-yellow-500 text-gray-900 font-bold py-3.5 rounded-xl"
+              >
+                Tạo Lệnh Rút
+              </button>
+            </form>
+          </div>
+          <div id="wcontent-history" class="hidden">
+            <div id="transactionList" class="space-y-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      id="topRechargeModal"
+      class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[120] hidden items-center justify-center p-4"
+      onclick="closeTopRechargeModal()"
+    >
+      <div
+        class="bg-gradient-to-b from-indigo-900 to-slate-900 rounded-3xl w-full max-w-md shadow-2xl p-0 relative overflow-hidden animate-tab"
+        onclick="event.stopPropagation()"
+      >
+        <button
+          onclick="closeTopRechargeModal()"
+          class="absolute top-4 right-4 w-8 h-8 bg-white/10 text-white rounded-full z-20"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="pt-8 pb-6 px-6 text-center border-b border-white/10">
+          <i class="fa-solid fa-trophy text-5xl text-yellow-400 mb-3"></i>
+          <h2 class="text-2xl font-black text-white">BẢNG VÀNG ĐẠI GIA</h2>
+        </div>
+        <div class="p-6 max-h-[50vh] overflow-y-auto">
+          <div id="topRechargeList" class="space-y-3"></div>
+        </div>
       </div>
     </div>
 
@@ -790,6 +959,10 @@
         getDoc,
         updateDoc,
         deleteDoc,
+        onSnapshot,
+        query,
+        orderBy,
+        limit,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -800,6 +973,7 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
+      window.globalUsersDict = {};
       window.loggedInUserId = "";
       window.hasCompletedProfile = false;
       window.loggedInUserName = "";
@@ -808,83 +982,116 @@
       window.editingProjectTitle = null;
       window.customProjects = [];
       window.globalApps = [];
+      window.currentUserBalance = 0;
+      window.userTransactions = [];
 
       const defaultProjects = [
         {
           title: "Website bán Nông sản sạch NAU",
           category: "Công nghệ thông tin",
-          roles: [
-            { role: "Frontend", count: 2 },
-            { role: "Marketing", count: 1 },
-          ],
+          roles: [{ role: "Frontend", count: 2 }],
           deadline: "15/05/2026",
           description: "Xây dựng website kết nối nông dân.",
-          skills: ["React", "Bán hàng"],
+          skills: ["React"],
           leaderName: "Trần Thế Phong",
           leaderInitials: "P",
-          leaderAvatar: "",
           isOwner: false,
           currentMembers: 2,
           slotsNeeded: 3,
         },
-        {
-          title: "Dự án Nông nghiệp tuần hoàn",
-          category: "Nông nghiệp - Thú y",
-          roles: [
-            { role: "Nghiên cứu giống", count: 1 },
-            { role: "Kế toán", count: 1 },
-          ],
-          deadline: "20/06/2026",
-          description: "Mô hình trồng rau thủy canh nuôi cá.",
-          skills: ["Sinh học", "Excel"],
-          leaderName: "Lâm Thị B",
-          leaderInitials: "B",
-          leaderAvatar: "",
-          isOwner: false,
-          currentMembers: 1,
-          slotsNeeded: 2,
-        },
       ];
 
       document.addEventListener("DOMContentLoaded", async () => {
-        const savedUser = localStorage.getItem("userProfileData");
-        if (!savedUser) return (window.location.href = "index.html");
-        const localData = JSON.parse(savedUser);
+        const rawProfile = localStorage.getItem("userProfileData");
+        if (!rawProfile) return (window.location.href = "index.html");
+        const localData = JSON.parse(rawProfile);
         if (localData.role === "teacher")
           return (window.location.href = "dashboard.html");
         window.loggedInUserId = localData.id;
 
-        try {
-          const userSnap = await getDoc(
-            doc(db, "users", window.loggedInUserId),
-          );
-          if (userSnap.exists()) {
-            const fbUser = userSnap.data();
-            window.loggedInUserName = fbUser.name;
-            window.loggedInUserAvatarBase64 = fbUser.avatarBase64 || "";
-            if (fbUser.avatarBase64) window.hasCompletedProfile = true;
-          } else window.loggedInUserName = localData.name;
-        } catch (e) {
-          window.loggedInUserName = localData.name;
-        }
+        onSnapshot(collection(db, "users"), (snap) => {
+          snap.forEach((doc) => {
+            window.globalUsersDict[doc.id] = doc.data();
+          });
+          let myData = window.globalUsersDict[window.loggedInUserId];
+          if (myData) {
+            window.loggedInUserName = myData.name;
+            window.loggedInUserAvatarBase64 = myData.avatarBase64 || "";
+            if (myData.avatarBase64) window.hasCompletedProfile = true;
+            window.currentUserBalance = myData.balance || 0;
+            document.getElementById("userBalanceDisplay").innerText =
+              new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(window.currentUserBalance);
+            if (document.getElementById("walletBigBalance"))
+              document.getElementById("walletBigBalance").innerText =
+                new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(window.currentUserBalance);
+            document.getElementById("userTotalDepositDisplay").innerText =
+              new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(myData.totalDeposit || 0);
+            updateHeaderAvatar();
+          }
+          if (window.customProjects.length > 0) window.filterProjects();
+          if (
+            !document.getElementById("savedModal").classList.contains("hidden")
+          )
+            window.renderSavedList();
+        });
 
-        document.getElementById("userName").innerText = window.loggedInUserName;
-        const avatarEl = document.getElementById("userAvatar");
-        if (window.loggedInUserAvatarBase64) {
-          avatarEl.innerHTML = `<img src="${window.loggedInUserAvatarBase64}" class="w-full h-full object-cover rounded-full">`;
-        } else {
-          avatarEl.classList.replace("bg-gray-300", "bg-orange-500");
-          avatarEl.innerText = window.loggedInUserName.charAt(0).toUpperCase();
-        }
-
-        if (window.hasCompletedProfile)
-          document
-            .getElementById("profileReminderBanner")
-            .classList.add("hidden");
-        else
-          document
-            .getElementById("profileReminderBanner")
-            .classList.remove("hidden");
+        loadTopRechargeBanner();
+        onSnapshot(doc(db, "system_settings", "announcement"), (docSnap) => {
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            let isSnoozed =
+              localStorage.getItem("announcementSnooze") &&
+              Date.now() < parseInt(localStorage.getItem("announcementSnooze"));
+            if (
+              data.active &&
+              !isSnoozed &&
+              !sessionStorage.getItem("announcementSeen")
+            ) {
+              document.getElementById("announcementTitle").innerText =
+                data.title;
+              document.getElementById("announcementMessage").innerText =
+                data.message;
+              document
+                .getElementById("announcementModal")
+                .classList.remove("hidden");
+              document
+                .getElementById("announcementModal")
+                .classList.add("flex");
+              createParticles();
+              setTimeout(
+                () =>
+                  document
+                    .getElementById("announcementContent")
+                    .classList.remove("scale-95", "opacity-0"),
+                100,
+              );
+            }
+          }
+        });
+        onSnapshot(collection(db, "transactions"), (snap) => {
+          window.userTransactions = [];
+          snap.forEach((d) => {
+            let data = d.data();
+            if (data.userId === window.loggedInUserId) {
+              data.id = d.id;
+              window.userTransactions.push(data);
+            }
+          });
+          window.userTransactions.sort((a, b) => b.createdAt - a.createdAt);
+          if (
+            !document.getElementById("walletModal").classList.contains("hidden")
+          )
+            renderTransactionHistory();
+        });
 
         try {
           const projSnap = await getDocs(collection(db, "projects"));
@@ -892,11 +1099,215 @@
           const appSnap = await getDocs(collection(db, "applications"));
           window.globalApps = appSnap.docs.map((doc) => doc.data());
         } catch (e) {}
-
         window.filterProjects();
         window.updateLeaderVisibility();
         window.updateAppliedCountMenu();
       });
+
+      function updateHeaderAvatar() {
+        document.getElementById("userName").innerText = window.loggedInUserName;
+        document.getElementById("dropdownBigName").innerText =
+          window.loggedInUserName;
+        document.getElementById("dropdownBigId").innerText =
+          window.loggedInUserId;
+        const avatarEl = document.getElementById("leaderAvatar");
+        const bigAvatarEl = document.getElementById("dropdownBigAvatar");
+        if (window.loggedInUserAvatarBase64) {
+          avatarEl.innerHTML = `<img src="${window.loggedInUserAvatarBase64}" class="w-full h-full object-cover">`;
+          bigAvatarEl.innerHTML = `<img src="${window.loggedInUserAvatarBase64}" class="w-full h-full object-cover">`;
+        } else {
+          avatarEl.innerHTML = window.loggedInUserName.charAt(0).toUpperCase();
+          bigAvatarEl.innerHTML = window.loggedInUserName
+            .charAt(0)
+            .toUpperCase();
+        }
+      }
+
+      window.doneAnnouncement = () => {
+        sessionStorage.setItem("announcementSeen", "true");
+        closeAnnouncement();
+      };
+      window.snoozeAnnouncement = () => {
+        localStorage.setItem("announcementSnooze", Date.now() + 3600000);
+        closeAnnouncement();
+      };
+      function closeAnnouncement() {
+        document
+          .getElementById("announcementContent")
+          .classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          document.getElementById("announcementModal").classList.add("hidden");
+          document.getElementById("particles-container").innerHTML = "";
+        }, 300);
+      }
+      function createParticles() {
+        const container = document.getElementById("particles-container");
+        for (let i = 0; i < 50; i++) {
+          let p = document.createElement("div");
+          p.className = "particle";
+          p.style.left = Math.random() * 100 + "vw";
+          p.style.animationDuration = Math.random() * 3 + 2 + "s";
+          p.style.width = p.style.height = Math.random() * 4 + 2 + "px";
+          container.appendChild(p);
+        }
+      }
+
+      async function loadTopRechargeBanner() {
+        const banner = document.getElementById("topRechargeBanner");
+        try {
+          const q = query(
+            collection(db, "users"),
+            orderBy("totalDeposit", "desc"),
+            limit(3),
+          );
+          const snap = await getDocs(q);
+          banner.innerHTML = "";
+          let rank = 1;
+          let medals = ["text-yellow-300", "text-gray-300", "text-amber-500"];
+          let sizes = ["w-12 h-12", "w-10 h-10", "w-10 h-10"];
+          snap.forEach((doc) => {
+            const d = doc.data();
+            if (d.totalDeposit > 0 && d.role !== "admin" && rank <= 3) {
+              let ava = d.avatarBase64
+                ? `<img src="${d.avatarBase64}" class="w-full h-full object-cover">`
+                : `<div class="w-full h-full bg-indigo-500 flex items-center justify-center text-white font-bold text-xs">${d.name.charAt(0)}</div>`;
+              let html = `<div class="flex flex-col items-center group relative ${rank === 1 ? "scale-110 -translate-y-2" : ""}"><div class="absolute -top-3 ${medals[rank - 1]}"><i class="fa-solid fa-crown text-sm"></i></div><div class="${sizes[rank - 1]} rounded-full border-2 border-white/20 shadow-lg overflow-hidden relative">${ava}</div><div class="text-[9px] text-white font-bold bg-white/10 px-1.5 py-0.5 rounded mt-1 truncate max-w-[60px]">${d.name}</div></div>`;
+              if (rank === 1) banner.insertAdjacentHTML("afterbegin", html);
+              else banner.insertAdjacentHTML("beforeend", html);
+              rank++;
+            }
+          });
+          if (rank === 1)
+            banner.innerHTML =
+              '<div class="text-indigo-300 text-xs">Chưa có ai lên bảng vàng!</div>';
+        } catch (e) {}
+      }
+
+      window.openWalletModal = function (tabName) {
+        document.getElementById("userDropdown").classList.add("hidden");
+        document.body.classList.add("modal-active");
+        document.getElementById("walletModal").classList.remove("hidden");
+        document.getElementById("walletModal").classList.add("flex");
+        switchWalletTab(tabName);
+      };
+      window.closeWalletModal = function () {
+        document.body.classList.remove("modal-active");
+        document.getElementById("walletModal").classList.add("hidden");
+        document.getElementById("walletModal").classList.remove("flex");
+      };
+      window.switchWalletTab = function (tab) {
+        ["deposit", "withdraw", "history"].forEach((t) => {
+          document.getElementById("wcontent-" + t).classList.add("hidden");
+          document.getElementById("wcontent-" + t).classList.remove("block");
+          document
+            .getElementById("wtab-" + t)
+            .classList.remove("border-blue-600", "text-blue-600");
+          document
+            .getElementById("wtab-" + t)
+            .classList.add("border-transparent", "text-gray-500");
+        });
+        document.getElementById("wcontent-" + tab).classList.remove("hidden");
+        document.getElementById("wcontent-" + tab).classList.add("block");
+        document
+          .getElementById("wtab-" + tab)
+          .classList.remove("border-transparent", "text-gray-500");
+        document
+          .getElementById("wtab-" + tab)
+          .classList.add("border-blue-600", "text-blue-600");
+        if (tab === "history") renderTransactionHistory();
+      };
+      window.generateDepositQR = function () {
+        const amount = document.getElementById("depositAmount").value;
+        if (!amount || parseInt(amount) < 10000)
+          return alert("Tối thiểu 10.000đ");
+        const memo = `NAP ${window.loggedInUserId}`;
+        const qrUrl = `https://img.vietqr.io/image/970422-4619092006-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(memo)}&accountName=VU%20XUAN%20CONG`;
+        document.getElementById("depositQRImg").src = qrUrl;
+        document.getElementById("depositQRBox").classList.remove("hidden");
+        document.getElementById("depositQRBox").classList.add("flex");
+      };
+      window.submitDepositRequest = async function () {
+        const amount = parseInt(document.getElementById("depositAmount").value);
+        const transId = "TR_" + Date.now();
+        try {
+          await setDoc(doc(db, "transactions", transId), {
+            id: transId,
+            userId: window.loggedInUserId,
+            type: "deposit",
+            amount: amount,
+            status: "pending",
+            createdAt: Date.now(),
+            dateStr: new Date().toLocaleString("vi-VN"),
+          });
+          alert("Yêu cầu đã được gửi!");
+          document.getElementById("depositAmount").value = "";
+          document.getElementById("depositQRBox").classList.remove("flex");
+          document.getElementById("depositQRBox").classList.add("hidden");
+          switchWalletTab("history");
+        } catch (e) {}
+      };
+      window.submitWithdrawRequest = async function (e) {
+        e.preventDefault();
+        const amount = parseInt(
+          document.getElementById("withdrawAmount").value,
+        );
+        const bank = document.getElementById("withdrawBank").value;
+        const acc = document.getElementById("withdrawAcc").value;
+        const name = document.getElementById("withdrawName").value;
+        if (amount > window.currentUserBalance) return alert("Số dư không đủ!");
+        if (amount < 50000) return alert("Tối thiểu 50.000đ");
+        try {
+          await updateDoc(doc(db, "users", window.loggedInUserId), {
+            balance: window.currentUserBalance - amount,
+          });
+          const transId = "TR_" + Date.now();
+          await setDoc(doc(db, "transactions", transId), {
+            id: transId,
+            userId: window.loggedInUserId,
+            type: "withdraw",
+            amount: amount,
+            bankInfo: `${bank} - ${acc} - ${name}`,
+            status: "pending",
+            createdAt: Date.now(),
+            dateStr: new Date().toLocaleString("vi-VN"),
+          });
+          alert("Lệnh rút tiền thành công!");
+          e.target.reset();
+          switchWalletTab("history");
+        } catch (err) {}
+      };
+      window.renderTransactionHistory = function () {
+        const list = document.getElementById("transactionList");
+        if (window.userTransactions.length === 0)
+          return (list.innerHTML = `<div class="text-center py-10 text-gray-400 text-sm">Chưa có giao dịch nào.</div>`);
+        list.innerHTML = window.userTransactions
+          .map((t) => {
+            let icon =
+              t.type === "deposit"
+                ? '<div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-lg"><i class="fa-solid fa-arrow-down"></i></div>'
+                : '<div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-lg"><i class="fa-solid fa-arrow-up"></i></div>';
+            let title =
+              t.type === "deposit"
+                ? "Nạp tiền vào Ví"
+                : "Rút tiền / Đổi thưởng";
+            let amountStr =
+              (t.type === "deposit" ? "+" : "-") +
+              new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(t.amount);
+            let color =
+              t.type === "deposit" ? "text-green-600" : "text-red-600";
+            let badge =
+              t.status === "pending"
+                ? '<span class="bg-orange-100 text-orange-600 px-2 py-0.5 rounded text-[10px] font-bold">Đang xử lý</span>'
+                : t.status === "approved"
+                  ? '<span class="bg-green-100 text-green-600 px-2 py-0.5 rounded text-[10px] font-bold">Thành công</span>'
+                  : '<span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Từ chối</span>';
+            return `<div class="flex items-center justify-between p-4 border border-gray-100 rounded-xl hover:bg-gray-50 transition"><div class="flex items-center gap-3">${icon}<div><h4 class="font-bold text-gray-800 text-sm">${title} ${badge}</h4><p class="text-[10px] text-gray-400">${t.dateStr}</p></div></div><span class="font-black ${color}">${amountStr}</span></div>`;
+          })
+          .join("");
+      };
 
       window.updateAppliedCountMenu = function () {
         const count = window.globalApps.filter(
@@ -905,7 +1316,6 @@
         if (document.getElementById("appliedCountMenu"))
           document.getElementById("appliedCountMenu").innerText = count;
       };
-
       window.filterProjects = function () {
         const keyword = document
           .getElementById("searchInput")
@@ -913,7 +1323,6 @@
           .trim();
         const cat = document.getElementById("filterCategory").value;
         let filtered = [...window.customProjects, ...defaultProjects];
-
         filtered = filtered.filter((p) => {
           let totalSlotsCount = p.slotsNeeded || 0;
           if (p.roles && p.roles.length > 0)
@@ -928,7 +1337,6 @@
             (p.isOwner && p.leaderName === window.loggedInUserName)
           );
         });
-
         if (keyword)
           filtered = filtered.filter(
             (p) =>
@@ -942,14 +1350,12 @@
               p.category &&
               p.category.toLowerCase().includes(cat.toLowerCase()),
           );
-
         const grid = document.getElementById("projectGrid");
         grid.innerHTML = "";
         if (filtered.length === 0)
           grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500">Không tìm thấy dự án phù hợp.</div>`;
         else filtered.forEach((p) => window.renderProjectCard(p));
       };
-
       window.renderProjectCard = function (p) {
         let skillsHtml = "";
         (p.skills || []).forEach((s) => {
@@ -966,7 +1372,6 @@
         } else {
           rolesHtml = `<span class="flex items-center text-[10px] sm:text-[11px] font-bold text-gray-600 bg-gray-100 px-2.5 py-1 rounded-md border border-gray-200 whitespace-nowrap"><i class="fa-solid fa-user-tag mr-1.5 text-gray-400"></i> ${totalSlotsCount || 5} Thành viên</span>`;
         }
-
         const myApp = window.globalApps.find(
           (a) =>
             a.projectId === p.title && a.applicantId === window.loggedInUserId,
@@ -976,7 +1381,6 @@
         let statusBadge = isFull
           ? `<span class="bg-gray-100 text-gray-500 px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-bold whitespace-nowrap"><i class="fa-solid fa-lock mr-1"></i> Đã đóng</span>`
           : `<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[9px] sm:text-[10px] font-bold whitespace-nowrap"><i class="fa-solid fa-fire mr-1"></i> Đang tuyển</span>`;
-
         let actionButton = "";
         if (p.isOwner && p.leaderName === window.loggedInUserName) {
           actionButton = `<div class="flex space-x-2"><button onclick="editProject('${p.title}', event)" class="bg-yellow-50 text-yellow-600 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center"><i class="fa-solid fa-pen text-xs"></i></button><button onclick="deleteProject('${p.title}', event)" class="bg-red-50 text-red-500 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center"><i class="fa-solid fa-trash-can text-xs"></i></button><button onclick="window.location.href='kanban.html'" class="bg-white border border-blue-600 text-blue-600 font-bold py-1.5 px-3 sm:px-4 rounded-full text-xs sm:text-sm">Quản lý</button></div>`;
@@ -991,21 +1395,17 @@
           actionButton = `<button onclick="handleApply('${p.title}')" class="bg-white border border-blue-600 text-blue-600 font-bold py-2 px-4 sm:px-6 rounded-full text-xs sm:text-sm whitespace-nowrap">Ứng tuyển</button>`;
         }
 
-        let actualAvatar = p.leaderAvatar;
-        if (
-          p.isOwner &&
-          p.leaderName === window.loggedInUserName &&
-          window.loggedInUserAvatarBase64
-        )
-          actualAvatar = window.loggedInUserAvatarBase64;
+        const leaderUser = window.globalUsersDict[p.leaderId] || {};
+        let actualAvatar = leaderUser.avatarBase64 || p.leaderAvatar;
+        let actualName = leaderUser.name || p.leaderName;
         let leaderAvatarHtml = actualAvatar
           ? `<img src="${actualAvatar}" class="w-8 h-8 sm:w-10 sm:h-10 object-cover rounded-full border border-gray-100 shadow-sm shrink-0">`
           : `<div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">${p.leaderInitials || "L"}</div>`;
 
         const card = document.createElement("div");
         card.className =
-          "bg-white rounded-2xl sm:rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition flex flex-col p-4 sm:p-6 w-full";
-        card.innerHTML = `<div class="flex justify-between items-start mb-3 sm:mb-4"><div class="flex flex-wrap items-center gap-2"><div class="text-[10px] sm:text-xs font-black text-blue-600 uppercase">${p.category || "Đa ngành"}</div>${statusBadge}</div></div><h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2 cursor-pointer leading-snug" onclick="openDetailModal('${p.title}')">${p.title}</h3><p class="text-gray-500 text-xs sm:text-sm mb-4 sm:mb-5 line-clamp-2 cursor-pointer" onclick="openDetailModal('${p.title}')">${p.description}</p><div class="mb-4 sm:mb-5 space-y-2 sm:space-y-3"><div class="flex flex-wrap gap-1.5 sm:gap-2">${skillsHtml}</div><div class="flex flex-wrap gap-1.5 sm:gap-2 pt-1 border-t border-gray-100">${rolesHtml}</div></div><div class="flex flex-wrap sm:flex-nowrap justify-between items-center border-t border-gray-50 pt-3 sm:pt-4 mt-auto gap-3"><div class="flex items-center space-x-2 sm:space-x-3">${leaderAvatarHtml}<span class="text-xs sm:text-sm text-gray-700 font-bold truncate max-w-[100px] sm:max-w-[150px]">${p.leaderName}</span></div>${actionButton}</div>`;
+          "bg-white rounded-2xl sm:rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition flex flex-col p-4 sm:p-6 w-full animate-tab";
+        card.innerHTML = `<div class="flex justify-between items-start mb-3 sm:mb-4"><div class="flex flex-wrap items-center gap-2"><div class="text-[10px] sm:text-xs font-black text-blue-600 uppercase">${p.category || "Đa ngành"}</div>${statusBadge}</div></div><h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2 cursor-pointer leading-snug" onclick="openDetailModal('${p.title}')">${p.title}</h3><p class="text-gray-500 text-xs sm:text-sm mb-4 sm:mb-5 line-clamp-2 cursor-pointer" onclick="openDetailModal('${p.title}')">${p.description}</p><div class="mb-4 sm:mb-5 space-y-2 sm:space-y-3"><div class="flex flex-wrap gap-1.5 sm:gap-2">${skillsHtml}</div><div class="flex flex-wrap gap-1.5 sm:gap-2 pt-1 border-t border-gray-100">${rolesHtml}</div></div><div class="flex flex-wrap sm:flex-nowrap justify-between items-center border-t border-gray-50 pt-3 sm:pt-4 mt-auto gap-3"><div class="flex items-center space-x-2 sm:space-x-3">${leaderAvatarHtml}<span class="text-xs sm:text-sm text-gray-700 font-bold truncate max-w-[100px] sm:max-w-[150px]">${actualName}</span></div>${actionButton}</div>`;
         document.getElementById("projectGrid").appendChild(card);
       };
 
@@ -1017,19 +1417,18 @@
           const img = new Image();
           img.onload = function () {
             const canvas = document.createElement("canvas");
-            const MAX_WIDTH = 250;
-            const MAX_HEIGHT = 250;
+            const MAX = 250;
             let width = img.width;
             let height = img.height;
             if (width > height) {
-              if (width > MAX_WIDTH) {
-                height *= MAX_WIDTH / width;
-                width = MAX_WIDTH;
+              if (width > MAX) {
+                height *= MAX / width;
+                width = MAX;
               }
             } else {
-              if (height > MAX_HEIGHT) {
-                width *= MAX_HEIGHT / height;
-                height = MAX_HEIGHT;
+              if (height > MAX) {
+                width *= MAX / height;
+                height = MAX;
               }
             }
             canvas.width = width;
@@ -1047,7 +1446,6 @@
         };
         reader.readAsDataURL(file);
       };
-
       window.submitProfile = async function (e) {
         e.preventDefault();
         const name = document.getElementById("profileFullName").value.trim();
@@ -1060,8 +1458,7 @@
           return alert("⚠️ Vui lòng chọn ít nhất 1 kỹ năng!");
         const imgEl = document.getElementById("avatarPreview");
         if (imgEl.classList.contains("hidden"))
-          return alert("⚠️ Bắt buộc tải lên ảnh đại diện hình thay chữ!");
-
+          return alert("⚠️ Bắt buộc tải lên ảnh đại diện!");
         try {
           await updateDoc(doc(db, "users", window.loggedInUserId), {
             name: name,
@@ -1073,18 +1470,19 @@
             skills: profileSkills.slice(),
             avatarBase64: imgEl.src,
           });
-          window.customProjects.forEach(async (p) => {
-            if (p.leaderName === window.loggedInUserName && p.isOwner) {
-              await updateDoc(doc(db, "projects", p.title), {
-                leaderAvatar: imgEl.src,
-              });
-            }
-          });
           alert("✅ Cập nhật hồ sơ thành công!");
           location.reload();
-        } catch (err) {
-          alert("Lỗi mạng! Thử lại bằng ảnh kích thước nhỏ hơn nhé.");
-        }
+        } catch (err) {}
+      };
+
+      // ĐÃ CẬP NHẬT ĐÚNG 18 NHÓM NGÀNH KHI TẠO DỰ ÁN
+      window.addRoleRow = function () {
+        const container = document.getElementById("dynamicRolesContainer");
+        const row = document.createElement("div");
+        row.className =
+          "role-row flex flex-col md:flex-row gap-2 sm:gap-3 items-start sm:items-end fade-in-section mb-3";
+        row.innerHTML = `<div class="w-full md:w-2/5 relative"><input type="text" list="roleList" required placeholder="Vai trò..." class="role-name w-full px-3 sm:px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-1 focus:ring-blue-500"></div><div class="w-full md:w-2/5"><select required class="role-major w-full px-3 sm:px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm outline-none cursor-pointer text-gray-600"><option value=\"\" disabled selected hidden>Ngành/Khoa...</option><optgroup label="Công nghệ thông tin"><option value="Công nghệ thông tin">Công nghệ thông tin</option><option value="Kỹ thuật phần mềm">Kỹ thuật phần mềm</option><option value="Khoa học máy tính">Khoa học máy tính</option><option value="Hệ thống thông tin">Hệ thống thông tin</option></optgroup><optgroup label="Kinh tế & Quản trị"><option value="Kế toán">Kế toán</option><option value="Kinh tế">Kinh tế</option><option value="Marketing">Marketing</option><option value="Quản trị kinh doanh">Quản trị kinh doanh</option><option value="Tài chính - Ngân hàng">Tài chính - Ngân hàng</option><option value="Logistics">Logistics</option><option value="Thương mại điện tử">Thương mại điện tử</option></optgroup><optgroup label="Nông nghiệp & Thú y"><option value="Nông nghiệp CNC">Nông nghiệp CNC</option><option value="Quản lý đất đai">Quản lý đất đai</option><option value="Thú y">Thú y</option><option value="Chăn nuôi">Chăn nuôi</option></optgroup><optgroup label="Ngôn ngữ & Sư phạm"><option value="Ngôn ngữ Anh">Ngôn ngữ Anh</option><option value="Ngôn ngữ Trung">Ngôn ngữ Trung</option><option value="Sư phạm">Sư phạm</option></optgroup></select></div><div class="w-full md:w-1/5 flex gap-2"><input type="number" min="1" required placeholder="SL" class="role-count w-full px-3 sm:px-4 py-2.5 bg-white border rounded-xl text-xs sm:text-sm outline-none"><button type="button" onclick="this.parentElement.parentElement.remove()" class="w-10 sm:w-12 shrink-0 bg-red-50 text-red-500 rounded-xl border border-red-100 hover:bg-red-500 hover:text-white transition flex items-center justify-center"><i class="fa-solid fa-trash-can text-xs sm:text-sm"></i></button></div>`;
+        container.appendChild(row);
       };
 
       window.submitCreateProject = async function (event) {
@@ -1114,7 +1512,14 @@
               });
               totalSlots += rCount;
               let group = "";
-              if (["Công nghệ thông tin"].includes(rMajor))
+              if (
+                [
+                  "Công nghệ thông tin",
+                  "Kỹ thuật phần mềm",
+                  "Khoa học máy tính",
+                  "Hệ thống thông tin",
+                ].includes(rMajor)
+              )
                 group = "Công nghệ thông tin";
               else if (
                 [
@@ -1123,23 +1528,22 @@
                   "Marketing",
                   "Quản trị kinh doanh",
                   "Tài chính - Ngân hàng",
-                  "Logistics và QL chuỗi cung ứng",
+                  "Logistics",
                   "Thương mại điện tử",
                 ].includes(rMajor)
               )
                 group = "Kinh tế - Quản trị";
               else if (
-                ["Nông nghiệp CNC", "Quản lý đất đai", "Thú y"].includes(rMajor)
+                [
+                  "Nông nghiệp CNC",
+                  "Quản lý đất đai",
+                  "Thú y",
+                  "Chăn nuôi",
+                ].includes(rMajor)
               )
                 group = "Nông nghiệp - Thú y";
               else if (
-                [
-                  "Ngôn ngữ Anh",
-                  "Ngôn ngữ Trung",
-                  "Sư phạm Khoa học Tự nhiên",
-                  "Sư phạm Tiểu học",
-                  "Cao đẳng Mầm non",
-                ].includes(rMajor)
+                ["Ngôn ngữ Anh", "Ngôn ngữ Trung", "Sư phạm"].includes(rMajor)
               )
                 group = "Ngôn ngữ - Sư phạm";
               if (group) categoriesSet.add(group);
@@ -1167,13 +1571,12 @@
           if (window.editingProjectTitle)
             await deleteDoc(doc(db, "projects", window.editingProjectTitle));
           await setDoc(doc(db, "projects", projName), newProjectObj);
-          alert(`🎉 TẠO DỰ ÁN THÀNH CÔNG VÀ ĐÃ ĐỒNG BỘ!`);
+          alert(`🎉 TẠO DỰ ÁN THÀNH CÔNG!`);
           window.location.href = "kanban.html";
         } catch (error) {
           alert("Lỗi lưu dự án!");
         }
       };
-
       window.submitApplication = async function (e) {
         e.preventDefault();
         const role = document.getElementById("applyRoleSelect").value;
@@ -1191,32 +1594,21 @@
             status: "pending",
             time: new Date().toLocaleString("vi-VN"),
           });
-          alert("✅ Gửi đơn ứng tuyển thành công!");
+          alert("✅ Gửi đơn thành công!");
           location.reload();
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) {}
       };
-
       window.deleteProject = async function (title, event) {
         event.stopPropagation();
-        if (confirm(`Xóa vĩnh viễn dự án "${title}" trên toàn hệ thống?`)) {
+        if (confirm(`Xóa vĩnh viễn dự án "${title}"?`)) {
           await deleteDoc(doc(db, "projects", title));
           location.reload();
         }
       };
-
       window.openProfileModal = async function () {
         document.body.classList.add("modal-active");
         document.getElementById("profileModal").classList.remove("hidden");
         document.getElementById("profileModal").classList.add("flex");
-        setTimeout(
-          () =>
-            document
-              .getElementById("profileModal")
-              .children[0].classList.remove("scale-95", "opacity-0"),
-          10,
-        );
         try {
           const userSnap = await getDoc(
             doc(db, "users", window.loggedInUserId),
@@ -1245,10 +1637,9 @@
           }
         } catch (e) {}
       };
-
       window.openCreateProjectModal = function (isNew = false) {
         if (!window.hasCompletedProfile) {
-          alert("⚠️ Bạn chưa có ảnh đại diện! Cập nhật hồ sơ trước.");
+          alert("⚠️ Cập nhật hồ sơ có ảnh đại diện trước khi tạo dự án.");
           return window.openProfileModal();
         }
         document.body.classList.add("modal-active");
@@ -1256,13 +1647,6 @@
           .getElementById("createProjectModal")
           .classList.remove("hidden");
         document.getElementById("createProjectModal").classList.add("flex");
-        setTimeout(
-          () =>
-            document
-              .getElementById("createProjectModal")
-              .children[0].classList.remove("scale-95", "opacity-0"),
-          10,
-        );
         if (isNew) {
           window.editingProjectTitle = null;
           document.getElementById("createModalTitle").innerText =
@@ -1273,7 +1657,6 @@
           window.addRoleRow();
         }
       };
-
       window.editProject = function (title, event) {
         event.stopPropagation();
         const p = window.customProjects.find((x) => x.title === title);
@@ -1302,7 +1685,6 @@
           });
         }
       };
-
       window.handleApply = function (title) {
         if (!window.hasCompletedProfile) {
           alert("⚠️ Cập nhật hồ sơ có ảnh trước khi ứng tuyển.");
@@ -1322,15 +1704,7 @@
         document.body.classList.add("modal-active");
         document.getElementById("applyModal").classList.remove("hidden");
         document.getElementById("applyModal").classList.add("flex");
-        setTimeout(
-          () =>
-            document
-              .getElementById("applyModal")
-              .children[0].classList.remove("scale-95", "opacity-0"),
-          10,
-        );
       };
-
       window.openDetailModal = function (title) {
         const p = [...defaultProjects, ...window.customProjects].find(
           (x) => x.title === title,
@@ -1340,30 +1714,18 @@
           document.getElementById("detailCategory").innerText =
             p.category || "Đa ngành";
           document.getElementById("detailDesc").innerText = p.description;
-          document.getElementById("detailLeaderName").innerText = p.leaderName;
-          let ava = p.leaderAvatar;
-          if (
-            p.isOwner &&
-            p.leaderName === window.loggedInUserName &&
-            window.loggedInUserAvatarBase64
-          )
-            ava = window.loggedInUserAvatarBase64;
-          document.getElementById("detailLeaderAvatar").innerHTML = ava
-            ? `<img src="${ava}" class="w-full h-full object-cover">`
+          const leaderUser = window.globalUsersDict[p.leaderId] || {};
+          let actualAvatar = leaderUser.avatarBase64 || p.leaderAvatar;
+          let actualName = leaderUser.name || p.leaderName;
+          document.getElementById("detailLeaderName").innerText = actualName;
+          document.getElementById("detailLeaderAvatar").innerHTML = actualAvatar
+            ? `<img src="${actualAvatar}" class="w-full h-full object-cover">`
             : p.leaderInitials || "L";
           document.body.classList.add("modal-active");
           document.getElementById("detailModal").classList.remove("hidden");
           document.getElementById("detailModal").classList.add("flex");
-          setTimeout(
-            () =>
-              document
-                .getElementById("detailModal")
-                .children[0].classList.remove("scale-95", "opacity-0"),
-            10,
-          );
         }
       };
-
       window.closeProfileModal = () => {
         document.body.classList.remove("modal-active");
         document.getElementById("profileModal").classList.add("hidden");
@@ -1384,27 +1746,6 @@
         document.getElementById("detailModal").classList.add("hidden");
         document.getElementById("detailModal").classList.remove("flex");
       };
-
-      window.addRoleRow = function () {
-        const container = document.getElementById("dynamicRolesContainer");
-        const row = document.createElement("div");
-        row.className =
-          "role-row flex flex-col md:flex-row gap-2 sm:gap-3 items-start sm:items-end fade-in-section mb-3";
-        row.innerHTML = `
-            <div class="w-full md:w-2/5 relative"><input type="text" list="roleList" required placeholder="Vai trò (VD: IT...)" class="role-name w-full px-3 sm:px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-1 focus:ring-blue-500"></div>
-            <div class="w-full md:w-2/5">
-                <select required class="role-major w-full px-3 sm:px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm outline-none cursor-pointer text-gray-600 focus:ring-1 focus:ring-blue-500">
-                    <option value="" disabled selected hidden>Ngành/Khoa...</option>
-                    <optgroup label="Công nghệ thông tin"><option>Công nghệ thông tin</option></optgroup>
-                    <optgroup label="Kinh tế & Quản trị"><option>Kế toán</option><option>Kinh tế</option><option>Marketing</option><option>Quản trị kinh doanh</option><option>Tài chính - Ngân hàng</option><option>Logistics và QL chuỗi cung ứng</option><option>Thương mại điện tử</option></optgroup>
-                    <optgroup label="Nông nghiệp & Thú y"><option>Nông nghiệp CNC</option><option>Quản lý đất đai</option><option>Thú y</option></optgroup>
-                    <optgroup label="Ngôn ngữ & Sư phạm"><option>Ngôn ngữ Anh</option><option>Ngôn ngữ Trung</option><option>Sư phạm Khoa học Tự nhiên</option><option>Sư phạm Tiểu học</option><option>Cao đẳng Mầm non</option></optgroup>
-                </select>
-            </div>
-            <div class="w-full md:w-1/5 flex gap-2"><input type="number" min="1" required placeholder="SL" class="role-count w-full px-3 sm:px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm outline-none focus:ring-1 focus:ring-blue-500"><button type="button" onclick="this.parentElement.parentElement.remove()" class="w-10 sm:w-12 shrink-0 bg-red-50 text-red-500 rounded-xl border border-red-100 hover:bg-red-500 hover:text-white transition flex items-center justify-center"><i class="fa-solid fa-trash-can text-xs sm:text-sm"></i></button></div>`;
-        container.appendChild(row);
-      };
-
       const predefinedSkills = [
         "Tiếng Anh",
         "Word",
@@ -1528,7 +1869,6 @@
           },
         };
       }
-
       window.profileTagManager = setupTagInput(
         "profileSkillInput",
         "profileSkillContainer",
@@ -1543,7 +1883,6 @@
         window.projectSkills,
         "removeProjectSkill",
       );
-
       window.toggleUserDropdown = (e) => {
         e.stopPropagation();
         document.getElementById("userDropdown").classList.toggle("hidden");
@@ -1552,7 +1891,6 @@
         localStorage.removeItem("userProfileData");
         window.location.href = "index.html";
       };
-
       window.updateLeaderVisibility = function () {
         const isLeader = window.customProjects.some(
           (p) => p.leaderName === window.loggedInUserName && p.isOwner,
@@ -1565,29 +1903,16 @@
         if (isLeader || isMember)
           document.getElementById("leaderAreaBtn").classList.remove("hidden");
       };
-
       window.openSavedModal = function () {
         document.body.classList.add("modal-active");
         document.getElementById("savedModal").classList.remove("hidden");
         document.getElementById("savedModal").classList.add("flex");
         window.renderSavedList();
-        setTimeout(
-          () =>
-            document
-              .getElementById("savedSidebarContent")
-              .classList.remove("translate-x-full"),
-          10,
-        );
       };
       window.closeSavedModal = function () {
         document.body.classList.remove("modal-active");
-        document
-          .getElementById("savedSidebarContent")
-          .classList.add("translate-x-full");
-        setTimeout(() => {
-          document.getElementById("savedModal").classList.add("hidden");
-          document.getElementById("savedModal").classList.remove("flex");
-        }, 300);
+        document.getElementById("savedModal").classList.add("hidden");
+        document.getElementById("savedModal").classList.remove("flex");
       };
       window.renderSavedList = function () {
         const container = document.getElementById("savedListContainer");

@@ -79,7 +79,6 @@
       onclick="toggleSidebar()"
       class="fixed inset-0 bg-black/50 z-40 hidden md:hidden transition-opacity"
     ></div>
-
     <aside
       id="adminSidebar"
       class="fixed inset-y-0 left-0 w-64 bg-slate-950 text-slate-300 flex flex-col z-50 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 shadow-2xl md:shadow-none"
@@ -215,28 +214,25 @@
                 id="pendingCountBadge2"
                 class="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full ml-1 hidden"
                 >0</span
-              >
-            </button>
-            <button
+              ></button
+            ><button
               onclick="switchSubTab('users', 'transactions')"
               id="subtab-users-transactions"
               class="whitespace-nowrap text-gray-500 font-bold border-b-2 border-transparent hover:text-blue-600 pb-3 transition px-1"
             >
-              Nạp/Rút Tiền Ví
+              Nạp/Rút Tiền
               <span
                 id="transCountBadge"
                 class="bg-yellow-500 text-white text-[10px] px-1.5 py-0.5 rounded-full ml-1 hidden"
                 >0</span
-              >
-            </button>
-            <button
+              ></button
+            ><button
               onclick="switchSubTab('users', 'active')"
               id="subtab-users-active"
               class="whitespace-nowrap text-gray-500 font-bold border-b-2 border-transparent hover:text-blue-600 pb-3 transition px-1"
             >
-              Tài khoản hệ thống
-            </button>
-            <button
+              Tài khoản hệ thống</button
+            ><button
               onclick="switchSubTab('users', 'create')"
               id="subtab-users-create"
               class="whitespace-nowrap text-gray-500 font-bold border-b-2 border-transparent hover:text-blue-600 pb-3 transition px-1"
@@ -257,7 +253,6 @@
             />
           </div>
         </div>
-
         <div class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar">
           <div
             id="subcontent-users-pending"
@@ -269,9 +264,7 @@
                   class="bg-red-50 text-red-800 text-[10px] sm:text-xs uppercase border-b border-red-100"
                 >
                   <tr>
-                    <th class="p-3 sm:p-4">
-                      <i class="fa-solid fa-clock mr-1"></i> Thời gian
-                    </th>
+                    <th class="p-3 sm:p-4">Thời gian</th>
                     <th class="p-3 sm:p-4">Mã SV</th>
                     <th class="p-3 sm:p-4">Họ Tên</th>
                     <th class="p-3 sm:p-4 text-right">Thao tác</th>
@@ -309,7 +302,6 @@
               </table>
             </div>
           </div>
-
           <div
             id="subcontent-users-active"
             class="hidden bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
@@ -333,15 +325,13 @@
               </table>
             </div>
           </div>
-
           <div
             id="subcontent-users-create"
             class="hidden bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden max-w-4xl mx-auto mt-4"
           >
             <div class="p-4 sm:p-5 border-b border-gray-100 bg-blue-50/50">
               <h3 class="font-bold text-blue-800">
-                <i class="fa-solid fa-user-plus mr-2"></i>Nhập thông tin tài
-                khoản mới
+                <i class="fa-solid fa-user-plus mr-2"></i>Tạo tài khoản mới
               </h3>
             </div>
             <form
@@ -355,7 +345,7 @@
                   type="text"
                   id="newUserId"
                   required
-                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-gray-50"
+                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm bg-gray-50"
                 />
               </div>
               <div>
@@ -365,7 +355,7 @@
                   type="text"
                   id="newUserName"
                   required
-                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-gray-50"
+                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm bg-gray-50"
                 />
               </div>
               <div>
@@ -375,7 +365,7 @@
                   type="text"
                   id="newUserPass"
                   required
-                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-gray-50"
+                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm bg-gray-50"
                 />
               </div>
               <div>
@@ -383,7 +373,7 @@
                   >Vai trò *</label
                 ><select
                   id="newUserRole"
-                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white"
+                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm"
                 >
                   <option value="student">Sinh viên</option>
                   <option value="teacher">Giảng viên</option>
@@ -392,9 +382,9 @@
               <div class="sm:col-span-2 pt-2">
                 <button
                   type="submit"
-                  class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition shadow-md"
+                  class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition"
                 >
-                  <i class="fa-solid fa-check-circle mr-2"></i> TẠO TÀI KHOẢN
+                  TẠO TÀI KHOẢN
                 </button>
               </div>
             </form>
@@ -407,18 +397,16 @@
         class="hidden flex-1 flex-col h-full overflow-hidden"
       >
         <div
-          class="bg-white px-4 sm:px-6 pt-4 pb-0 border-b border-gray-200 flex flex-col sm:flex-row sm:items-end justify-between gap-4 shrink-0 shadow-sm z-10"
+          class="bg-white px-4 sm:px-6 pt-4 pb-0 border-b border-gray-200 flex justify-between shrink-0 shadow-sm z-10"
         >
-          <div
-            class="flex space-x-6 overflow-x-auto hide-scrollbar w-full sm:w-auto"
-          >
+          <div class="flex space-x-6 overflow-x-auto w-full">
             <button
-              class="whitespace-nowrap text-blue-600 font-bold border-b-2 border-blue-600 pb-3 transition px-1"
+              class="text-blue-600 font-bold border-b-2 border-blue-600 pb-3 px-1"
             >
               Tất cả dự án hệ thống
             </button>
           </div>
-          <div class="relative w-full sm:w-72 shrink-0 pb-3">
+          <div class="relative w-72 pb-3">
             <i
               class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 -mt-1.5 text-gray-400"
             ></i
@@ -426,62 +414,52 @@
               type="text"
               id="searchProjectsInput"
               onkeyup="searchAdmin('projects')"
-              placeholder="Tìm tên dự án, leader..."
-              class="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"
+              placeholder="Tìm kiếm..."
+              class="w-full pl-9 pr-4 py-2 bg-gray-50 border rounded-lg text-sm"
             />
           </div>
         </div>
         <div class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar">
-          <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
-          >
-            <div class="overflow-x-auto w-full">
-              <table class="w-full text-left min-w-[600px]">
-                <thead
-                  class="bg-gray-50 text-gray-500 text-[10px] sm:text-xs uppercase border-b border-gray-100"
-                >
-                  <tr>
-                    <th class="p-3 sm:p-4">Tên Dự án</th>
-                    <th class="p-3 sm:p-4">Leader</th>
-                    <th class="p-3 sm:p-4">Trạng thái</th>
-                    <th class="p-3 sm:p-4 text-right">Hành động</th>
-                  </tr>
-                </thead>
-                <tbody
-                  id="projectsTableBody"
-                  class="divide-y divide-gray-100 text-xs sm:text-sm"
-                ></tbody>
-              </table>
-            </div>
+          <div class="bg-white rounded-2xl border shadow-sm overflow-hidden">
+            <table class="w-full text-left min-w-[600px]">
+              <thead
+                class="bg-gray-50 text-gray-500 text-xs uppercase border-b"
+              >
+                <tr>
+                  <th class="p-4">Dự án</th>
+                  <th class="p-4">Leader</th>
+                  <th class="p-4">Trạng thái</th>
+                  <th class="p-4 text-right">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="projectsTableBody" class="divide-y text-sm"></tbody>
+            </table>
           </div>
         </div>
       </div>
-
       <div
         id="content-events"
         class="hidden flex-1 flex-col h-full overflow-hidden"
       >
         <div
-          class="bg-white px-4 sm:px-6 pt-4 pb-0 border-b border-gray-200 flex flex-col sm:flex-row sm:items-end justify-between gap-4 shrink-0 shadow-sm z-10"
+          class="bg-white px-4 sm:px-6 pt-4 pb-0 border-b border-gray-200 flex justify-between shrink-0 shadow-sm z-10"
         >
-          <div
-            class="flex space-x-6 overflow-x-auto hide-scrollbar w-full sm:w-auto"
-          >
+          <div class="flex space-x-6 overflow-x-auto w-full">
             <button
               onclick="switchSubTab('events', 'all')"
               id="subtab-events-all"
-              class="whitespace-nowrap text-blue-600 font-bold border-b-2 border-blue-600 pb-3 transition px-1"
+              class="text-blue-600 font-bold border-b-2 border-blue-600 pb-3 px-1"
             >
-              Danh sách sự kiện</button
+              Sự kiện</button
             ><button
               onclick="switchSubTab('events', 'create')"
               id="subtab-events-create"
-              class="whitespace-nowrap text-gray-500 font-bold border-b-2 border-transparent hover:text-blue-600 pb-3 transition px-1"
+              class="text-gray-500 font-bold border-b-2 border-transparent hover:text-blue-600 pb-3 px-1"
             >
-              Đăng sự kiện mới
+              Đăng mới
             </button>
           </div>
-          <div class="relative w-full sm:w-72 shrink-0 pb-3">
+          <div class="relative w-72 pb-3">
             <i
               class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 -mt-1.5 text-gray-400"
             ></i
@@ -489,168 +467,126 @@
               type="text"
               id="searchEventsInput"
               onkeyup="searchAdmin('events')"
-              placeholder="Tìm kiếm sự kiện..."
-              class="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"
+              placeholder="Tìm kiếm..."
+              class="w-full pl-9 pr-4 py-2 bg-gray-50 border rounded-lg text-sm"
             />
           </div>
         </div>
         <div class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar">
           <div
             id="subcontent-events-all"
-            class="block bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden animate-tab"
+            class="block bg-white rounded-2xl border shadow-sm overflow-hidden animate-tab"
           >
-            <div class="overflow-x-auto w-full">
-              <table class="w-full text-left min-w-[500px]">
-                <thead
-                  class="bg-gray-50 text-gray-500 text-[10px] sm:text-xs uppercase border-b border-gray-100"
-                >
-                  <tr>
-                    <th class="p-3 sm:p-4">Tiêu đề Sự kiện</th>
-                    <th class="p-3 sm:p-4">Thời gian</th>
-                    <th class="p-3 sm:p-4 text-right">Thao tác</th>
-                  </tr>
-                </thead>
-                <tbody
-                  id="eventsTableBody"
-                  class="divide-y divide-gray-100 text-xs sm:text-sm"
-                ></tbody>
-              </table>
-            </div>
+            <table class="w-full text-left min-w-[500px]">
+              <thead
+                class="bg-gray-50 text-gray-500 text-xs uppercase border-b"
+              >
+                <tr>
+                  <th class="p-4">Tiêu đề</th>
+                  <th class="p-4">Thời gian</th>
+                  <th class="p-4 text-right">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="eventsTableBody" class="divide-y text-sm"></tbody>
+            </table>
           </div>
           <div
             id="subcontent-events-create"
-            class="hidden bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden max-w-4xl mx-auto mt-4"
+            class="hidden bg-white rounded-2xl border shadow-sm overflow-hidden max-w-4xl mx-auto mt-4"
           >
-            <div class="p-4 sm:p-5 border-b border-gray-100 bg-purple-50/50">
-              <h3 class="font-bold text-purple-800">
-                <i class="fa-solid fa-bullhorn mr-2"></i>Soạn thảo Sự kiện
-              </h3>
-            </div>
-            <form
-              onsubmit="createEvent(event)"
-              class="p-4 sm:p-6 space-y-4 w-full"
-            >
+            <form onsubmit="createEvent(event)" class="p-6 space-y-4">
               <input
                 type="text"
                 id="evTitle"
                 required
-                placeholder="Tiêu đề sự kiện *"
-                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 bg-gray-50"
+                placeholder="Tiêu đề..."
+                class="w-full p-3 border rounded-lg text-sm bg-gray-50"
               /><textarea
                 id="evDesc"
                 required
-                placeholder="Nội dung chi tiết..."
                 rows="4"
-                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 custom-scrollbar bg-gray-50"
+                class="w-full p-3 border rounded-lg text-sm bg-gray-50"
               ></textarea>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-4">
                 <input
                   type="date"
                   id="evDate"
                   required
-                  class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 text-gray-600 bg-gray-50"
+                  class="w-full p-3 border rounded-lg text-sm bg-gray-50"
                 /><input
                   type="url"
                   id="evVideoUrl"
-                  placeholder="Link Video (Youtube/Drive...)"
-                  class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 bg-gray-50"
+                  placeholder="Link Video..."
+                  class="w-full p-3 border rounded-lg text-sm bg-gray-50"
                 />
               </div>
-              <div class="flex flex-col sm:flex-row gap-3 w-full">
+              <div class="flex gap-3">
                 <label
-                  class="bg-blue-50 text-blue-600 px-4 py-3.5 rounded-lg cursor-pointer border border-blue-200 hover:bg-blue-100 transition flex-1 text-center font-bold text-sm shadow-sm whitespace-nowrap"
-                  ><i class="fa-solid fa-image mr-1"></i> Chọn Ảnh/Video<input
+                  class="bg-blue-50 text-blue-600 px-4 py-3 rounded-lg cursor-pointer flex-1 text-center font-bold text-sm"
+                  >Chọn Ảnh<input
                     type="file"
                     id="evGallery"
-                    accept="image/*,video/*"
-                    class="hidden"
-                    onchange="previewEvMedia(event)" /></label
-                ><label
-                  class="bg-green-50 text-green-600 px-4 py-3.5 rounded-lg cursor-pointer border border-green-200 hover:bg-green-100 transition flex-1 text-center font-bold text-sm shadow-sm whitespace-nowrap"
-                  ><i class="fa-solid fa-camera mr-1"></i> Chụp trực tiếp<input
-                    type="file"
-                    id="evCamera"
                     accept="image/*"
-                    capture="environment"
                     class="hidden"
                     onchange="previewEvMedia(event)"
                 /></label>
               </div>
               <img
                 id="evPreviewImg"
-                class="hidden w-full max-h-72 object-contain rounded-xl shadow-sm border border-gray-200 bg-gray-50 mt-2"
-              />
-              <div class="pt-4">
-                <button
-                  type="submit"
-                  class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-4 py-3.5 rounded-lg w-full transition shadow-md"
-                >
-                  <i class="fa-solid fa-paper-plane mr-2"></i> ĐĂNG SỰ KIỆN
-                </button>
-              </div>
+                class="hidden w-full max-h-72 object-contain rounded-xl border bg-gray-50 mt-2"
+              /><button
+                type="submit"
+                class="bg-purple-600 text-white font-bold py-3 rounded-lg w-full"
+              >
+                ĐĂNG
+              </button>
             </form>
           </div>
         </div>
       </div>
-
       <div
         id="content-system"
         class="hidden flex-1 flex-col h-full overflow-hidden"
       >
-        <div
-          class="bg-white px-4 sm:px-6 py-4 border-b border-gray-200 shadow-sm z-10"
-        >
-          <h3 class="font-bold text-gray-800">
-            Cấu hình Thông báo Toàn Server
-          </h3>
+        <div class="bg-white px-6 py-4 border-b shadow-sm z-10">
+          <h3 class="font-bold text-gray-800">Thông báo Toàn Server</h3>
         </div>
-        <div class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar">
-          <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden max-w-3xl mx-auto"
-          >
+        <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+          <div class="bg-white rounded-2xl border shadow-sm max-w-3xl mx-auto">
             <form
               onsubmit="saveSystemAnnouncement(event)"
               class="p-6 space-y-5"
             >
+              <label class="flex items-center cursor-pointer"
+                ><input
+                  type="checkbox"
+                  id="annActive"
+                  class="w-5 h-5 text-blue-600 rounded"
+                /><span class="ml-3 font-bold">Kích hoạt</span></label
+              >
               <div>
-                <label class="flex items-center cursor-pointer"
-                  ><input
-                    type="checkbox"
-                    id="annActive"
-                    class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  /><span class="ml-3 font-bold text-gray-800"
-                    >Kích hoạt Thông báo</span
-                  ></label
-                >
-              </div>
-              <div>
-                <label class="block text-sm font-bold text-gray-700 mb-1.5"
-                  >Tiêu đề thông báo *</label
+                <label class="block text-sm font-bold mb-1">Tiêu đề *</label
                 ><input
                   type="text"
                   id="annTitle"
                   required
-                  placeholder="VD: CHÚC MỪNG NĂM MỚI 2026!"
-                  class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
+                  class="w-full px-4 py-3 border rounded-lg text-sm"
                 />
               </div>
               <div>
-                <label class="block text-sm font-bold text-gray-700 mb-1.5"
-                  >Nội dung *</label
+                <label class="block text-sm font-bold mb-1">Nội dung *</label
                 ><textarea
                   id="annMessage"
                   required
                   rows="5"
-                  placeholder="Nhập nội dung thông báo..."
-                  class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 custom-scrollbar"
+                  class="w-full px-4 py-3 border rounded-lg text-sm"
                 ></textarea>
               </div>
               <button
                 type="submit"
-                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg transition shadow-md"
+                class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg"
               >
-                <i class="fa-solid fa-satellite-dish mr-2"></i> Cập Nhật Thông
-                Báo
+                Cập Nhật
               </button>
             </form>
           </div>
@@ -663,47 +599,42 @@
       class="fixed inset-0 bg-black/60 z-[110] hidden items-center justify-center p-4"
     >
       <div
-        class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl relative w-full sm:w-[95%] animate-tab"
+        class="bg-white rounded-2xl max-w-md p-6 shadow-2xl relative w-full animate-tab"
       >
-        <h3 class="font-black text-xl text-gray-800 mb-6 border-b pb-3">
+        <h3 class="font-black text-xl mb-6 border-b pb-3">
           <i class="fa-solid fa-pen-to-square text-blue-600 mr-2"></i>Cập nhật
-          Tài khoản
         </h3>
         <input type="hidden" id="editUserId" />
         <div class="mb-4">
-          <label class="block text-xs font-bold text-gray-600 mb-1"
-            >Mã SV / ID</label
+          <label class="block text-xs font-bold mb-1">ID</label
           ><input
             type="text"
             id="editUserIdDisplay"
             disabled
-            class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-100 font-bold text-gray-500"
+            class="w-full px-3 py-2 border rounded-lg text-sm bg-gray-100 text-gray-500"
           />
         </div>
         <div class="mb-4">
-          <label class="block text-xs font-bold text-gray-600 mb-1"
-            >Họ và Tên *</label
+          <label class="block text-xs font-bold mb-1">Tên *</label
           ><input
             type="text"
             id="editUserName"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
+            class="w-full px-3 py-2 border rounded-lg text-sm"
           />
         </div>
         <div class="mb-4">
-          <label class="block text-xs font-bold text-gray-600 mb-1"
-            >Mật khẩu *</label
+          <label class="block text-xs font-bold mb-1">Pass *</label
           ><input
             type="text"
             id="editUserPass"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
+            class="w-full px-3 py-2 border rounded-lg text-sm"
           />
         </div>
         <div class="mb-6">
-          <label class="block text-xs font-bold text-gray-600 mb-1"
-            >Vai trò *</label
+          <label class="block text-xs font-bold mb-1">Role *</label
           ><select
             id="editUserRole"
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white"
+            class="w-full px-3 py-2 border rounded-lg text-sm"
           >
             <option value="student">Sinh viên</option>
             <option value="teacher">Giảng viên</option>
@@ -712,14 +643,14 @@
         <div class="flex gap-3">
           <button
             onclick="closeEditUserModal()"
-            class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 rounded-lg transition"
+            class="flex-1 bg-gray-100 font-bold py-2.5 rounded-lg"
           >
             Hủy</button
           ><button
             onclick="saveEditUser()"
-            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition shadow-md"
+            class="flex-1 bg-blue-600 text-white font-bold py-2.5 rounded-lg"
           >
-            Lưu Cập Nhật
+            Lưu
           </button>
         </div>
       </div>
@@ -730,7 +661,7 @@
       class="fixed inset-0 bg-black/60 z-[110] hidden items-center justify-center p-4"
     >
       <div
-        class="bg-white rounded-3xl w-full max-w-md p-0 shadow-2xl relative w-full sm:w-[95%] animate-tab overflow-hidden"
+        class="bg-white rounded-3xl w-full max-w-md p-0 shadow-2xl relative animate-tab overflow-hidden"
       >
         <div
           class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-center relative"
@@ -758,15 +689,11 @@
           </p>
         </div>
         <div class="p-6 space-y-4">
-          <div
-            class="flex justify-between items-center border-b border-gray-100 pb-3"
-          >
-            <span class="text-gray-500 text-sm">Mã SV / ID:</span
+          <div class="flex justify-between border-b pb-3">
+            <span class="text-gray-500 text-sm">ID:</span
             ><span id="udId" class="font-bold text-gray-800">---</span>
           </div>
-          <div
-            class="flex justify-between items-center border-b border-gray-100 pb-3"
-          >
+          <div class="flex justify-between border-b pb-3">
             <span class="text-gray-500 text-sm">Chuyên ngành:</span
             ><span
               id="udMajor"
@@ -774,24 +701,14 @@
               >---</span
             >
           </div>
-          <div
-            class="flex justify-between items-center border-b border-gray-100 pb-3"
-          >
+          <div class="flex justify-between border-b pb-3">
             <span class="text-gray-500 text-sm">Số dư Ví:</span
             ><span id="udBalance" class="font-black text-yellow-500">0 ₫</span>
           </div>
-          <div class="flex justify-between items-center">
-            <span class="text-gray-500 text-sm">Tổng Nạp Tích Lũy:</span
+          <div class="flex justify-between">
+            <span class="text-gray-500 text-sm">Tổng Nạp:</span
             ><span id="udTotal" class="font-black text-green-600">0 ₫</span>
           </div>
-        </div>
-        <div class="p-4 bg-gray-50 text-center">
-          <button
-            onclick="closeUserDetailModal()"
-            class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold px-8 py-2 rounded-full transition text-sm"
-          >
-            Đóng
-          </button>
         </div>
       </div>
     </div>
@@ -818,7 +735,6 @@
       const db = getFirestore(app);
 
       window.allUsersData = {};
-
       window.toggleSidebar = function () {
         document
           .getElementById("adminSidebar")
@@ -927,6 +843,20 @@
       };
 
       function loadAdminData() {
+        onSnapshot(collection(db, "users"), (snapshot) => {
+          const tbody = document.getElementById("usersTableBody");
+          tbody.innerHTML = "";
+          window.allUsersData = {};
+          snapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            window.allUsersData[docSnap.id] = data;
+            let roleHtml =
+              data.role === "teacher"
+                ? '<span class="text-orange-500">Giảng viên</span>'
+                : '<span class="text-blue-500">Sinh viên</span>';
+            tbody.innerHTML += `<tr class="border-b hover:bg-gray-50"><td class="p-3 font-bold">${docSnap.id}</td><td class="p-3">${data.name}</td><td class="p-3 uppercase font-bold">${roleHtml}</td><td class="p-3 text-right whitespace-nowrap"><button onclick="viewUserDetails('${docSnap.id}')" class="text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-lg mr-2"><i class="fa-solid fa-eye"></i></button><button onclick="openEditUser('${docSnap.id}')" class="text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg mr-2"><i class="fa-solid fa-pen"></i></button><button onclick="deleteUserAdmin('${docSnap.id}')" class="text-red-500 bg-red-50 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+          });
+        });
         onSnapshot(collection(db, "pending_users"), (snapshot) => {
           const tbody = document.getElementById("pendingTableBody");
           tbody.innerHTML = "";
@@ -935,29 +865,20 @@
             const data = docSnap.data();
             if (data.paymentStatus === "waiting") {
               count++;
-              const time = data.createdAt
-                ? new Date(data.createdAt.seconds * 1000).toLocaleString(
-                    "vi-VN",
-                  )
-                : "Vừa xong";
-              tbody.innerHTML += `<tr class="hover:bg-red-50/20 border-b border-gray-100"><td class="p-3 sm:p-4 text-gray-500 whitespace-nowrap">${time}</td><td class="p-3 sm:p-4 font-bold text-gray-800">${docSnap.id}</td><td class="p-3 sm:p-4 font-bold text-blue-600 whitespace-nowrap">${data.name}</td><td class="p-3 sm:p-4 text-right whitespace-nowrap"><button onclick="approvePayment('${docSnap.id}')" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg font-bold transition shadow-sm"><i class="fa-solid fa-check mr-1"></i> Duyệt</button><button onclick="rejectPayment('${docSnap.id}')" class="bg-white border border-gray-200 text-gray-500 hover:text-red-500 px-2.5 py-1.5 rounded-lg font-bold ml-2 transition shadow-sm"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+              tbody.innerHTML += `<tr class="border-b"><td class="p-3">${new Date(data.createdAt.seconds * 1000).toLocaleString("vi-VN")}</td><td class="p-3 font-bold">${docSnap.id}</td><td class="p-3 text-blue-600 font-bold">${data.name}</td><td class="p-3 text-right"><button onclick="approvePayment('${docSnap.id}')" class="bg-green-500 text-white px-3 py-1.5 rounded-lg mr-2"><i class="fa-solid fa-check"></i> Duyệt</button><button onclick="rejectPayment('${docSnap.id}')" class="bg-white border text-gray-500 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-trash"></i></button></td></tr>`;
             }
           });
           if (count === 0)
-            tbody.innerHTML = `<tr><td colspan=\"4\" class=\"p-8 text-center text-gray-400 font-medium\">Không có ai đang chờ.</td></tr>`;
-          const badge1 = document.getElementById("pendingCountBadge");
-          const badge2 = document.getElementById("pendingCountBadge2");
-          if (count > 0) {
-            badge1.innerText = count;
-            badge1.classList.remove("hidden");
-            badge2.innerText = count;
-            badge2.classList.remove("hidden");
-          } else {
-            badge1.classList.add("hidden");
-            badge2.classList.add("hidden");
-          }
+            tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-400">Trống</td></tr>`;
+          document.getElementById("pendingCountBadge").innerText = count;
+          document
+            .getElementById("pendingCountBadge")
+            .classList.toggle("hidden", count === 0);
+          document.getElementById("pendingCountBadge2").innerText = count;
+          document
+            .getElementById("pendingCountBadge2")
+            .classList.toggle("hidden", count === 0);
         });
-
         onSnapshot(collection(db, "transactions"), (snapshot) => {
           const tbody = document.getElementById("transTableBody");
           tbody.innerHTML = "";
@@ -968,64 +889,32 @@
               count++;
               let typeHtml =
                 data.type === "deposit"
-                  ? '<span class="text-green-600 font-bold bg-green-50 px-2 py-1 rounded border border-green-200">Nạp tiền</span>'
-                  : '<span class="text-red-600 font-bold bg-red-50 px-2 py-1 rounded border border-red-200">Rút tiền</span>';
-              let amt = new Intl.NumberFormat("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              }).format(data.amount);
-              tbody.innerHTML += `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="p-3 sm:p-4 text-gray-500 whitespace-nowrap">${data.dateStr || ""}</td><td class="p-3 sm:p-4">${typeHtml}</td><td class="p-3 sm:p-4 font-bold text-gray-800">${data.userId}</td><td class="p-3 sm:p-4 font-black ${data.type === "deposit" ? "text-green-600" : "text-red-600"}">${amt}</td><td class="p-3 sm:p-4 text-xs text-gray-500 max-w-[200px] truncate" title="${data.bankInfo || "-"}">${data.bankInfo || "-"}</td><td class="p-3 sm:p-4 text-right whitespace-nowrap"><button onclick="approveTransaction('${docSnap.id}', '${data.type}', '${data.userId}', ${data.amount})" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg font-bold transition shadow-sm mr-1"><i class="fa-solid fa-check"></i></button><button onclick="rejectTransaction('${docSnap.id}', '${data.type}', '${data.userId}', ${data.amount})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg font-bold transition shadow-sm"><i class="fa-solid fa-xmark"></i></button></td></tr>`;
+                  ? '<span class="text-green-600 bg-green-50 px-2 py-1 rounded">Nạp</span>'
+                  : '<span class="text-red-600 bg-red-50 px-2 py-1 rounded">Rút</span>';
+              tbody.innerHTML += `<tr class="border-b"><td class="p-3">${data.dateStr || ""}</td><td class="p-3">${typeHtml}</td><td class="p-3 font-bold">${data.userId}</td><td class="p-3 font-black ${data.type === "deposit" ? "text-green-600" : "text-red-600"}">${new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(data.amount)}</td><td class="p-3 text-xs max-w-[200px] truncate">${data.bankInfo || "-"}</td><td class="p-3 text-right whitespace-nowrap"><button onclick="approveTransaction('${docSnap.id}', '${data.type}', '${data.userId}', ${data.amount})" class="bg-green-500 text-white px-3 py-1.5 rounded-lg mr-1"><i class="fa-solid fa-check"></i></button><button onclick="rejectTransaction('${docSnap.id}', '${data.type}', '${data.userId}', ${data.amount})" class="bg-red-500 text-white px-3 py-1.5 rounded-lg"><i class="fa-solid fa-xmark"></i></button></td></tr>`;
             }
           });
           if (count === 0)
-            tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-gray-400 font-medium">Không có lệnh Nạp/Rút nào đang chờ.</td></tr>`;
-          const badge = document.getElementById("transCountBadge");
-          if (count > 0) {
-            badge.innerText = count;
-            badge.classList.remove("hidden");
-          } else badge.classList.add("hidden");
+            tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-gray-400">Trống</td></tr>`;
+          document.getElementById("transCountBadge").innerText = count;
+          document
+            .getElementById("transCountBadge")
+            .classList.toggle("hidden", count === 0);
         });
-
-        onSnapshot(collection(db, "users"), (snapshot) => {
-          const tbody = document.getElementById("usersTableBody");
-          tbody.innerHTML = "";
-          window.allUsersData = {};
-          snapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            window.allUsersData[docSnap.id] = data;
-            let roleHtml =
-              data.role === "teacher"
-                ? '<span class="text-orange-500 whitespace-nowrap">Giảng viên</span>'
-                : '<span class="text-blue-500 whitespace-nowrap">Sinh viên</span>';
-            // Đã thêm Nút "Xem Chi tiết"
-            tbody.innerHTML += `<tr class="border-b border-gray-100 hover:bg-gray-50"><td class="p-3 sm:p-4 font-bold">${docSnap.id}</td><td class="p-3 sm:p-4 whitespace-nowrap">${data.name}</td><td class="p-3 sm:p-4 uppercase font-bold">${roleHtml}</td><td class="p-3 sm:p-4 text-right whitespace-nowrap"><button onclick="viewUserDetails('${docSnap.id}')" class="text-indigo-600 hover:text-indigo-800 bg-indigo-50 px-3 py-1.5 rounded-lg font-bold mr-2 transition shadow-sm" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></button><button onclick="openEditUser('${docSnap.id}', '${data.name}', '${data.role}', '${data.password}')" class="text-blue-600 hover:text-blue-800 bg-blue-50 px-3 py-1.5 rounded-lg font-bold mr-2 transition shadow-sm" title="Sửa"><i class="fa-solid fa-pen"></i></button><button onclick="deleteUserAdmin('${docSnap.id}')" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg font-bold transition shadow-sm" title="Xóa"><i class="fa-solid fa-trash"></i></button></td></tr>`;
-          });
-        });
-
         onSnapshot(collection(db, "projects"), (snapshot) => {
           const tbody = document.getElementById("projectsTableBody");
           tbody.innerHTML = "";
           snapshot.forEach((docSnap) => {
             const data = docSnap.data();
-            let st =
-              data.status === "approved"
-                ? '<span class="text-green-500 whitespace-nowrap">Đã duyệt</span>'
-                : data.status === "pending"
-                  ? '<span class="text-orange-500 whitespace-nowrap">Chờ duyệt</span>'
-                  : '<span class="text-red-500 whitespace-nowrap">Đã hủy</span>';
-            tbody.innerHTML += `<tr class="border-b border-gray-100 hover:bg-gray-50"><td class="p-3 sm:p-4 font-bold text-blue-600 truncate max-w-[150px] sm:max-w-none border-none">${data.title}</td><td class="p-3 sm:p-4 whitespace-nowrap">${data.leaderName}</td><td class="p-3 sm:p-4 font-bold">${st}</td><td class="p-3 sm:p-4 text-right"><button onclick="deleteProjectAdmin('${docSnap.id}')" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg font-bold transition shadow-sm"><i class="fa-solid fa-trash"></i> Xóa</button></td></tr>`;
+            tbody.innerHTML += `<tr class="border-b hover:bg-gray-50"><td class="p-3 font-bold text-blue-600 truncate">${data.title}</td><td class="p-3">${data.leaderName}</td><td class="p-3 font-bold">${data.status === "approved" ? '<span class="text-green-500">Đã duyệt</span>' : data.status === "pending" ? '<span class="text-orange-500">Chờ duyệt</span>' : '<span class="text-red-500">Đã hủy</span>'}</td><td class="p-3 text-right"><button onclick="deleteProjectAdmin('${docSnap.id}')" class="text-red-500 hover:underline font-bold">Xóa</button></td></tr>`;
           });
         });
         onSnapshot(collection(db, "events"), (snapshot) => {
           const tbody = document.getElementById("eventsTableBody");
           tbody.innerHTML = "";
-          if (snapshot.empty) {
-            tbody.innerHTML = `<tr><td colspan="3" class="p-6 text-center text-gray-500">Chưa có sự kiện nào.</td></tr>`;
-            return;
-          }
           snapshot.forEach((docSnap) => {
             const data = docSnap.data();
-            tbody.innerHTML += `<tr class="border-b border-gray-100 hover:bg-gray-50"><td class="p-3 sm:p-4 font-bold text-blue-600 truncate max-w-[150px] sm:max-w-none">${data.title}</td><td class="p-3 sm:p-4 text-gray-500 whitespace-nowrap">${data.date}</td><td class="p-3 sm:p-4 text-right"><button onclick="deleteEvent('${docSnap.id}')" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg font-bold transition shadow-sm"><i class="fa-solid fa-trash"></i> Xóa</button></td></tr>`;
+            tbody.innerHTML += `<tr class="border-b hover:bg-gray-50"><td class="p-3 font-bold text-blue-600">${data.title}</td><td class="p-3 text-gray-500">${data.date}</td><td class="p-3 text-right"><button onclick="deleteEvent('${docSnap.id}')" class="text-red-500 hover:underline font-bold">Xóa</button></td></tr>`;
           });
         });
         onSnapshot(doc(db, "system_settings", "announcement"), (docSnap) => {
@@ -1038,34 +927,35 @@
         });
       }
 
-      // --- LOGIC XEM CHI TIẾT USER ---
+      // XEM CHI TIẾT USER (ĐÃ FIX LỖI CRASH)
       window.viewUserDetails = function (id) {
         const user = window.allUsersData[id];
-        if (!user) return;
+        if (!user) {
+          alert("Không tìm thấy dữ liệu!");
+          return;
+        }
 
-        document.getElementById("udId").innerText = user.id;
-        document.getElementById("udName").innerText = user.name;
+        document.getElementById("udId").innerText = id;
+        document.getElementById("udName").innerText =
+          user.name || "Chưa cập nhật";
         document.getElementById("udRole").innerText =
           user.role === "teacher" ? "GIẢNG VIÊN" : "SINH VIÊN";
         document.getElementById("udMajor").innerText =
           user.major || "Chưa cập nhật";
-
-        let bal = new Intl.NumberFormat("vi-VN", {
-          style: "currency",
-          currency: "VND",
-        }).format(user.balance || 0);
-        let tot = new Intl.NumberFormat("vi-VN", {
-          style: "currency",
-          currency: "VND",
-        }).format(user.totalDeposit || 0);
-        document.getElementById("udBalance").innerText = bal;
-        document.getElementById("udTotal").innerText = tot;
+        document.getElementById("udBalance").innerText = new Intl.NumberFormat(
+          "vi-VN",
+          { style: "currency", currency: "VND" },
+        ).format(user.balance || 0);
+        document.getElementById("udTotal").innerText = new Intl.NumberFormat(
+          "vi-VN",
+          { style: "currency", currency: "VND" },
+        ).format(user.totalDeposit || 0);
 
         if (user.avatarBase64) {
           document.getElementById("udAvatar").innerHTML =
             `<img src="${user.avatarBase64}" class="w-full h-full object-cover">`;
         } else {
-          document.getElementById("udAvatar").innerHTML = user.name
+          document.getElementById("udAvatar").innerHTML = (user.name || "U")
             .charAt(0)
             .toUpperCase();
         }
@@ -1080,6 +970,33 @@
         document.getElementById("userDetailModal").classList.remove("flex");
       };
 
+      window.openEditUser = function (id) {
+        const user = window.allUsersData[id];
+        if (!user) return;
+        document.getElementById("editUserId").value = id;
+        document.getElementById("editUserIdDisplay").value = id;
+        document.getElementById("editUserName").value = user.name;
+        document.getElementById("editUserRole").value = user.role;
+        document.getElementById("editUserPass").value = user.password;
+        document.getElementById("editUserModal").classList.remove("hidden");
+        document.getElementById("editUserModal").classList.add("flex");
+      };
+      window.closeEditUserModal = function () {
+        document.getElementById("editUserModal").classList.add("hidden");
+        document.getElementById("editUserModal").classList.remove("flex");
+      };
+      window.saveEditUser = async function () {
+        const id = document.getElementById("editUserId").value;
+        try {
+          await updateDoc(doc(db, "users", id), {
+            name: document.getElementById("editUserName").value,
+            role: document.getElementById("editUserRole").value,
+            password: document.getElementById("editUserPass").value,
+          });
+          alert("Đã lưu!");
+          closeEditUserModal();
+        } catch (e) {}
+      };
       window.saveSystemAnnouncement = async function (e) {
         e.preventDefault();
         try {
@@ -1089,10 +1006,8 @@
             active: document.getElementById("annActive").checked,
             updatedAt: Date.now(),
           });
-          alert("Đã cập nhật hệ thống thông báo!");
-        } catch (err) {
-          alert("Lỗi: " + err.message);
-        }
+          alert("Cập nhật thành công!");
+        } catch (err) {}
       };
       window.approveTransaction = async function (
         transId,
@@ -1100,7 +1015,7 @@
         userId,
         amount,
       ) {
-        if (!confirm("Xác nhận duyệt giao dịch này?")) return;
+        if (!confirm("Duyệt giao dịch này?")) return;
         try {
           if (type === "deposit") {
             const uSnap = await getDoc(doc(db, "users", userId));
@@ -1118,9 +1033,7 @@
           await updateDoc(doc(db, "transactions", transId), {
             status: "approved",
           });
-        } catch (e) {
-          alert("Lỗi: " + e.message);
-        }
+        } catch (e) {}
       };
       window.rejectTransaction = async function (
         transId,
@@ -1128,7 +1041,7 @@
         userId,
         amount,
       ) {
-        if (!confirm("Từ chối giao dịch này?")) return;
+        if (!confirm("Từ chối giao dịch?")) return;
         try {
           if (type === "withdraw") {
             const uSnap = await getDoc(doc(db, "users", userId));
@@ -1141,42 +1054,10 @@
           await updateDoc(doc(db, "transactions", transId), {
             status: "rejected",
           });
-        } catch (e) {
-          alert("Lỗi: " + e.message);
-        }
-      };
-      window.openEditUser = function (id, name, role, pass) {
-        document.getElementById("editUserId").value = id;
-        document.getElementById("editUserIdDisplay").value = id;
-        document.getElementById("editUserName").value = name;
-        document.getElementById("editUserRole").value = role;
-        document.getElementById("editUserPass").value = pass;
-        document.getElementById("editUserModal").classList.remove("hidden");
-        document.getElementById("editUserModal").classList.add("flex");
-      };
-      window.closeEditUserModal = function () {
-        document.getElementById("editUserModal").classList.add("hidden");
-        document.getElementById("editUserModal").classList.remove("flex");
-      };
-      window.saveEditUser = async function () {
-        const id = document.getElementById("editUserId").value;
-        const name = document.getElementById("editUserName").value;
-        const role = document.getElementById("editUserRole").value;
-        const pass = document.getElementById("editUserPass").value;
-        try {
-          await updateDoc(doc(db, "users", id), {
-            name: name,
-            role: role,
-            password: pass,
-          });
-          alert("Cập nhật thành công!");
-          closeEditUserModal();
-        } catch (e) {
-          alert("Lỗi: " + e.message);
-        }
+        } catch (e) {}
       };
       window.approvePayment = async function (id) {
-        if (!confirm(`Xác nhận ĐÃ NHẬN TIỀN đăng ký từ ${id}?`)) return;
+        if (!confirm(`ĐÃ NHẬN TIỀN từ ${id}?`)) return;
         try {
           const pRef = doc(db, "pending_users", id);
           const snap = await getDoc(pRef);
@@ -1196,12 +1077,10 @@
               await deleteDoc(pRef);
             }, 3000);
           }
-        } catch (e) {
-          alert("Lỗi: " + e.message);
-        }
+        } catch (e) {}
       };
       window.rejectPayment = async function (id) {
-        if (confirm("Xóa bỏ yêu cầu đăng ký này?")) {
+        if (confirm("Xóa bỏ yêu cầu?")) {
           await deleteDoc(doc(db, "pending_users", id));
         }
       };
@@ -1212,41 +1091,34 @@
           .value.trim()
           .toUpperCase();
         const name = document.getElementById("newUserName").value.trim();
-        const pass = document.getElementById("newUserPass").value;
-        const role = document.getElementById("newUserRole").value;
         try {
           const snap = await getDoc(doc(db, "users", id));
-          if (snap.exists()) {
-            alert("⚠️ ID đã tồn tại!");
-            return;
-          }
+          if (snap.exists()) return alert("ID đã tồn tại!");
           await setDoc(doc(db, "users", id), {
             id: id,
             name: name,
-            password: pass,
-            role: role,
+            password: document.getElementById("newUserPass").value,
+            role: document.getElementById("newUserRole").value,
             createdAt: new Date(),
             balance: 0,
             totalDeposit: 0,
           });
-          alert(`✅ Đã tạo TK cho ${name}!`);
+          alert(`Đã tạo TK cho ${name}!`);
           e.target.reset();
-        } catch (err) {
-          alert("Lỗi: " + err.message);
-        }
+        } catch (err) {}
       };
       window.deleteUserAdmin = async function (id) {
-        if (confirm(`CẢNH BÁO: Xóa vĩnh viễn tài khoản ${id}?`)) {
+        if (confirm(`Xóa vĩnh viễn ${id}?`)) {
           await deleteDoc(doc(db, "users", id));
         }
       };
       window.deleteProjectAdmin = async function (id) {
-        if (confirm(`CẢNH BÁO: Xóa vĩnh viễn dự án "${id}"?`)) {
+        if (confirm(`Xóa dự án "${id}"?`)) {
           await deleteDoc(doc(db, "projects", id));
         }
       };
       window.deleteEvent = async function (id) {
-        if (confirm(`Xóa bỏ sự kiện này?`)) {
+        if (confirm(`Xóa sự kiện?`)) {
           await deleteDoc(doc(db, "events", id));
         }
       };
@@ -1254,36 +1126,29 @@
       window.previewEvMedia = function (e) {
         const file = e.target.files[0];
         if (!file) return;
-        if (file.type.startsWith("video/")) {
-          alert(
-            "Với video, hãy upload lên Youtube/Drive rồi dán link vào ô bên cạnh nhé!",
-          );
-          return;
-        }
         const reader = new FileReader();
         reader.onload = function (event) {
           const img = new Image();
           img.onload = function () {
             const canvas = document.createElement("canvas");
-            const MAX_WIDTH = 800;
-            const MAX_HEIGHT = 800;
-            let width = img.width;
-            let height = img.height;
-            if (width > height) {
-              if (width > MAX_WIDTH) {
-                height *= MAX_WIDTH / width;
-                width = MAX_WIDTH;
+            const MAX = 800;
+            let w = img.width;
+            let h = img.height;
+            if (w > h) {
+              if (w > MAX) {
+                h *= MAX / w;
+                w = MAX;
               }
             } else {
-              if (height > MAX_HEIGHT) {
-                width *= MAX_HEIGHT / height;
-                height = MAX_HEIGHT;
+              if (h > MAX) {
+                w *= MAX / h;
+                h = MAX;
               }
             }
-            canvas.width = width;
-            canvas.height = height;
+            canvas.width = w;
+            canvas.height = h;
             const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, width, height);
+            ctx.drawImage(img, 0, 0, w, h);
             window.evImageBase64 = canvas.toDataURL("image/jpeg", 0.7);
             document.getElementById("evPreviewImg").src = window.evImageBase64;
             document.getElementById("evPreviewImg").classList.remove("hidden");
@@ -1294,29 +1159,23 @@
       };
       window.createEvent = async function (e) {
         e.preventDefault();
-        const title = document.getElementById("evTitle").value;
-        const desc = document.getElementById("evDesc").value;
-        const date = document.getElementById("evDate").value;
-        const vLink = document.getElementById("evVideoUrl").value;
         const evId = "EV_" + Date.now();
         try {
           await setDoc(doc(db, "events", evId), {
             id: evId,
-            title: title,
-            description: desc,
-            date: date,
+            title: document.getElementById("evTitle").value,
+            description: document.getElementById("evDesc").value,
+            date: document.getElementById("evDate").value,
             image: window.evImageBase64,
-            videoUrl: vLink,
+            videoUrl: document.getElementById("evVideoUrl").value,
             createdAt: new Date(),
           });
-          alert("✅ Đăng sự kiện thành công!");
+          alert("Đã đăng!");
           e.target.reset();
           document.getElementById("evPreviewImg").classList.add("hidden");
           window.evImageBase64 = "";
           switchSubTab("events", "all");
-        } catch (err) {
-          alert("Lỗi: " + err.message);
-        }
+        } catch (err) {}
       };
     </script>
   </body>
