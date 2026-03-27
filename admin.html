@@ -33,6 +33,22 @@
         background-color: #ef4444 !important;
         color: white !important;
       }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .animate-tab {
+        animation: tabEnter 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      }
+      @keyframes tabEnter {
+        0% {
+          opacity: 0;
+          transform: translateY(15px) scale(0.98);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
     </style>
   </head>
   <body class="h-screen flex overflow-hidden bg-slate-50">
@@ -50,8 +66,7 @@
           id="adminPass"
           placeholder="Nhập mã bí mật..."
           class="w-full px-4 py-3 border border-gray-300 rounded-xl mb-4 text-center font-bold tracking-widest outline-none focus:border-red-500"
-        />
-        <button
+        /><button
           onclick="checkAdmin()"
           class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl transition"
         >
@@ -59,7 +74,6 @@
         </button>
       </div>
     </div>
-
     <div
       id="sidebarOverlay"
       onclick="toggleSidebar()"
@@ -88,7 +102,6 @@
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-
       <div class="p-4 flex-1 overflow-y-auto custom-scrollbar">
         <p
           class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-3 px-2"
@@ -98,50 +111,49 @@
         <div class="space-y-1">
           <button
             onclick="
-              switchTab('payment');
+              switchMainTab('users');
               toggleSidebar();
             "
-            id="tab-payment"
+            id="mainTab-users"
             class="w-full flex items-center px-4 py-3 rounded-xl font-bold transition hover:bg-slate-800 tab-active"
           >
-            <i class="fa-solid fa-money-bill-transfer w-6 text-left"></i> Duyệt
-            Lệ phí
-            <span
+            <i class="fa-solid fa-users w-6 text-left"></i> Quản lý Tài
+            khoản<span
               id="pendingCountBadge"
-              class="ml-auto bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full hidden"
+              class="ml-auto bg-white text-red-600 text-[10px] px-2 py-0.5 rounded-full font-black hidden"
               >0</span
             >
           </button>
           <button
             onclick="
-              switchTab('users');
+              switchMainTab('projects');
               toggleSidebar();
             "
-            id="tab-users"
-            class="w-full flex items-center px-4 py-3 rounded-xl font-bold transition hover:bg-slate-800"
-          >
-            <i class="fa-solid fa-users w-6 text-left"></i> Quản lý Users
-          </button>
-          <button
-            onclick="
-              switchTab('projects');
-              toggleSidebar();
-            "
-            id="tab-projects"
+            id="mainTab-projects"
             class="w-full flex items-center px-4 py-3 rounded-xl font-bold transition hover:bg-slate-800"
           >
             <i class="fa-solid fa-layer-group w-6 text-left"></i> Quản lý Dự án
           </button>
           <button
             onclick="
-              switchTab('events');
+              switchMainTab('events');
               toggleSidebar();
             "
-            id="tab-events"
+            id="mainTab-events"
             class="w-full flex items-center px-4 py-3 rounded-xl font-bold transition hover:bg-slate-800"
           >
             <i class="fa-solid fa-calendar-days w-6 text-left"></i> Quản lý Sự
             kiện
+          </button>
+          <button
+            onclick="
+              switchMainTab('system');
+              toggleSidebar();
+            "
+            id="mainTab-system"
+            class="w-full flex items-center px-4 py-3 rounded-xl font-bold transition hover:bg-slate-800"
+          >
+            <i class="fa-solid fa-bullhorn w-6 text-left"></i> Thông báo Server
           </button>
         </div>
       </div>
@@ -155,9 +167,11 @@
       </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-screen w-full overflow-hidden">
+    <main
+      class="flex-1 flex flex-col h-screen w-full overflow-hidden bg-slate-50"
+    >
       <header
-        class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 shrink-0 shadow-sm z-10 w-full"
+        class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 shrink-0 z-10 w-full"
       >
         <div class="flex items-center gap-3">
           <button
@@ -167,10 +181,10 @@
             <i class="fa-solid fa-bars"></i>
           </button>
           <h2
-            class="text-base sm:text-xl font-extrabold text-gray-800 uppercase truncate max-w-[200px] sm:max-w-none"
+            class="text-base sm:text-xl font-extrabold text-gray-800 uppercase truncate"
             id="topbarTitle"
           >
-            XÁC NHẬN THANH TOÁN
+            QUẢN LÝ TÀI KHOẢN
           </h2>
         </div>
         <div class="flex items-center gap-3 shrink-0">
@@ -182,25 +196,82 @@
       </header>
 
       <div
-        class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar w-full relative"
+        id="content-users"
+        class="flex-1 flex flex-col h-full overflow-hidden animate-tab"
       >
-        <div id="content-payment" class="block">
+        <div
+          class="bg-white px-4 sm:px-6 pt-4 pb-0 border-b border-gray-200 flex flex-col sm:flex-row sm:items-end justify-between gap-4 shrink-0 shadow-sm z-10"
+        >
           <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden flex flex-col"
+            class="flex space-x-6 overflow-x-auto hide-scrollbar w-full sm:w-auto"
           >
-            <div class="p-4 sm:p-5 border-b border-gray-100 bg-red-50/30">
-              <h3 class="font-bold text-red-700 text-sm sm:text-base">
-                <i class="fa-solid fa-clock-rotate-left mr-2"></i>Sinh viên đang
-                chờ duyệt tiền
-              </h3>
-            </div>
+            <button
+              onclick="switchSubTab('users', 'pending')"
+              id="subtab-users-pending"
+              class="whitespace-nowrap text-blue-600 font-bold border-b-2 border-blue-600 pb-3 transition px-1"
+            >
+              Lệ phí Đăng ký
+              <span
+                id="pendingCountBadge2"
+                class="bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-full ml-1 hidden"
+                >0</span
+              >
+            </button>
+            <button
+              onclick="switchSubTab('users', 'transactions')"
+              id="subtab-users-transactions"
+              class="whitespace-nowrap text-gray-500 font-bold border-b-2 border-transparent hover:text-blue-600 pb-3 transition px-1"
+            >
+              Nạp/Rút Tiền Ví
+              <span
+                id="transCountBadge"
+                class="bg-yellow-500 text-white text-[10px] px-1.5 py-0.5 rounded-full ml-1 hidden"
+                >0</span
+              >
+            </button>
+            <button
+              onclick="switchSubTab('users', 'active')"
+              id="subtab-users-active"
+              class="whitespace-nowrap text-gray-500 font-bold border-b-2 border-transparent hover:text-blue-600 pb-3 transition px-1"
+            >
+              Tài khoản hệ thống
+            </button>
+            <button
+              onclick="switchSubTab('users', 'create')"
+              id="subtab-users-create"
+              class="whitespace-nowrap text-gray-500 font-bold border-b-2 border-transparent hover:text-blue-600 pb-3 transition px-1"
+            >
+              Cấp tài khoản mới
+            </button>
+          </div>
+          <div class="relative w-full sm:w-72 shrink-0 pb-3">
+            <i
+              class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 -mt-1.5 text-gray-400"
+            ></i
+            ><input
+              type="text"
+              id="searchUsersInput"
+              onkeyup="searchAdmin('users')"
+              placeholder="Tìm kiếm..."
+              class="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"
+            />
+          </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar">
+          <div
+            id="subcontent-users-pending"
+            class="block bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden animate-tab"
+          >
             <div class="overflow-x-auto w-full">
               <table class="w-full text-left min-w-[600px]">
                 <thead
-                  class="bg-gray-50 text-gray-500 text-[10px] sm:text-xs uppercase"
+                  class="bg-red-50 text-red-800 text-[10px] sm:text-xs uppercase border-b border-red-100"
                 >
                   <tr>
-                    <th class="p-3 sm:p-4 whitespace-nowrap">Thời gian</th>
+                    <th class="p-3 sm:p-4">
+                      <i class="fa-solid fa-clock mr-1"></i> Thời gian
+                    </th>
                     <th class="p-3 sm:p-4">Mã SV</th>
                     <th class="p-3 sm:p-4">Họ Tên</th>
                     <th class="p-3 sm:p-4 text-right">Thao tác</th>
@@ -213,84 +284,40 @@
               </table>
             </div>
           </div>
-        </div>
-
-        <div id="content-users" class="hidden">
           <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-6"
+            id="subcontent-users-transactions"
+            class="hidden bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
           >
-            <div class="p-4 sm:p-5 border-b border-gray-100 bg-blue-50/50">
-              <h3 class="font-bold text-blue-800 text-sm sm:text-base">
-                <i class="fa-solid fa-user-plus mr-2"></i>Cấp tài khoản mới
-              </h3>
+            <div class="overflow-x-auto w-full">
+              <table class="w-full text-left min-w-[800px]">
+                <thead
+                  class="bg-yellow-50 text-yellow-800 text-[10px] sm:text-xs uppercase border-b border-yellow-100"
+                >
+                  <tr>
+                    <th class="p-3 sm:p-4">Thời gian</th>
+                    <th class="p-3 sm:p-4">Loại</th>
+                    <th class="p-3 sm:p-4">User ID</th>
+                    <th class="p-3 sm:p-4">Số tiền</th>
+                    <th class="p-3 sm:p-4">Thông tin (Rút)</th>
+                    <th class="p-3 sm:p-4 text-right">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="transTableBody"
+                  class="divide-y divide-gray-100 text-xs sm:text-sm"
+                ></tbody>
+              </table>
             </div>
-            <form
-              onsubmit="createNewUser(event)"
-              class="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end w-full"
-            >
-              <div>
-                <label class="block text-xs font-bold text-gray-600 mb-1"
-                  >Mã SV / ID *</label
-                ><input
-                  type="text"
-                  id="newUserId"
-                  required
-                  class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-gray-600 mb-1"
-                  >Họ Tên *</label
-                ><input
-                  type="text"
-                  id="newUserName"
-                  required
-                  class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-gray-600 mb-1"
-                  >Mật khẩu *</label
-                ><input
-                  type="text"
-                  id="newUserPass"
-                  required
-                  class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label class="block text-xs font-bold text-gray-600 mb-1"
-                  >Vai trò *</label
-                >
-                <select
-                  id="newUserRole"
-                  class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white"
-                >
-                  <option value="student">Sinh viên</option>
-                  <option value="teacher">Giảng viên</option>
-                </select>
-              </div>
-              <button
-                type="submit"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg text-sm transition shadow-sm sm:col-span-2 lg:col-span-1 mt-2 lg:mt-0"
-              >
-                Tạo Mới
-              </button>
-            </form>
           </div>
 
           <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
+            id="subcontent-users-active"
+            class="hidden bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
           >
-            <div class="p-4 sm:p-5 border-b border-gray-100">
-              <h3 class="font-bold text-gray-800 text-sm sm:text-base">
-                Tất cả tài khoản
-              </h3>
-            </div>
             <div class="overflow-x-auto w-full">
               <table class="w-full text-left min-w-[600px]">
                 <thead
-                  class="bg-gray-50 text-gray-500 text-[10px] sm:text-xs uppercase"
+                  class="bg-gray-50 text-gray-500 text-[10px] sm:text-xs uppercase border-b border-gray-100"
                 >
                   <tr>
                     <th class="p-3 sm:p-4">ID</th>
@@ -306,21 +333,112 @@
               </table>
             </div>
           </div>
-        </div>
 
-        <div id="content-projects" class="hidden">
+          <div
+            id="subcontent-users-create"
+            class="hidden bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden max-w-4xl mx-auto mt-4"
+          >
+            <div class="p-4 sm:p-5 border-b border-gray-100 bg-blue-50/50">
+              <h3 class="font-bold text-blue-800">
+                <i class="fa-solid fa-user-plus mr-2"></i>Nhập thông tin tài
+                khoản mới
+              </h3>
+            </div>
+            <form
+              onsubmit="createNewUser(event)"
+              class="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-5 w-full"
+            >
+              <div>
+                <label class="block text-xs font-bold text-gray-600 mb-1.5"
+                  >Mã SV / ID *</label
+                ><input
+                  type="text"
+                  id="newUserId"
+                  required
+                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-gray-50"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-600 mb-1.5"
+                  >Họ Tên *</label
+                ><input
+                  type="text"
+                  id="newUserName"
+                  required
+                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-gray-50"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-600 mb-1.5"
+                  >Mật khẩu *</label
+                ><input
+                  type="text"
+                  id="newUserPass"
+                  required
+                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-gray-50"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-600 mb-1.5"
+                  >Vai trò *</label
+                ><select
+                  id="newUserRole"
+                  class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white"
+                >
+                  <option value="student">Sinh viên</option>
+                  <option value="teacher">Giảng viên</option>
+                </select>
+              </div>
+              <div class="sm:col-span-2 pt-2">
+                <button
+                  type="submit"
+                  class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition shadow-md"
+                >
+                  <i class="fa-solid fa-check-circle mr-2"></i> TẠO TÀI KHOẢN
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="content-projects"
+        class="hidden flex-1 flex-col h-full overflow-hidden"
+      >
+        <div
+          class="bg-white px-4 sm:px-6 pt-4 pb-0 border-b border-gray-200 flex flex-col sm:flex-row sm:items-end justify-between gap-4 shrink-0 shadow-sm z-10"
+        >
+          <div
+            class="flex space-x-6 overflow-x-auto hide-scrollbar w-full sm:w-auto"
+          >
+            <button
+              class="whitespace-nowrap text-blue-600 font-bold border-b-2 border-blue-600 pb-3 transition px-1"
+            >
+              Tất cả dự án hệ thống
+            </button>
+          </div>
+          <div class="relative w-full sm:w-72 shrink-0 pb-3">
+            <i
+              class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 -mt-1.5 text-gray-400"
+            ></i
+            ><input
+              type="text"
+              id="searchProjectsInput"
+              onkeyup="searchAdmin('projects')"
+              placeholder="Tìm tên dự án, leader..."
+              class="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"
+            />
+          </div>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar">
           <div
             class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
           >
-            <div class="p-4 sm:p-5 border-b border-gray-100">
-              <h3 class="font-bold text-gray-800 text-sm sm:text-base">
-                Tất cả Dự án
-              </h3>
-            </div>
             <div class="overflow-x-auto w-full">
               <table class="w-full text-left min-w-[600px]">
                 <thead
-                  class="bg-gray-50 text-gray-500 text-[10px] sm:text-xs uppercase"
+                  class="bg-gray-50 text-gray-500 text-[10px] sm:text-xs uppercase border-b border-gray-100"
                 >
                   <tr>
                     <th class="p-3 sm:p-4">Tên Dự án</th>
@@ -337,105 +455,57 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <div id="content-events" class="hidden">
+      <div
+        id="content-events"
+        class="hidden flex-1 flex-col h-full overflow-hidden"
+      >
+        <div
+          class="bg-white px-4 sm:px-6 pt-4 pb-0 border-b border-gray-200 flex flex-col sm:flex-row sm:items-end justify-between gap-4 shrink-0 shadow-sm z-10"
+        >
           <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-6"
+            class="flex space-x-6 overflow-x-auto hide-scrollbar w-full sm:w-auto"
           >
-            <div class="p-4 sm:p-5 border-b border-gray-100 bg-purple-50/50">
-              <h3 class="font-bold text-purple-800 text-sm sm:text-base">
-                <i class="fa-solid fa-bullhorn mr-2"></i>Đăng Sự Kiện Mới
-              </h3>
-            </div>
-            <form
-              onsubmit="createEvent(event)"
-              class="p-4 sm:p-5 space-y-4 w-full"
+            <button
+              onclick="switchSubTab('events', 'all')"
+              id="subtab-events-all"
+              class="whitespace-nowrap text-blue-600 font-bold border-b-2 border-blue-600 pb-3 transition px-1"
             >
-              <input
-                type="text"
-                id="evTitle"
-                required
-                placeholder="Tiêu đề sự kiện *"
-                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500"
-              />
-              <textarea
-                id="evDesc"
-                required
-                placeholder="Nội dung chi tiết..."
-                rows="4"
-                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 custom-scrollbar"
-              ></textarea>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input
-                  type="date"
-                  id="evDate"
-                  required
-                  class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 text-gray-600 bg-white"
-                />
-                <input
-                  type="url"
-                  id="evVideoUrl"
-                  placeholder="Link Video (Youtube/Drive...)"
-                  class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500"
-                />
-              </div>
-
-              <div class="flex flex-col sm:flex-row gap-3 w-full">
-                <label
-                  class="bg-blue-50 text-blue-600 px-4 py-3 rounded-lg cursor-pointer border border-blue-200 hover:bg-blue-100 transition flex-1 text-center font-bold text-sm shadow-sm whitespace-nowrap"
-                >
-                  <i class="fa-solid fa-image mr-1"></i> Chọn Ảnh/Video
-                  <input
-                    type="file"
-                    id="evGallery"
-                    accept="image/*,video/*"
-                    class="hidden"
-                    onchange="previewEvMedia(event)"
-                  />
-                </label>
-                <label
-                  class="bg-green-50 text-green-600 px-4 py-3 rounded-lg cursor-pointer border border-green-200 hover:bg-green-100 transition flex-1 text-center font-bold text-sm shadow-sm whitespace-nowrap"
-                >
-                  <i class="fa-solid fa-camera mr-1"></i> Chụp trực tiếp
-                  <input
-                    type="file"
-                    id="evCamera"
-                    accept="image/*"
-                    capture="environment"
-                    class="hidden"
-                    onchange="previewEvMedia(event)"
-                  />
-                </label>
-              </div>
-              <img
-                id="evPreviewImg"
-                class="hidden w-full max-h-64 object-contain rounded-xl shadow-sm border border-gray-200 bg-gray-50"
-              />
-
-              <button
-                type="submit"
-                class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-4 py-3 rounded-lg w-full transition shadow-md"
-              >
-                ĐĂNG SỰ KIỆN
-              </button>
-            </form>
+              Danh sách sự kiện</button
+            ><button
+              onclick="switchSubTab('events', 'create')"
+              id="subtab-events-create"
+              class="whitespace-nowrap text-gray-500 font-bold border-b-2 border-transparent hover:text-blue-600 pb-3 transition px-1"
+            >
+              Đăng sự kiện mới
+            </button>
           </div>
-
+          <div class="relative w-full sm:w-72 shrink-0 pb-3">
+            <i
+              class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 -mt-1.5 text-gray-400"
+            ></i
+            ><input
+              type="text"
+              id="searchEventsInput"
+              onkeyup="searchAdmin('events')"
+              placeholder="Tìm kiếm sự kiện..."
+              class="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm outline-none focus:ring-1 focus:ring-blue-500 transition"
+            />
+          </div>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar">
           <div
-            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden w-full"
+            id="subcontent-events-all"
+            class="block bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden animate-tab"
           >
-            <div class="p-4 sm:p-5 border-b border-gray-100">
-              <h3 class="font-bold text-gray-800 text-sm sm:text-base">
-                Danh sách Sự kiện
-              </h3>
-            </div>
             <div class="overflow-x-auto w-full">
               <table class="w-full text-left min-w-[500px]">
                 <thead
-                  class="bg-gray-50 text-gray-500 text-[10px] sm:text-xs uppercase"
+                  class="bg-gray-50 text-gray-500 text-[10px] sm:text-xs uppercase border-b border-gray-100"
                 >
                   <tr>
-                    <th class="p-3 sm:p-4">Tiêu đề</th>
+                    <th class="p-3 sm:p-4">Tiêu đề Sự kiện</th>
                     <th class="p-3 sm:p-4">Thời gian</th>
                     <th class="p-3 sm:p-4 text-right">Thao tác</th>
                   </tr>
@@ -447,6 +517,143 @@
               </table>
             </div>
           </div>
+          <div
+            id="subcontent-events-create"
+            class="hidden bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden max-w-4xl mx-auto mt-4"
+          >
+            <div class="p-4 sm:p-5 border-b border-gray-100 bg-purple-50/50">
+              <h3 class="font-bold text-purple-800">
+                <i class="fa-solid fa-bullhorn mr-2"></i>Soạn thảo Sự kiện
+              </h3>
+            </div>
+            <form
+              onsubmit="createEvent(event)"
+              class="p-4 sm:p-6 space-y-4 w-full"
+            >
+              <input
+                type="text"
+                id="evTitle"
+                required
+                placeholder="Tiêu đề sự kiện *"
+                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 bg-gray-50"
+              /><textarea
+                id="evDesc"
+                required
+                placeholder="Nội dung chi tiết..."
+                rows="4"
+                class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 custom-scrollbar bg-gray-50"
+              ></textarea>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input
+                  type="date"
+                  id="evDate"
+                  required
+                  class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 text-gray-600 bg-gray-50"
+                /><input
+                  type="url"
+                  id="evVideoUrl"
+                  placeholder="Link Video (Youtube/Drive...)"
+                  class="w-full p-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-purple-500 bg-gray-50"
+                />
+              </div>
+              <div class="flex flex-col sm:flex-row gap-3 w-full">
+                <label
+                  class="bg-blue-50 text-blue-600 px-4 py-3.5 rounded-lg cursor-pointer border border-blue-200 hover:bg-blue-100 transition flex-1 text-center font-bold text-sm shadow-sm whitespace-nowrap"
+                  ><i class="fa-solid fa-image mr-1"></i> Chọn Ảnh/Video<input
+                    type="file"
+                    id="evGallery"
+                    accept="image/*,video/*"
+                    class="hidden"
+                    onchange="previewEvMedia(event)" /></label
+                ><label
+                  class="bg-green-50 text-green-600 px-4 py-3.5 rounded-lg cursor-pointer border border-green-200 hover:bg-green-100 transition flex-1 text-center font-bold text-sm shadow-sm whitespace-nowrap"
+                  ><i class="fa-solid fa-camera mr-1"></i> Chụp trực tiếp<input
+                    type="file"
+                    id="evCamera"
+                    accept="image/*"
+                    capture="environment"
+                    class="hidden"
+                    onchange="previewEvMedia(event)"
+                /></label>
+              </div>
+              <img
+                id="evPreviewImg"
+                class="hidden w-full max-h-72 object-contain rounded-xl shadow-sm border border-gray-200 bg-gray-50 mt-2"
+              />
+              <div class="pt-4">
+                <button
+                  type="submit"
+                  class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-4 py-3.5 rounded-lg w-full transition shadow-md"
+                >
+                  <i class="fa-solid fa-paper-plane mr-2"></i> ĐĂNG SỰ KIỆN
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="content-system"
+        class="hidden flex-1 flex-col h-full overflow-hidden"
+      >
+        <div
+          class="bg-white px-4 sm:px-6 py-4 border-b border-gray-200 shadow-sm z-10"
+        >
+          <h3 class="font-bold text-gray-800">
+            Cấu hình Thông báo Toàn Server
+          </h3>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 custom-scrollbar">
+          <div
+            class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden max-w-3xl mx-auto"
+          >
+            <form
+              onsubmit="saveSystemAnnouncement(event)"
+              class="p-6 space-y-5"
+            >
+              <div>
+                <label class="flex items-center cursor-pointer"
+                  ><input
+                    type="checkbox"
+                    id="annActive"
+                    class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  /><span class="ml-3 font-bold text-gray-800"
+                    >Kích hoạt Thông báo</span
+                  ></label
+                >
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5"
+                  >Tiêu đề thông báo *</label
+                ><input
+                  type="text"
+                  id="annTitle"
+                  required
+                  placeholder="VD: CHÚC MỪNG NĂM MỚI 2026!"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-bold text-gray-700 mb-1.5"
+                  >Nội dung *</label
+                ><textarea
+                  id="annMessage"
+                  required
+                  rows="5"
+                  placeholder="Nhập nội dung thông báo..."
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 custom-scrollbar"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg transition shadow-md"
+              >
+                <i class="fa-solid fa-satellite-dish mr-2"></i> Cập Nhật Thông
+                Báo
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </main>
@@ -456,53 +663,47 @@
       class="fixed inset-0 bg-black/60 z-[110] hidden items-center justify-center p-4"
     >
       <div
-        class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl relative w-full sm:w-[95%]"
+        class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl relative w-full sm:w-[95%] animate-tab"
       >
-        <h3
-          class="font-black text-lg sm:text-xl text-gray-800 mb-6 border-b pb-3"
-        >
+        <h3 class="font-black text-xl text-gray-800 mb-6 border-b pb-3">
           <i class="fa-solid fa-pen-to-square text-blue-600 mr-2"></i>Cập nhật
           Tài khoản
         </h3>
         <input type="hidden" id="editUserId" />
         <div class="mb-4">
           <label class="block text-xs font-bold text-gray-600 mb-1"
-            >Mã SV / ID (Cố định)</label
-          >
-          <input
+            >Mã SV / ID</label
+          ><input
             type="text"
             id="editUserIdDisplay"
             disabled
-            class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-gray-100 font-bold text-gray-500"
+            class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-100 font-bold text-gray-500"
           />
         </div>
         <div class="mb-4">
           <label class="block text-xs font-bold text-gray-600 mb-1"
             >Họ và Tên *</label
-          >
-          <input
+          ><input
             type="text"
             id="editUserName"
-            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
           />
         </div>
         <div class="mb-4">
           <label class="block text-xs font-bold text-gray-600 mb-1"
             >Mật khẩu *</label
-          >
-          <input
+          ><input
             type="text"
             id="editUserPass"
-            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500"
           />
         </div>
         <div class="mb-6">
           <label class="block text-xs font-bold text-gray-600 mb-1"
             >Vai trò *</label
-          >
-          <select
+          ><select
             id="editUserRole"
-            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-blue-500 bg-white"
           >
             <option value="student">Sinh viên</option>
             <option value="teacher">Giảng viên</option>
@@ -511,15 +712,85 @@
         <div class="flex gap-3">
           <button
             onclick="closeEditUserModal()"
-            class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 rounded-lg transition text-sm"
+            class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-2.5 rounded-lg transition"
           >
-            Hủy
-          </button>
-          <button
+            Hủy</button
+          ><button
             onclick="saveEditUser()"
-            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition shadow-md text-sm"
+            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition shadow-md"
           >
-            Lưu
+            Lưu Cập Nhật
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="userDetailModal"
+      class="fixed inset-0 bg-black/60 z-[110] hidden items-center justify-center p-4"
+    >
+      <div
+        class="bg-white rounded-3xl w-full max-w-md p-0 shadow-2xl relative w-full sm:w-[95%] animate-tab overflow-hidden"
+      >
+        <div
+          class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-center relative"
+        >
+          <button
+            onclick="closeUserDetailModal()"
+            class="absolute top-4 right-4 w-8 h-8 bg-white/20 text-white rounded-full hover:bg-red-500 transition"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div
+            id="udAvatar"
+            class="w-20 h-20 bg-white rounded-full mx-auto flex items-center justify-center text-blue-600 font-black text-3xl shadow-lg border-4 border-white/30 overflow-hidden mb-3"
+          >
+            U
+          </div>
+          <h3 id="udName" class="font-black text-xl text-white">
+            Tên Sinh Viên
+          </h3>
+          <p
+            id="udRole"
+            class="text-blue-200 text-sm font-bold uppercase tracking-wider"
+          >
+            Sinh viên
+          </p>
+        </div>
+        <div class="p-6 space-y-4">
+          <div
+            class="flex justify-between items-center border-b border-gray-100 pb-3"
+          >
+            <span class="text-gray-500 text-sm">Mã SV / ID:</span
+            ><span id="udId" class="font-bold text-gray-800">---</span>
+          </div>
+          <div
+            class="flex justify-between items-center border-b border-gray-100 pb-3"
+          >
+            <span class="text-gray-500 text-sm">Chuyên ngành:</span
+            ><span
+              id="udMajor"
+              class="font-bold text-gray-800 text-right max-w-[200px]"
+              >---</span
+            >
+          </div>
+          <div
+            class="flex justify-between items-center border-b border-gray-100 pb-3"
+          >
+            <span class="text-gray-500 text-sm">Số dư Ví:</span
+            ><span id="udBalance" class="font-black text-yellow-500">0 ₫</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-gray-500 text-sm">Tổng Nạp Tích Lũy:</span
+            ><span id="udTotal" class="font-black text-green-600">0 ₫</span>
+          </div>
+        </div>
+        <div class="p-4 bg-gray-50 text-center">
+          <button
+            onclick="closeUserDetailModal()"
+            class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold px-8 py-2 rounded-full transition text-sm"
+          >
+            Đóng
           </button>
         </div>
       </div>
@@ -546,12 +817,94 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
+      window.allUsersData = {};
+
       window.toggleSidebar = function () {
-        const sidebar = document.getElementById("adminSidebar");
-        const overlay = document.getElementById("sidebarOverlay");
-        sidebar.classList.toggle("-translate-x-full");
-        overlay.classList.toggle("hidden");
+        document
+          .getElementById("adminSidebar")
+          .classList.toggle("-translate-x-full");
+        document.getElementById("sidebarOverlay").classList.toggle("hidden");
       };
+      window.switchMainTab = function (tab) {
+        ["users", "projects", "events", "system"].forEach((t) => {
+          document.getElementById("content-" + t).classList.add("hidden");
+          document
+            .getElementById("content-" + t)
+            .classList.remove("flex", "animate-tab");
+          document
+            .getElementById("mainTab-" + t)
+            .classList.remove("tab-active");
+          document
+            .getElementById("mainTab-" + t)
+            .classList.add("text-slate-300");
+        });
+        const activeContent = document.getElementById("content-" + tab);
+        activeContent.classList.remove("hidden");
+        activeContent.classList.add("flex");
+        activeContent.classList.remove("animate-tab");
+        void activeContent.offsetWidth;
+        activeContent.classList.add("animate-tab");
+        document.getElementById("mainTab-" + tab).classList.add("tab-active");
+        document
+          .getElementById("mainTab-" + tab)
+          .classList.remove("text-slate-300");
+        const titles = {
+          users: "QUẢN LÝ TÀI KHOẢN",
+          projects: "QUẢN LÝ TOÀN BỘ DỰ ÁN",
+          events: "ĐIỀU HÀNH SỰ KIỆN",
+          system: "HỆ THỐNG THÔNG BÁO",
+        };
+        document.getElementById("topbarTitle").innerText = titles[tab];
+      };
+      window.switchSubTab = function (section, tab) {
+        const contents = document.querySelectorAll(
+          `[id^='subcontent-${section}-']`,
+        );
+        contents.forEach((c) => {
+          c.classList.add("hidden");
+          c.classList.remove("block", "animate-tab");
+        });
+        const tabs = document.querySelectorAll(`[id^='subtab-${section}-']`);
+        tabs.forEach((t) => {
+          t.classList.remove("text-blue-600", "border-blue-600");
+          t.classList.add("text-gray-500", "border-transparent");
+        });
+        const activeContent = document.getElementById(
+          `subcontent-${section}-${tab}`,
+        );
+        activeContent.classList.remove("hidden");
+        activeContent.classList.add("block");
+        activeContent.classList.remove("animate-tab");
+        void activeContent.offsetWidth;
+        activeContent.classList.add("animate-tab");
+        const activeTab = document.getElementById(`subtab-${section}-${tab}`);
+        activeTab.classList.remove("text-gray-500", "border-transparent");
+        activeTab.classList.add("text-blue-600", "border-blue-600");
+      };
+      window.searchAdmin = function (section) {
+        const keyword = document
+          .getElementById(
+            `search${section.charAt(0).toUpperCase() + section.slice(1)}Input`,
+          )
+          .value.toLowerCase()
+          .trim();
+        if (section === "users") {
+          filterTable("pendingTableBody", keyword);
+          filterTable("transTableBody", keyword);
+          filterTable("usersTableBody", keyword);
+        } else if (section === "projects") {
+          filterTable("projectsTableBody", keyword);
+        } else if (section === "events") {
+          filterTable("eventsTableBody", keyword);
+        }
+      };
+      function filterTable(tbodyId, keyword) {
+        const rows = document.querySelectorAll(`#${tbodyId} tr`);
+        rows.forEach((row) => {
+          const text = row.innerText.toLowerCase();
+          row.style.display = text.includes(keyword) ? "" : "none";
+        });
+      }
 
       window.checkAdmin = function () {
         if (document.getElementById("adminPass").value === "24442444aA@") {
@@ -562,39 +915,15 @@
           alert("Sai mật khẩu!");
         }
       };
-
-      // ĐÃ SỬA: CHẠY TRỰC TIẾP KHÔNG CẦN DOMContentLoaded ĐỂ TRÁNH LỖI MODULE RACE CONDITION
       if (sessionStorage.getItem("isAdminAuthed") === "true") {
         document.getElementById("adminLogin").classList.add("hidden");
         loadAdminData();
       }
-
       window.adminLogout = function () {
         if (confirm("Đăng xuất khỏi quyền Admin?")) {
           sessionStorage.removeItem("isAdminAuthed");
           window.location.href = "index.html";
         }
-      };
-
-      window.switchTab = function (tab) {
-        ["payment", "users", "projects", "events"].forEach((t) => {
-          document.getElementById("content-" + t).classList.add("hidden");
-          document.getElementById("tab-" + t).classList.remove("tab-active");
-          document.getElementById("tab-" + t).classList.add("text-slate-300");
-        });
-        document.getElementById("content-" + tab).classList.remove("hidden");
-        document.getElementById("tab-" + tab).classList.add("tab-active");
-        document
-          .getElementById("tab-" + tab)
-          .classList.remove("text-slate-300");
-
-        const titles = {
-          payment: "DUYỆT THANH TOÁN LỆ PHÍ",
-          users: "QUẢN LÝ TÀI KHOẢN (USERS)",
-          projects: "QUẢN LÝ TOÀN BỘ DỰ ÁN",
-          events: "ĐIỀU HÀNH SỰ KIỆN",
-        };
-        document.getElementById("topbarTitle").innerText = titles[tab];
       };
 
       function loadAdminData() {
@@ -611,12 +940,46 @@
                     "vi-VN",
                   )
                 : "Vừa xong";
-              tbody.innerHTML += `<tr class="hover:bg-red-50/20 border-b border-gray-100"><td class="p-3 sm:p-4 text-gray-500 whitespace-nowrap">${time}</td><td class="p-3 sm:p-4 font-bold text-gray-800">${docSnap.id}</td><td class="p-3 sm:p-4 font-bold text-blue-600 whitespace-nowrap">${data.name}</td><td class="p-3 sm:p-4 text-right whitespace-nowrap"><button onclick="approvePayment('${docSnap.id}')" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg font-bold transition shadow-sm"><i class="fa-solid fa-check mr-1"></i> Duyệt</button><button onclick="rejectPayment('${docSnap.id}')" class="bg-white border border-gray-200 text-gray-500 hover:text-red-500 px-2.5 py-1.5 rounded-lg font-bold ml-2 transition shadow-sm" title="Xóa bỏ"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+              tbody.innerHTML += `<tr class="hover:bg-red-50/20 border-b border-gray-100"><td class="p-3 sm:p-4 text-gray-500 whitespace-nowrap">${time}</td><td class="p-3 sm:p-4 font-bold text-gray-800">${docSnap.id}</td><td class="p-3 sm:p-4 font-bold text-blue-600 whitespace-nowrap">${data.name}</td><td class="p-3 sm:p-4 text-right whitespace-nowrap"><button onclick="approvePayment('${docSnap.id}')" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg font-bold transition shadow-sm"><i class="fa-solid fa-check mr-1"></i> Duyệt</button><button onclick="rejectPayment('${docSnap.id}')" class="bg-white border border-gray-200 text-gray-500 hover:text-red-500 px-2.5 py-1.5 rounded-lg font-bold ml-2 transition shadow-sm"><i class="fa-solid fa-trash"></i></button></td></tr>`;
             }
           });
           if (count === 0)
-            tbody.innerHTML = `<tr><td colspan=\"4\" class=\"p-8 text-center text-gray-400 font-medium\">Không có ai đang chờ thanh toán.</td></tr>`;
-          const badge = document.getElementById("pendingCountBadge");
+            tbody.innerHTML = `<tr><td colspan=\"4\" class=\"p-8 text-center text-gray-400 font-medium\">Không có ai đang chờ.</td></tr>`;
+          const badge1 = document.getElementById("pendingCountBadge");
+          const badge2 = document.getElementById("pendingCountBadge2");
+          if (count > 0) {
+            badge1.innerText = count;
+            badge1.classList.remove("hidden");
+            badge2.innerText = count;
+            badge2.classList.remove("hidden");
+          } else {
+            badge1.classList.add("hidden");
+            badge2.classList.add("hidden");
+          }
+        });
+
+        onSnapshot(collection(db, "transactions"), (snapshot) => {
+          const tbody = document.getElementById("transTableBody");
+          tbody.innerHTML = "";
+          let count = 0;
+          snapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            if (data.status === "pending") {
+              count++;
+              let typeHtml =
+                data.type === "deposit"
+                  ? '<span class="text-green-600 font-bold bg-green-50 px-2 py-1 rounded border border-green-200">Nạp tiền</span>'
+                  : '<span class="text-red-600 font-bold bg-red-50 px-2 py-1 rounded border border-red-200">Rút tiền</span>';
+              let amt = new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(data.amount);
+              tbody.innerHTML += `<tr class="hover:bg-gray-50 border-b border-gray-100"><td class="p-3 sm:p-4 text-gray-500 whitespace-nowrap">${data.dateStr || ""}</td><td class="p-3 sm:p-4">${typeHtml}</td><td class="p-3 sm:p-4 font-bold text-gray-800">${data.userId}</td><td class="p-3 sm:p-4 font-black ${data.type === "deposit" ? "text-green-600" : "text-red-600"}">${amt}</td><td class="p-3 sm:p-4 text-xs text-gray-500 max-w-[200px] truncate" title="${data.bankInfo || "-"}">${data.bankInfo || "-"}</td><td class="p-3 sm:p-4 text-right whitespace-nowrap"><button onclick="approveTransaction('${docSnap.id}', '${data.type}', '${data.userId}', ${data.amount})" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg font-bold transition shadow-sm mr-1"><i class="fa-solid fa-check"></i></button><button onclick="rejectTransaction('${docSnap.id}', '${data.type}', '${data.userId}', ${data.amount})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg font-bold transition shadow-sm"><i class="fa-solid fa-xmark"></i></button></td></tr>`;
+            }
+          });
+          if (count === 0)
+            tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-gray-400 font-medium">Không có lệnh Nạp/Rút nào đang chờ.</td></tr>`;
+          const badge = document.getElementById("transCountBadge");
           if (count > 0) {
             badge.innerText = count;
             badge.classList.remove("hidden");
@@ -626,13 +989,16 @@
         onSnapshot(collection(db, "users"), (snapshot) => {
           const tbody = document.getElementById("usersTableBody");
           tbody.innerHTML = "";
+          window.allUsersData = {};
           snapshot.forEach((docSnap) => {
             const data = docSnap.data();
+            window.allUsersData[docSnap.id] = data;
             let roleHtml =
               data.role === "teacher"
                 ? '<span class="text-orange-500 whitespace-nowrap">Giảng viên</span>'
                 : '<span class="text-blue-500 whitespace-nowrap">Sinh viên</span>';
-            tbody.innerHTML += `<tr class="border-b border-gray-100"><td class="p-3 sm:p-4 font-bold">${docSnap.id}</td><td class="p-3 sm:p-4 whitespace-nowrap">${data.name}</td><td class="p-3 sm:p-4 uppercase font-bold">${roleHtml}</td><td class="p-3 sm:p-4 text-right whitespace-nowrap"><button onclick="openEditUser('${docSnap.id}', '${data.name}', '${data.role}', '${data.password}')" class="text-blue-600 hover:text-blue-800 bg-blue-50 px-3 py-1.5 rounded-lg font-bold mr-2 transition shadow-sm"><i class="fa-solid fa-pen"></i></button><button onclick="deleteUserAdmin('${docSnap.id}')" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg font-bold transition shadow-sm"><i class="fa-solid fa-trash"></i></button></td></tr>`;
+            // Đã thêm Nút "Xem Chi tiết"
+            tbody.innerHTML += `<tr class="border-b border-gray-100 hover:bg-gray-50"><td class="p-3 sm:p-4 font-bold">${docSnap.id}</td><td class="p-3 sm:p-4 whitespace-nowrap">${data.name}</td><td class="p-3 sm:p-4 uppercase font-bold">${roleHtml}</td><td class="p-3 sm:p-4 text-right whitespace-nowrap"><button onclick="viewUserDetails('${docSnap.id}')" class="text-indigo-600 hover:text-indigo-800 bg-indigo-50 px-3 py-1.5 rounded-lg font-bold mr-2 transition shadow-sm" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></button><button onclick="openEditUser('${docSnap.id}', '${data.name}', '${data.role}', '${data.password}')" class="text-blue-600 hover:text-blue-800 bg-blue-50 px-3 py-1.5 rounded-lg font-bold mr-2 transition shadow-sm" title="Sửa"><i class="fa-solid fa-pen"></i></button><button onclick="deleteUserAdmin('${docSnap.id}')" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg font-bold transition shadow-sm" title="Xóa"><i class="fa-solid fa-trash"></i></button></td></tr>`;
           });
         });
 
@@ -647,10 +1013,9 @@
                 : data.status === "pending"
                   ? '<span class="text-orange-500 whitespace-nowrap">Chờ duyệt</span>'
                   : '<span class="text-red-500 whitespace-nowrap">Đã hủy</span>';
-            tbody.innerHTML += `<tr class="border-b border-gray-100"><td class="p-3 sm:p-4 font-bold text-blue-600 truncate max-w-[150px] sm:max-w-none border-none">${data.title}</td><td class="p-3 sm:p-4 whitespace-nowrap">${data.leaderName}</td><td class="p-3 sm:p-4 font-bold">${st}</td><td class="p-3 sm:p-4 text-right"><button onclick="deleteProjectAdmin('${docSnap.id}')" class="text-red-500 hover:underline font-bold">Xóa</button></td></tr>`;
+            tbody.innerHTML += `<tr class="border-b border-gray-100 hover:bg-gray-50"><td class="p-3 sm:p-4 font-bold text-blue-600 truncate max-w-[150px] sm:max-w-none border-none">${data.title}</td><td class="p-3 sm:p-4 whitespace-nowrap">${data.leaderName}</td><td class="p-3 sm:p-4 font-bold">${st}</td><td class="p-3 sm:p-4 text-right"><button onclick="deleteProjectAdmin('${docSnap.id}')" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg font-bold transition shadow-sm"><i class="fa-solid fa-trash"></i> Xóa</button></td></tr>`;
           });
         });
-
         onSnapshot(collection(db, "events"), (snapshot) => {
           const tbody = document.getElementById("eventsTableBody");
           tbody.innerHTML = "";
@@ -660,11 +1025,126 @@
           }
           snapshot.forEach((docSnap) => {
             const data = docSnap.data();
-            tbody.innerHTML += `<tr class="border-b border-gray-100"><td class="p-3 sm:p-4 font-bold text-blue-600 truncate max-w-[150px] sm:max-w-none">${data.title}</td><td class="p-3 sm:p-4 text-gray-500 whitespace-nowrap">${data.date}</td><td class="p-3 sm:p-4 text-right"><button onclick="deleteEvent('${docSnap.id}')" class="text-red-500 hover:underline font-bold">Xóa</button></td></tr>`;
+            tbody.innerHTML += `<tr class="border-b border-gray-100 hover:bg-gray-50"><td class="p-3 sm:p-4 font-bold text-blue-600 truncate max-w-[150px] sm:max-w-none">${data.title}</td><td class="p-3 sm:p-4 text-gray-500 whitespace-nowrap">${data.date}</td><td class="p-3 sm:p-4 text-right"><button onclick="deleteEvent('${docSnap.id}')" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1.5 rounded-lg font-bold transition shadow-sm"><i class="fa-solid fa-trash"></i> Xóa</button></td></tr>`;
           });
+        });
+        onSnapshot(doc(db, "system_settings", "announcement"), (docSnap) => {
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            document.getElementById("annTitle").value = data.title || "";
+            document.getElementById("annMessage").value = data.message || "";
+            document.getElementById("annActive").checked = data.active || false;
+          }
         });
       }
 
+      // --- LOGIC XEM CHI TIẾT USER ---
+      window.viewUserDetails = function (id) {
+        const user = window.allUsersData[id];
+        if (!user) return;
+
+        document.getElementById("udId").innerText = user.id;
+        document.getElementById("udName").innerText = user.name;
+        document.getElementById("udRole").innerText =
+          user.role === "teacher" ? "GIẢNG VIÊN" : "SINH VIÊN";
+        document.getElementById("udMajor").innerText =
+          user.major || "Chưa cập nhật";
+
+        let bal = new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }).format(user.balance || 0);
+        let tot = new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }).format(user.totalDeposit || 0);
+        document.getElementById("udBalance").innerText = bal;
+        document.getElementById("udTotal").innerText = tot;
+
+        if (user.avatarBase64) {
+          document.getElementById("udAvatar").innerHTML =
+            `<img src="${user.avatarBase64}" class="w-full h-full object-cover">`;
+        } else {
+          document.getElementById("udAvatar").innerHTML = user.name
+            .charAt(0)
+            .toUpperCase();
+        }
+
+        document.body.classList.add("modal-active");
+        document.getElementById("userDetailModal").classList.remove("hidden");
+        document.getElementById("userDetailModal").classList.add("flex");
+      };
+      window.closeUserDetailModal = function () {
+        document.body.classList.remove("modal-active");
+        document.getElementById("userDetailModal").classList.add("hidden");
+        document.getElementById("userDetailModal").classList.remove("flex");
+      };
+
+      window.saveSystemAnnouncement = async function (e) {
+        e.preventDefault();
+        try {
+          await setDoc(doc(db, "system_settings", "announcement"), {
+            title: document.getElementById("annTitle").value,
+            message: document.getElementById("annMessage").value,
+            active: document.getElementById("annActive").checked,
+            updatedAt: Date.now(),
+          });
+          alert("Đã cập nhật hệ thống thông báo!");
+        } catch (err) {
+          alert("Lỗi: " + err.message);
+        }
+      };
+      window.approveTransaction = async function (
+        transId,
+        type,
+        userId,
+        amount,
+      ) {
+        if (!confirm("Xác nhận duyệt giao dịch này?")) return;
+        try {
+          if (type === "deposit") {
+            const uSnap = await getDoc(doc(db, "users", userId));
+            let curBal = 0;
+            let curTotal = 0;
+            if (uSnap.exists()) {
+              curBal = uSnap.data().balance || 0;
+              curTotal = uSnap.data().totalDeposit || 0;
+            }
+            await updateDoc(doc(db, "users", userId), {
+              balance: curBal + amount,
+              totalDeposit: curTotal + amount,
+            });
+          }
+          await updateDoc(doc(db, "transactions", transId), {
+            status: "approved",
+          });
+        } catch (e) {
+          alert("Lỗi: " + e.message);
+        }
+      };
+      window.rejectTransaction = async function (
+        transId,
+        type,
+        userId,
+        amount,
+      ) {
+        if (!confirm("Từ chối giao dịch này?")) return;
+        try {
+          if (type === "withdraw") {
+            const uSnap = await getDoc(doc(db, "users", userId));
+            let curBal = 0;
+            if (uSnap.exists()) curBal = uSnap.data().balance || 0;
+            await updateDoc(doc(db, "users", userId), {
+              balance: curBal + amount,
+            });
+          }
+          await updateDoc(doc(db, "transactions", transId), {
+            status: "rejected",
+          });
+        } catch (e) {
+          alert("Lỗi: " + e.message);
+        }
+      };
       window.openEditUser = function (id, name, role, pass) {
         document.getElementById("editUserId").value = id;
         document.getElementById("editUserIdDisplay").value = id;
@@ -695,9 +1175,8 @@
           alert("Lỗi: " + e.message);
         }
       };
-
       window.approvePayment = async function (id) {
-        if (!confirm(`Xác nhận ĐÃ NHẬN TIỀN từ ${id}?`)) return;
+        if (!confirm(`Xác nhận ĐÃ NHẬN TIỀN đăng ký từ ${id}?`)) return;
         try {
           const pRef = doc(db, "pending_users", id);
           const snap = await getDoc(pRef);
@@ -709,6 +1188,8 @@
               role: u.role || "student",
               password: u.password,
               createdAt: u.createdAt || new Date(),
+              balance: 0,
+              totalDeposit: 0,
             });
             await updateDoc(pRef, { paymentStatus: "approved" });
             setTimeout(async () => {
@@ -719,13 +1200,11 @@
           alert("Lỗi: " + e.message);
         }
       };
-
       window.rejectPayment = async function (id) {
         if (confirm("Xóa bỏ yêu cầu đăng ký này?")) {
           await deleteDoc(doc(db, "pending_users", id));
         }
       };
-
       window.createNewUser = async function (e) {
         e.preventDefault();
         const id = document
@@ -747,6 +1226,8 @@
             password: pass,
             role: role,
             createdAt: new Date(),
+            balance: 0,
+            totalDeposit: 0,
           });
           alert(`✅ Đã tạo TK cho ${name}!`);
           e.target.reset();
@@ -754,14 +1235,13 @@
           alert("Lỗi: " + err.message);
         }
       };
-
       window.deleteUserAdmin = async function (id) {
-        if (confirm(`Xóa vĩnh viễn tài khoản ${id}?`)) {
+        if (confirm(`CẢNH BÁO: Xóa vĩnh viễn tài khoản ${id}?`)) {
           await deleteDoc(doc(db, "users", id));
         }
       };
       window.deleteProjectAdmin = async function (id) {
-        if (confirm(`Xóa vĩnh viễn dự án "${id}"?`)) {
+        if (confirm(`CẢNH BÁO: Xóa vĩnh viễn dự án "${id}"?`)) {
           await deleteDoc(doc(db, "projects", id));
         }
       };
@@ -770,7 +1250,6 @@
           await deleteDoc(doc(db, "events", id));
         }
       };
-
       window.evImageBase64 = "";
       window.previewEvMedia = function (e) {
         const file = e.target.files[0];
@@ -813,7 +1292,6 @@
         };
         reader.readAsDataURL(file);
       };
-
       window.createEvent = async function (e) {
         e.preventDefault();
         const title = document.getElementById("evTitle").value;
@@ -835,6 +1313,7 @@
           e.target.reset();
           document.getElementById("evPreviewImg").classList.add("hidden");
           window.evImageBase64 = "";
+          switchSubTab("events", "all");
         } catch (err) {
           alert("Lỗi: " + err.message);
         }

@@ -2,7 +2,10 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>UNICOLLAB - Khu Vực Nhóm</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -13,6 +16,7 @@
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background-color: #f1f5f9;
+        -webkit-tap-highlight-color: transparent;
       }
       .hide-scrollbar::-webkit-scrollbar {
         display: none;
@@ -65,19 +69,6 @@
       .modal-active {
         overflow: hidden;
       }
-      .fade-in-section {
-        animation: fadeIn 0.3s ease-out forwards;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(5px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
       .tab-btn {
         color: #64748b;
         font-weight: 600;
@@ -107,7 +98,6 @@
         }
       }
 
-      /* HIỆU ỨNG HẠT BỤI RƠI (PARTICLES) */
       #particles-container {
         position: absolute;
         top: 0;
@@ -130,12 +120,49 @@
           opacity: 0;
         }
       }
-
-      /* GLOSSY CARD DROPDOWN */
       .glossy-card {
         background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
         border: 1px solid rgba(255, 255, 255, 0.1);
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      }
+
+      /* CHAT MESSENGER STYLES */
+      .typing-dot {
+        animation: typing 1.4s infinite ease-in-out both;
+      }
+      .typing-dot:nth-child(1) {
+        animation-delay: -0.32s;
+      }
+      .typing-dot:nth-child(2) {
+        animation-delay: -0.16s;
+      }
+      @keyframes typing {
+        0%,
+        80%,
+        100% {
+          transform: scale(0);
+        }
+        40% {
+          transform: scale(1);
+        }
+      }
+
+      .msg-bubble {
+        cursor: pointer;
+        user-select: none;
+        transition: filter 0.2s;
+      }
+      .msg-bubble:active {
+        filter: brightness(0.9);
+      }
+
+      /* Responsive: Mobile vs Desktop */
+      @media (max-width: 768px) {
+        #chatContent {
+          border-radius: 0;
+          height: 100% !important;
+          max-height: 100dvh;
+        }
       }
     </style>
   </head>
@@ -172,8 +199,8 @@
               onclick="toggleNotifDropdown(event)"
               class="text-gray-400 hover:text-white transition relative group p-2"
             >
-              <i class="fa-regular fa-bell text-xl"></i>
-              <span
+              <i class="fa-regular fa-bell text-xl"></i
+              ><span
                 id="bellBadge"
                 class="absolute top-0 right-0 bg-red-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-gray-900 hidden animate-pulse"
                 >0</span
@@ -211,8 +238,7 @@
                 id="leaderName"
                 class="text-sm font-bold text-gray-200 hidden sm:block px-2 max-w-[100px] truncate"
                 >User</span
-              >
-              <i
+              ><i
                 class="fa-solid fa-chevron-down text-gray-500 text-[10px] mr-2 hidden sm:block"
               ></i>
             </div>
@@ -243,7 +269,6 @@
                   ID: <span id="dropdownBigId">---</span>
                 </p>
               </div>
-
               <div
                 class="p-4 border-b border-white/10 flex justify-between items-center bg-black/20"
               >
@@ -251,8 +276,7 @@
                   <span
                     class="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-0.5"
                     >Số dư Khả dụng</span
-                  >
-                  <span
+                  ><span
                     id="userBalanceDisplay"
                     class="text-lg font-black text-yellow-400 tracking-tight"
                     >0 ₫</span
@@ -265,15 +289,13 @@
                   NẠP
                 </button>
               </div>
-
               <div class="p-4 border-b border-white/10 bg-black/20">
                 <div class="flex justify-between items-end mb-2">
                   <div class="flex flex-col">
                     <span
                       class="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-0.5"
                       >Tổng Nạp Tích Lũy</span
-                    >
-                    <span
+                    ><span
                       id="userTotalDepositDisplay"
                       class="text-sm font-bold text-white tracking-tight"
                       >0 ₫</span
@@ -293,25 +315,22 @@
                   ></div>
                 </div>
               </div>
-
               <div class="p-2 flex flex-col space-y-1">
                 <button
                   onclick="openWalletModal('withdraw')"
                   class="w-full text-left px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-white/10 hover:text-white transition flex items-center font-bold"
                 >
                   <i class="fa-solid fa-gift w-5 text-indigo-400"></i> Rút tiền
-                  / Đổi thưởng
-                </button>
-                <button
+                  / Đổi thưởng</button
+                ><button
                   onclick="openWalletModal('history')"
                   class="w-full text-left px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-white/10 hover:text-white transition flex items-center font-bold"
                 >
                   <i
                     class="fa-solid fa-clock-rotate-left w-5 text-blue-400"
                   ></i>
-                  Lịch sử Giao dịch
-                </button>
-                <button
+                  Lịch sử Giao dịch</button
+                ><button
                   onclick="leaderLogout()"
                   class="w-full text-left px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition flex items-center font-bold mt-2"
                 >
@@ -339,8 +358,7 @@
                 id="projCategory"
                 class="text-xs font-bold text-[#2563eb] bg-blue-50 px-2.5 py-1 rounded-md border border-blue-100 uppercase"
                 >Đang tải...</span
-              >
-              <span
+              ><span
                 id="roleBadge"
                 class="bg-purple-100 text-purple-700 px-2.5 py-1 rounded-md text-xs font-bold flex items-center"
                 >...</span
@@ -365,7 +383,6 @@
             </div>
           </div>
         </div>
-
         <div
           class="flex flex-wrap items-center justify-end gap-3 w-full md:w-auto shrink-0"
         >
@@ -380,17 +397,15 @@
               <i
                 class="fa-solid fa-table-columns mr-1.5 text-blue-600 hidden sm:inline"
               ></i>
-              Kanban
-            </button>
-            <button
+              Kanban</button
+            ><button
               onclick="switchTab('members')"
               id="tab-members"
               class="tab-btn whitespace-nowrap"
             >
               <i class="fa-solid fa-address-book mr-1.5 hidden sm:inline"></i>
-              Thành viên
-            </button>
-            <button
+              Thành viên</button
+            ><button
               onclick="switchTab('candidates')"
               id="tab-candidates"
               class="tab-btn relative whitespace-nowrap"
@@ -400,9 +415,8 @@
                 id="candidateBadge"
                 class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full animate-pulse border-2 border-white hidden"
                 >0</span
-              >
-            </button>
-            <button
+              ></button
+            ><button
               onclick="switchTab('settings')"
               id="tab-settings"
               class="tab-btn whitespace-nowrap"
@@ -412,9 +426,10 @@
           </div>
           <button
             onclick="openChatModal()"
-            class="bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-2.5 px-4 rounded-xl transition flex items-center shadow-sm text-sm border border-blue-200 w-full sm:w-auto justify-center"
+            class="bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-2.5 px-4 rounded-xl transition flex items-center shadow-sm text-sm border border-blue-200 w-full sm:w-auto justify-center relative"
           >
-            <i class="fa-solid fa-comment-dots mr-2 text-lg"></i> Chat Team
+            <i class="fa-brands fa-facebook-messenger mr-2 text-lg"></i> Chat
+            Nhóm
           </button>
         </div>
       </div>
@@ -429,8 +444,8 @@
           <div class="relative w-72">
             <i
               class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 text-sm"
-            ></i>
-            <input
+            ></i
+            ><input
               type="text"
               placeholder="Tìm tên thẻ..."
               class="w-full pl-9 pr-3 py-2 bg-white border hover:border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-100 shadow-sm"
@@ -441,7 +456,7 @@
             onclick="window.openTaskModal('col-todo')"
             class="bg-white border border-blue-200 text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-xl text-sm font-bold shadow-sm flex items-center transition hidden"
           >
-            <i class="fa-solid fa-plus mr-1.5"></i> Giao việc mới
+            <i class="fa-solid fa-plus mr-1.5"></i> Giao việc
           </button>
         </div>
         <div
@@ -449,7 +464,6 @@
           id="kanbanContainer"
         ></div>
       </div>
-
       <div
         id="content-members"
         class="hidden h-full flex flex-col p-6 max-w-[1000px] mx-auto w-full overflow-y-auto custom-scrollbar"
@@ -471,7 +485,6 @@
           class="grid grid-cols-1 md:grid-cols-2 gap-4"
         ></div>
       </div>
-
       <div
         id="content-candidates"
         class="hidden h-full flex flex-col p-6 max-w-[1000px] mx-auto w-full overflow-y-auto custom-scrollbar"
@@ -501,7 +514,6 @@
           </p>
         </div>
       </div>
-
       <div
         id="content-settings"
         class="hidden flex-1 h-full bg-white rounded-2xl shadow-sm border border-gray-200 p-8 overflow-y-auto custom-scrollbar"
@@ -516,12 +528,12 @@
             <div class="space-y-6">
               <div>
                 <label class="block text-sm font-bold text-gray-700 mb-2"
-                  >Tên dự án hiện tại *</label
+                  >Tên dự án hiện tại (Không thể đổi)</label
                 ><input
                   type="text"
                   id="settingProjName"
-                  required
-                  class="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none font-bold text-gray-800"
+                  readonly
+                  class="w-full px-5 py-3.5 bg-gray-100 border border-gray-200 rounded-xl text-sm outline-none font-bold text-gray-500 cursor-not-allowed"
                 />
               </div>
               <div>
@@ -565,6 +577,265 @@
     </main>
 
     <div
+      id="chatModal"
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-0 md:p-4"
+    >
+      <div
+        class="bg-white w-full h-full md:rounded-3xl md:h-[85vh] max-w-5xl shadow-2xl flex overflow-hidden relative transition-all duration-300 scale-95 opacity-0"
+        id="chatContent"
+      >
+        <div
+          id="chatSidebar"
+          class="w-full md:w-72 bg-white border-r border-gray-200 flex flex-col shrink-0 absolute md:relative z-30 h-full transform -translate-x-full md:translate-x-0 transition-transform duration-300 shadow-xl md:shadow-none"
+        >
+          <div
+            class="h-16 border-b border-gray-100 flex items-center justify-between px-4 bg-white shrink-0"
+          >
+            <h2 class="text-xl font-black text-gray-800">Thành viên</h2>
+            <button
+              onclick="toggleChatSidebar()"
+              class="md:hidden text-gray-500 hover:text-red-500 transition"
+            >
+              <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+          </div>
+          <div
+            class="p-3 bg-gray-50 text-[10px] font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 flex justify-between items-center"
+          >
+            <span>Trạng thái</span
+            ><span id="chatGroupStatus" class="text-green-600"
+              >Đang kết nối...</span
+            >
+          </div>
+          <div
+            class="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1"
+            id="chatMembersList"
+          ></div>
+        </div>
+
+        <div class="flex-1 flex flex-col bg-white h-full relative w-full z-20">
+          <div
+            id="msgContextMenu"
+            class="hidden absolute bg-white rounded-xl shadow-2xl border border-gray-200 py-1.5 z-[200] w-36 overflow-hidden transform scale-95 opacity-0 transition-all"
+          >
+            <button
+              onclick="replyMessage()"
+              class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-100 font-bold text-gray-700 flex items-center"
+            >
+              <i class="fa-solid fa-reply mr-2 text-gray-400"></i>Trả lời
+            </button>
+            <button
+              onclick="copyMessage()"
+              class="w-full text-left px-4 py-2.5 text-sm hover:bg-gray-100 font-bold text-gray-700 flex items-center"
+            >
+              <i class="fa-solid fa-copy mr-2 text-gray-400"></i>Sao chép
+            </button>
+            <button
+              onclick="deleteMessage()"
+              id="deleteMsgBtn"
+              class="w-full text-left px-4 py-2.5 text-sm hover:bg-red-50 font-bold text-red-600 flex items-center border-t border-gray-100"
+            >
+              <i class="fa-solid fa-trash-can mr-2"></i>Thu hồi
+            </button>
+          </div>
+
+          <div
+            class="h-16 border-b border-gray-100 flex justify-between items-center px-4 bg-white/95 backdrop-blur-sm shrink-0 z-10 shadow-sm"
+            onclick="closePlusMenu()"
+          >
+            <div class="flex items-center gap-3">
+              <button
+                onclick="toggleChatSidebar()"
+                class="md:hidden text-blue-600 hover:bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center transition"
+              >
+                <i class="fa-solid fa-users"></i>
+              </button>
+              <div class="flex flex-col">
+                <h3
+                  class="font-extrabold text-gray-800 text-base leading-tight truncate max-w-[180px] sm:max-w-xs"
+                  id="chatHeaderTitle"
+                >
+                  Chat Nhóm
+                </h3>
+                <span id="chatHeaderStatus" class="text-[11px] text-gray-500"
+                  >Hoạt động</span
+                >
+                <span
+                  id="chatTypingStatus"
+                  class="text-[11px] text-blue-500 font-bold hidden italic"
+                ></span>
+              </div>
+            </div>
+            <button
+              onclick="closeChatModal()"
+              class="w-8 h-8 bg-gray-100 text-gray-500 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <div
+            class="flex-1 overflow-y-auto p-4 md:p-6 bg-white custom-scrollbar flex flex-col relative"
+            id="chatMessagesArea"
+            onclick="
+              closePlusMenu();
+              hideMsgMenu();
+            "
+          ></div>
+
+          <div
+            id="typingIndicatorBox"
+            class="px-4 py-2 bg-white hidden items-end gap-2 shrink-0 border-t border-gray-50"
+          >
+            <div
+              class="w-7 h-7 rounded-full bg-gray-200 shrink-0 border border-gray-100"
+              id="typingUserAvatar"
+            ></div>
+            <div
+              class="bg-gray-100 rounded-2xl px-4 py-3 flex gap-1 items-center max-w-fit h-9"
+            >
+              <div
+                class="w-1.5 h-1.5 bg-gray-400 rounded-full typing-dot"
+              ></div>
+              <div
+                class="w-1.5 h-1.5 bg-gray-400 rounded-full typing-dot"
+              ></div>
+              <div
+                class="w-1.5 h-1.5 bg-gray-400 rounded-full typing-dot"
+              ></div>
+            </div>
+          </div>
+
+          <div
+            id="replyBanner"
+            class="hidden px-4 py-2.5 bg-gray-50 border-t border-gray-200 text-xs flex justify-between items-center text-gray-600 border-l-4 border-l-blue-500"
+          >
+            <div class="flex-1 truncate pr-4">
+              Đang trả lời
+              <strong id="replyToName" class="text-gray-800"></strong>:
+              <span id="replyToText" class="italic"></span>
+            </div>
+            <button
+              onclick="cancelReply()"
+              class="hover:text-red-500 font-bold text-lg px-2"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <div
+            id="chatPlusMenu"
+            class="hidden absolute bottom-[70px] left-2 bg-white rounded-2xl shadow-xl border border-gray-100 p-2 z-50 animate-tab w-48 origin-bottom-left"
+          >
+            <button
+              onclick="shareLocation()"
+              class="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 rounded-xl font-bold text-gray-700 flex items-center transition"
+            >
+              <i class="fa-solid fa-location-dot text-red-500 w-5"></i> Vị trí
+            </button>
+            <button
+              onclick="
+                document.getElementById('chatImageInput').click();
+                closePlusMenu();
+              "
+              class="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 rounded-xl font-bold text-gray-700 flex items-center transition"
+            >
+              <i class="fa-solid fa-file-arrow-up text-blue-500 w-5"></i> Chia
+              sẻ file
+            </button>
+            <button
+              onclick="alert('Tính năng Tin nhắn đã lưu đang phát triển')"
+              class="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 rounded-xl font-bold text-gray-700 flex items-center transition"
+            >
+              <i class="fa-solid fa-bookmark text-yellow-500 w-5"></i> Đã lưu
+            </button>
+          </div>
+
+          <input
+            type="file"
+            id="chatCameraInput"
+            accept="image/*"
+            capture="environment"
+            class="hidden"
+            onchange="handleChatFileUpload(event)"
+          />
+          <input
+            type="file"
+            id="chatImageInput"
+            accept="image/*"
+            class="hidden"
+            onchange="handleChatFileUpload(event)"
+          />
+
+          <div
+            class="p-2 sm:p-3 bg-white border-t border-gray-100 flex items-end gap-2 shrink-0 w-full z-40 pb-safe"
+          >
+            <div class="flex items-center gap-0.5 pb-1 shrink-0">
+              <button
+                type="button"
+                onclick="togglePlusMenu()"
+                class="w-8 h-8 text-blue-500 hover:bg-blue-50 rounded-full flex items-center justify-center transition"
+              >
+                <i class="fa-solid fa-circle-plus text-[22px]"></i>
+              </button>
+              <button
+                type="button"
+                onclick="document.getElementById('chatCameraInput').click()"
+                class="w-8 h-8 text-blue-500 hover:bg-blue-50 rounded-full flex items-center justify-center transition"
+              >
+                <i class="fa-solid fa-camera text-xl"></i>
+              </button>
+              <button
+                type="button"
+                onclick="document.getElementById('chatImageInput').click()"
+                class="w-8 h-8 text-blue-500 hover:bg-blue-50 rounded-full items-center justify-center transition hidden sm:flex"
+              >
+                <i class="fa-solid fa-image text-xl"></i>
+              </button>
+              <button
+                type="button"
+                onclick="startMicRecord()"
+                class="w-8 h-8 text-blue-500 hover:bg-blue-50 rounded-full items-center justify-center transition hidden sm:flex"
+              >
+                <i class="fa-solid fa-microphone text-xl"></i>
+              </button>
+            </div>
+
+            <div
+              class="flex-1 bg-gray-100 rounded-3xl flex items-end px-3 py-1.5 min-h-[36px] max-h-[100px] border border-transparent focus-within:border-gray-300 transition relative"
+            >
+              <textarea
+                id="chatInputMessage"
+                rows="1"
+                placeholder="Aa"
+                class="flex-1 bg-transparent border-none outline-none text-[15px] resize-none max-h-20 custom-scrollbar py-1 text-gray-800"
+                oninput="handleTyping()"
+                onkeydown="handleChatKeydown(event)"
+              ></textarea>
+              <button
+                type="button"
+                class="w-8 h-8 text-blue-500 hover:bg-gray-200 rounded-full flex items-center justify-center transition shrink-0 self-end mb-[-2px] absolute right-1 bottom-1"
+              >
+                <i class="fa-solid fa-face-smile text-xl"></i>
+              </button>
+            </div>
+
+            <div class="pb-1 shrink-0 pl-1">
+              <button
+                id="sendLikeBtn"
+                type="button"
+                onclick="sendChatMessage(event)"
+                class="w-8 h-8 text-blue-500 hover:bg-blue-50 rounded-full flex items-center justify-center transition"
+              >
+                <i id="sendIcon" class="fa-solid fa-thumbs-up text-2xl"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
       id="walletModal"
       class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[110] hidden items-center justify-center p-4"
       onclick="closeWalletModal()"
@@ -586,6 +857,24 @@
           >
             <i class="fa-solid fa-xmark"></i>
           </button>
+        </div>
+        <div
+          class="bg-gradient-to-r from-gray-900 to-gray-800 p-6 text-center text-white relative overflow-hidden"
+        >
+          <i
+            class="fa-solid fa-coins absolute text-[100px] text-white opacity-5 -right-5 -bottom-5"
+          ></i>
+          <p
+            class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1"
+          >
+            Số dư hiện tại
+          </p>
+          <h3
+            id="walletBigBalance"
+            class="text-4xl font-black text-yellow-400 tracking-tight"
+          >
+            0 ₫
+          </h3>
         </div>
         <div
           class="flex bg-white border-b border-gray-100 overflow-x-auto hide-scrollbar sticky top-[73px] z-10 shadow-sm"
@@ -624,7 +913,6 @@
                   id="depositAmount"
                   min="10000"
                   step="10000"
-                  placeholder="Tối thiểu 10.000đ"
                   class="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -703,7 +991,7 @@
               </div>
               <button
                 type="submit"
-                class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3.5 rounded-xl transition shadow-md mt-4"
+                class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3.5 rounded-xl shadow-md mt-4"
               >
                 Tạo Lệnh Rút Tiền
               </button>
@@ -728,7 +1016,6 @@
         </div>
       </div>
     </div>
-
     <div
       id="topRechargeModal"
       class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[120] hidden items-center justify-center p-4"
@@ -738,16 +1025,12 @@
         class="bg-gradient-to-b from-indigo-900 to-slate-900 rounded-3xl w-full max-w-md shadow-2xl p-0 relative overflow-hidden"
         onclick="event.stopPropagation()"
       >
-        <div
-          class="absolute top-0 left-0 w-full h-32 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none"
-        ></div>
         <button
           onclick="closeTopRechargeModal()"
           class="absolute top-4 right-4 w-8 h-8 bg-white/10 hover:bg-red-500 text-white rounded-full flex items-center justify-center transition z-20"
         >
           <i class="fa-solid fa-xmark"></i>
         </button>
-
         <div
           class="pt-8 pb-6 px-6 text-center relative z-10 border-b border-white/10"
         >
@@ -757,21 +1040,14 @@
           <h2 class="text-2xl font-black text-white tracking-wider">
             BẢNG VÀNG ĐẠI GIA
           </h2>
-          <p class="text-xs text-indigo-300 mt-1">
-            Top 10 tài khoản nạp tích lũy nhiều nhất
-          </p>
         </div>
-
         <div class="p-6 max-h-[50vh] overflow-y-auto custom-scrollbar">
           <div id="topRechargeList" class="space-y-3">
-            <div class="text-center py-10 text-gray-400">
-              Đang tải bảng xếp hạng...
-            </div>
+            <div class="text-center py-10 text-gray-400">Đang tải...</div>
           </div>
         </div>
       </div>
     </div>
-
     <div
       id="announcementModal"
       class="fixed inset-0 bg-black/80 backdrop-blur-md z-[150] hidden items-center justify-center p-4"
@@ -784,193 +1060,68 @@
         <i
           class="fa-solid fa-satellite-dish text-6xl text-yellow-400 mb-6 drop-shadow-[0_0_20px_rgba(250,204,21,0.6)]"
         ></i>
-        <h2
-          id="announcementTitle"
-          class="text-3xl sm:text-4xl font-black text-white mb-4 tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600"
-        >
-          THÔNG BÁO HỆ THỐNG
+        <h2 id="announcementTitle" class="text-3xl font-black text-white mb-4">
+          THÔNG BÁO
         </h2>
-        <p
-          id="announcementMessage"
-          class="text-indigo-100 text-base sm:text-lg leading-relaxed mb-8 whitespace-pre-line"
-        >
-          Nội dung thông báo...
+        <p id="announcementMessage" class="text-indigo-100 text-base mb-8">
+          ...
         </p>
-        <button
-          onclick="closeAnnouncementModal()"
-          class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold px-10 py-3 rounded-full transition shadow-[0_0_20px_rgba(79,70,229,0.4)] tracking-widest uppercase"
-        >
-          Đã rõ
-        </button>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <button
+            onclick="snoozeAnnouncement()"
+            class="bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-full transition border border-white/30 text-sm"
+          >
+            Tắt trong 1 tiếng</button
+          ><button
+            onclick="doneAnnouncement()"
+            class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold px-10 py-3 rounded-full transition shadow-[0_0_20px_rgba(79,70,229,0.4)]"
+          >
+            XONG
+          </button>
+        </div>
       </div>
     </div>
-
     <div
       id="taskModal"
       class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4"
     >
       <div
-        class="bg-white rounded-3xl w-full max-w-xl overflow-hidden shadow-2xl relative flex flex-col p-6 animate-tab"
+        class="bg-white rounded-3xl w-full max-w-xl shadow-2xl flex flex-col p-6 animate-tab"
       >
-        <h2 class="text-xl font-bold mb-4 border-b pb-2">
-          <i class="fa-solid fa-clipboard-list text-blue-600 mr-2"></i> Giao
-          việc
-        </h2>
+        <h2 class="text-xl font-bold mb-4 border-b pb-2">Giao việc</h2>
         <form onsubmit="submitTask(event)" class="space-y-4">
           <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1"
-              >Tên công việc *</label
-            ><input
+            <input
               type="text"
               id="taskTitle"
               required
-              class="w-full px-4 py-3 border rounded-xl text-sm outline-none focus:ring-1 focus:ring-blue-500"
+              class="w-full px-4 py-3 border rounded-xl text-sm outline-none"
             />
           </div>
           <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1"
-              >Giao cho *</label
-            ><select
+            <select
               id="taskAssignee"
               required
               class="w-full px-4 py-3 border rounded-xl text-sm outline-none bg-gray-50"
             ></select>
           </div>
-          <div class="flex gap-2 pt-2">
+          <div class="flex gap-2">
             <button
               type="button"
               onclick="
                 document.getElementById('taskModal').classList.add('hidden')
               "
-              class="flex-1 py-3 bg-gray-100 font-bold rounded-xl hover:bg-gray-200"
+              class="flex-1 py-3 bg-gray-100 font-bold rounded-xl"
             >
               Hủy</button
             ><button
               type="submit"
-              class="flex-1 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700"
+              class="flex-1 py-3 bg-blue-600 text-white font-bold rounded-xl"
             >
               Tạo thẻ
             </button>
           </div>
         </form>
-      </div>
-    </div>
-    <div
-      id="submitWorkModal"
-      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4"
-    >
-      <div
-        class="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl relative flex flex-col p-6 animate-tab"
-      >
-        <h2 class="text-xl font-bold mb-4 border-b pb-2">
-          <i class="fa-solid fa-cloud-arrow-up text-green-500 mr-2"></i> Nộp kết
-          quả
-        </h2>
-        <form onsubmit="submitWorkForm(event)" class="space-y-4">
-          <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1"
-              >Link kết quả</label
-            ><input
-              type="url"
-              id="workLink"
-              class="w-full px-4 py-3 border rounded-xl text-sm bg-gray-50 outline-none focus:ring-1 focus:ring-green-500"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-bold text-gray-700 mb-1"
-              >Lời nhắn *</label
-            ><textarea
-              id="workMessage"
-              required
-              rows="3"
-              class="w-full px-4 py-3 border rounded-xl text-sm bg-gray-50 outline-none focus:ring-1 focus:ring-green-500"
-            ></textarea>
-          </div>
-          <div class="flex gap-2 pt-2">
-            <button
-              type="button"
-              onclick="
-                document
-                  .getElementById('submitWorkModal')
-                  .classList.add('hidden')
-              "
-              class="flex-1 py-3 bg-gray-100 font-bold rounded-xl hover:bg-gray-200"
-            >
-              Hủy</button
-            ><button
-              type="submit"
-              class="flex-1 py-3 bg-green-500 text-white font-bold rounded-xl hover:bg-green-600"
-            >
-              Nộp bài
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div
-      id="chatModal"
-      class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-2 sm:p-5"
-    >
-      <div
-        class="bg-white rounded-2xl w-full max-w-5xl h-[85vh] sm:h-[80vh] shadow-2xl flex overflow-hidden relative transition-all duration-300 scale-95 opacity-0"
-        id="chatContent"
-      >
-        <div
-          class="w-20 md:w-80 bg-gray-50 border-r border-gray-200 flex flex-col shrink-0"
-        >
-          <div class="p-4 border-b border-gray-200 hidden md:block bg-white">
-            <h2 class="text-xl font-extrabold text-gray-800">Tin nhắn</h2>
-          </div>
-          <div class="flex-1 overflow-y-auto">
-            <div
-              class="p-3 border-b border-gray-100 flex items-center gap-3 bg-blue-50 border-l-4 border-l-blue-600"
-            >
-              <div
-                class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white"
-              >
-                <i class="fa-solid fa-users"></i>
-              </div>
-              <div class="hidden md:block flex-1">
-                <h4 class="text-sm font-bold" id="chatGroupSidebarName">
-                  Team Project
-                </h4>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="flex-1 flex flex-col bg-white h-full relative">
-          <div class="h-16 border-b flex justify-between items-center px-4">
-            <h3 class="font-extrabold" id="chatHeaderTitle">Chat Nhóm</h3>
-            <button
-              onclick="closeChatModal()"
-              class="w-8 h-8 bg-gray-100 rounded-full hover:bg-red-500 hover:text-white"
-            >
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-          </div>
-          <div
-            class="flex-1 overflow-y-auto p-4 md:p-6 bg-[#f8fafc] custom-scrollbar"
-            id="chatMessagesArea"
-          ></div>
-          <div class="p-3 bg-white border-t">
-            <form
-              onsubmit="sendChatMessage(event)"
-              class="flex items-center gap-2 bg-gray-100 rounded-full p-1.5"
-            >
-              <input
-                type="text"
-                id="chatInputMessage"
-                autocomplete="off"
-                class="flex-1 bg-transparent px-4 py-2 text-sm outline-none"
-              /><button
-                type="submit"
-                class="w-10 h-10 bg-blue-600 text-white rounded-full"
-              >
-                <i class="fa-solid fa-paper-plane"></i>
-              </button>
-            </form>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1001,15 +1152,20 @@
       window.currentTargetCol = "col-todo";
       window.currentProjTitle = "";
       window.teamMembers = [];
-      window.globalApps = [];
       window.loggedInUserId = "";
       window.loggedInUserName = "";
       window.loggedInUserAvatar = "";
       window.isLeader = false;
-      window.chatHistory = { team: [] };
-      window.myProjectsList = [];
       window.currentUserBalance = 0;
       window.userTransactions = [];
+
+      // BIẾN CHAT MỚI
+      window.chatHistory = { team: [] };
+      window.teamPresence = {};
+      let typingTimeout = null;
+      let heartbeatInterval = null;
+      window.replyingTo = null; // Chứa info tin nhắn đang reply
+      window.selectedMsgId = null; // Chứa msgId khi nhấn giữ
 
       document.addEventListener("DOMContentLoaded", async () => {
         const rawProfile = localStorage.getItem("userProfileData");
@@ -1017,7 +1173,6 @@
           window.location.href = "index.html";
           return;
         }
-
         let savedUser;
         try {
           savedUser = JSON.parse(rawProfile);
@@ -1025,12 +1180,10 @@
           window.location.href = "index.html";
           return;
         }
-
         window.loggedInUserId = savedUser.id;
         window.loggedInUserName = savedUser.name;
         window.loggedInUserAvatar = savedUser.avatarBase64 || "";
 
-        // UI Header Avatar
         if (window.loggedInUserAvatar) {
           document.getElementById("leaderAvatar").innerHTML =
             `<img src="${window.loggedInUserAvatar}" class="w-full h-full object-cover">`;
@@ -1049,50 +1202,31 @@
         document.getElementById("dropdownBigId").innerText =
           window.loggedInUserId;
 
-        // LOAD WALLET BALANCE & TOTAL DEPOSIT (REALTIME)
+        // VÍ & THÔNG BÁO (Bỏ qua cho gọn, tập trung Chat)
         onSnapshot(doc(db, "users", window.loggedInUserId), (docSnap) => {
           if (docSnap.exists()) {
             const d = docSnap.data();
             window.currentUserBalance = d.balance || 0;
-            let totalDep = d.totalDeposit || 0;
-            let formattedBal = new Intl.NumberFormat("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }).format(window.currentUserBalance);
-            let formattedTotal = new Intl.NumberFormat("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }).format(totalDep);
-
             document.getElementById("userBalanceDisplay").innerText =
-              formattedBal;
+              new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(window.currentUserBalance);
             document.getElementById("userTotalDepositDisplay").innerText =
-              formattedTotal;
+              new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(d.totalDeposit || 0);
           }
         });
-
-        // LOAD TRANSACTIONS
-        onSnapshot(collection(db, "transactions"), (snap) => {
-          window.userTransactions = [];
-          snap.forEach((d) => {
-            let data = d.data();
-            if (data.userId === window.loggedInUserId) {
-              data.id = d.id;
-              window.userTransactions.push(data);
-            }
-          });
-          window.userTransactions.sort((a, b) => b.createdAt - a.createdAt);
-          if (
-            !document.getElementById("walletModal").classList.contains("hidden")
-          )
-            renderTransactionHistory();
-        });
-
-        // CHECK & SHOW ANNOUNCEMENT (THÔNG BÁO TỪ ADMIN)
         onSnapshot(doc(db, "system_settings", "announcement"), (docSnap) => {
           if (docSnap.exists()) {
             const data = docSnap.data();
-            if (data.active && !sessionStorage.getItem("announcementSeen")) {
+            let isSnoozed =
+              localStorage.getItem("announcementSnooze") &&
+              Date.now() < parseInt(localStorage.getItem("announcementSnooze"));
+            let isSeen = sessionStorage.getItem("announcementSeen");
+            if (data.active && !isSnoozed && !isSeen) {
               document.getElementById("announcementTitle").innerText =
                 data.title;
               document.getElementById("announcementMessage").innerText =
@@ -1103,13 +1237,12 @@
               document
                 .getElementById("announcementModal")
                 .classList.add("flex");
-              createParticles(); // Hiệu ứng bụi rơi
+              createParticles();
               setTimeout(() => {
                 document
                   .getElementById("announcementContent")
                   .classList.remove("scale-95", "opacity-0");
               }, 100);
-              sessionStorage.setItem("announcementSeen", "true"); // Chỉ hiện 1 lần mỗi phiên
             }
           }
         });
@@ -1168,16 +1301,13 @@
 
             document.getElementById("projCategory").innerText =
               window.myProject.category || "Đa ngành";
-            document.getElementById("chatGroupSidebarName").innerText =
+            document.getElementById("chatHeaderTitle").innerText =
               window.myProject.title;
-
             if (document.getElementById("settingProjName")) {
               document.getElementById("settingProjName").value =
                 window.myProject.title;
               document.getElementById("settingProjDesc").value =
                 window.myProject.description;
-              document.getElementById("settingCategory").value =
-                window.myProject.category || "Đa ngành";
             }
             window.teamMembers = [
               {
@@ -1190,9 +1320,8 @@
             ];
 
             await loadTeamMembersFirebase();
-            setupChatListener();
+            setupChatSystem();
             setupKanbanListener();
-            setupNotificationListener();
 
             if (window.isLeader) {
               document.getElementById("roleBadge").innerHTML =
@@ -1213,288 +1342,535 @@
             document.getElementById("roleBadge").innerHTML =
               `<i class="fa-solid fa-circle-info mr-1.5"></i> Trống`;
             document.getElementById("kanbanContainer").innerHTML =
-              `<div class="w-full text-center py-20 bg-white rounded-3xl border border-dashed border-gray-300 shadow-sm mx-auto max-w-2xl mt-10"><i class="fa-solid fa-folder-open text-6xl text-gray-300 mb-5"></i><p class="text-gray-600 font-extrabold text-xl">Bạn chưa có dự án nào</p><p class="text-sm text-gray-500 mt-2 mb-6">Hãy quay lại trang Tìm Đồng Đội để ứng tuyển hoặc tạo dự án mới nhé!</p><button onclick="window.location.href='matching.html'" class="bg-blue-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-blue-700 transition shadow-md">Đến trang Tìm Đồng Đội</button></div>`;
+              `<div class="w-full text-center py-20 bg-white rounded-3xl border border-dashed border-gray-300 shadow-sm mx-auto max-w-2xl mt-10"><i class="fa-solid fa-folder-open text-6xl text-gray-300 mb-5"></i><p class="text-gray-600 font-extrabold text-xl">Bạn chưa có dự án nào</p><button onclick="window.location.href='matching.html'" class="mt-4 bg-blue-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-blue-700 transition shadow-md">Đến trang Tìm Đồng Đội</button></div>`;
             applyPermissions();
           }
-        } catch (e) {
-          console.error(e);
-        }
+        } catch (e) {}
       });
 
-      // --- MENU AVATAR MỚI ---
-      window.toggleUserDropdown = function (e) {
-        e.stopPropagation();
-        const drop = document.getElementById("userDropdown");
-        if (drop.classList.contains("hidden")) {
-          drop.classList.remove("hidden");
-          drop.classList.add("block");
-          drop.classList.remove("animate-tab");
-          void drop.offsetWidth;
-          drop.classList.add("animate-tab");
-        } else {
-          drop.classList.add("hidden");
-          drop.classList.remove("block");
-        }
-      };
-      document.addEventListener("click", function (e) {
-        const drop = document.getElementById("userDropdown");
-        if (
-          drop &&
-          !drop.classList.contains("hidden") &&
-          !e.target.closest("#userProfileWrap")
-        ) {
-          drop.classList.add("hidden");
-          drop.classList.remove("block");
-        }
-      });
-
-      // --- BẢNG XẾP HẠNG TOP NẠP ---
-      window.openTopRechargeModal = async function () {
-        document.getElementById("userDropdown").classList.add("hidden");
-        document.body.classList.add("modal-active");
-        document.getElementById("topRechargeModal").classList.remove("hidden");
-        document.getElementById("topRechargeModal").classList.add("flex");
-
-        const listContainer = document.getElementById("topRechargeList");
-        listContainer.innerHTML =
-          '<div class="text-center py-10"><i class="fa-solid fa-spinner fa-spin text-3xl text-indigo-500 mb-3"></i></div>';
-
-        try {
-          // Lấy top 10 user theo totalDeposit
-          const q = query(
-            collection(db, "users"),
-            orderBy("totalDeposit", "desc"),
-            limit(10),
-          );
-          const querySnapshot = await getDocs(q);
-          listContainer.innerHTML = "";
-          let rank = 1;
-          querySnapshot.forEach((doc) => {
-            const d = doc.data();
-            if (d.totalDeposit > 0 && d.role !== "admin") {
-              let medal = `<span class="text-gray-400 font-black text-lg w-6 text-center">${rank}</span>`;
-              if (rank === 1)
-                medal = `<i class="fa-solid fa-medal text-yellow-400 text-2xl w-6 text-center"></i>`;
-              if (rank === 2)
-                medal = `<i class="fa-solid fa-medal text-gray-300 text-xl w-6 text-center"></i>`;
-              if (rank === 3)
-                medal = `<i class="fa-solid fa-medal text-amber-600 text-lg w-6 text-center"></i>`;
-
-              let ava = d.avatarBase64
-                ? `<img src="${d.avatarBase64}" class="w-10 h-10 rounded-full object-cover border border-white/20">`
-                : `<div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold">${d.name.charAt(0)}</div>`;
-              let amt = new Intl.NumberFormat("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              }).format(d.totalDeposit);
-
-              listContainer.innerHTML += `
-                          <div class="flex items-center bg-white/5 border border-white/10 rounded-xl p-3 hover:bg-white/10 transition">
-                              ${medal}
-                              <div class="ml-3 mr-3">${ava}</div>
-                              <div class="flex-1"><h4 class="text-white font-bold text-sm">${d.name}</h4><p class="text-indigo-300 text-[10px]">${d.id}</p></div>
-                              <div class="text-yellow-400 font-black">${amt}</div>
-                          </div>`;
-              rank++;
+      // =====================================
+      // LÕI HỆ THỐNG CHAT (CÓ NHẤN GIỮ, FILE, LOCATION, REPLY)
+      // =====================================
+      function setupChatSystem() {
+        onSnapshot(
+          doc(db, "project_chats", window.currentProjTitle),
+          (docSnap) => {
+            if (docSnap.exists() && docSnap.data().messages) {
+              window.chatHistory.team = docSnap.data().messages;
+              renderChatMessages();
+              if (
+                !document
+                  .getElementById("chatModal")
+                  .classList.contains("hidden")
+              )
+                updatePresence({ lastRead: Date.now() });
             }
-          });
-          if (rank === 1)
-            listContainer.innerHTML =
-              '<div class="text-center py-10 text-gray-500">Chưa có dữ liệu bảng xếp hạng.</div>';
-        } catch (err) {
-          console.error(err);
-          listContainer.innerHTML =
-            '<div class="text-center py-10 text-red-500">Lỗi tải dữ liệu!</div>';
-        }
-      };
+          },
+        );
 
-      window.closeTopRechargeModal = function () {
-        document.body.classList.remove("modal-active");
-        document.getElementById("topRechargeModal").classList.add("hidden");
-        document.getElementById("topRechargeModal").classList.remove("flex");
-      };
+        onSnapshot(
+          doc(db, "project_presence", window.currentProjTitle),
+          (docSnap) => {
+            if (docSnap.exists()) {
+              window.teamPresence = docSnap.data();
+              renderChatSidebar();
+              renderTypingIndicator();
+              renderChatMessages();
+            }
+          },
+        );
 
-      // --- TẠO HIỆU ỨNG BỤI RƠI (PARTICLES) ---
-      function createParticles() {
-        const container = document.getElementById("particles-container");
-        container.innerHTML = "";
-        for (let i = 0; i < 50; i++) {
-          let p = document.createElement("div");
-          p.className = "particle";
-          p.style.left = Math.random() * 100 + "vw";
-          p.style.animationDuration = Math.random() * 3 + 2 + "s"; // 2-5s fall time
-          p.style.animationDelay = Math.random() * 2 + "s";
-          let size = Math.random() * 4 + 2; // 2-6px
-          p.style.width = size + "px";
-          p.style.height = size + "px";
-          container.appendChild(p);
+        updatePresence({ online: true, lastActive: Date.now(), typing: false });
+        heartbeatInterval = setInterval(
+          () => updatePresence({ online: true, lastActive: Date.now() }),
+          30000,
+        );
+        window.addEventListener("beforeunload", () => {
+          updatePresence({ online: false, typing: false });
+        });
+      }
+
+      async function updatePresence(dataObj) {
+        if (!window.currentProjTitle) return;
+        try {
+          let payload = {};
+          for (let key in dataObj)
+            payload[`${window.loggedInUserId}.${key}`] = dataObj[key];
+          payload[`${window.loggedInUserId}.name`] = window.loggedInUserName;
+          payload[`${window.loggedInUserId}.avatar`] =
+            window.loggedInUserAvatar;
+          payload[`${window.loggedInUserId}.initial`] = window.loggedInUserName
+            .charAt(0)
+            .toUpperCase();
+          await setDoc(
+            doc(db, "project_presence", window.currentProjTitle),
+            payload,
+            { merge: true },
+          );
+        } catch (e) {}
+      }
+
+      function renderChatSidebar() {
+        const list = document.getElementById("chatMembersList");
+        list.innerHTML = "";
+        let activeCount = 0;
+        window.teamMembers.forEach((member) => {
+          let p = window.teamPresence[member.id];
+          let statusHtml = "";
+          let isOnline = false;
+          if (p) {
+            let diffMins = Math.floor((Date.now() - p.lastActive) / 60000);
+            if (p.online && diffMins < 2) {
+              isOnline = true;
+              activeCount++;
+              statusHtml = `<span class="w-3 h-3 bg-green-500 rounded-full border-2 border-white absolute bottom-0 right-0 shadow-sm"></span>`;
+            } else {
+              let text =
+                diffMins < 60
+                  ? `${diffMins}p trước`
+                  : diffMins < 1440
+                    ? `${Math.floor(diffMins / 60)}h trước`
+                    : "Ngoại tuyến";
+              statusHtml = `<span class="text-[9px] text-gray-500 absolute -bottom-3 left-1 whitespace-nowrap bg-white px-1 font-bold rounded">${text}</span>`;
+            }
+          }
+          let ava = member.avatar
+            ? `<img src="${member.avatar}" class="w-10 h-10 rounded-full object-cover">`
+            : `<div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold">${member.initial}</div>`;
+          list.innerHTML += `<div class="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-100 transition cursor-pointer mb-2"><div class="relative w-10 h-10">${ava} ${statusHtml}</div><div class="flex-1 overflow-hidden ml-1"><h4 class="text-sm font-bold text-gray-800 truncate leading-tight">${member.name}</h4></div></div>`;
+        });
+        document.getElementById("chatGroupStatus").innerText =
+          `${activeCount} đang h.động`;
+        let otherActive =
+          activeCount -
+          (window.teamPresence[window.loggedInUserId]?.online ? 1 : 0);
+        if (otherActive > 0) {
+          document.getElementById("chatHeaderStatus").innerText =
+            `${activeCount} thành viên đang hoạt động`;
+          document
+            .getElementById("chatHeaderStatus")
+            .classList.add("text-green-600");
+        } else {
+          document.getElementById("chatHeaderStatus").innerText =
+            `Các thành viên đang offline`;
+          document
+            .getElementById("chatHeaderStatus")
+            .classList.remove("text-green-600");
         }
       }
-      window.closeAnnouncementModal = function () {
-        document
-          .getElementById("announcementContent")
-          .classList.add("scale-95", "opacity-0");
+
+      function renderTypingIndicator() {
+        let typingUsers = [];
+        for (let uid in window.teamPresence) {
+          if (uid !== window.loggedInUserId && window.teamPresence[uid].typing)
+            typingUsers.push(window.teamPresence[uid]);
+        }
+        const box = document.getElementById("typingIndicatorBox");
+        if (typingUsers.length > 0) {
+          let u = typingUsers[0];
+          document.getElementById("typingUserAvatar").innerHTML = u.avatar
+            ? `<img src="${u.avatar}" class="w-full h-full rounded-full object-cover">`
+            : `<div class="w-full h-full bg-blue-100 text-blue-600 font-bold text-xs flex items-center justify-center rounded-full">${u.initial}</div>`;
+          box.classList.remove("hidden");
+          box.classList.add("flex");
+          document.getElementById("chatTypingStatus").innerText =
+            `${u.name} đang soạn tin...`;
+          document
+            .getElementById("chatTypingStatus")
+            .classList.remove("hidden");
+          document.getElementById("chatHeaderStatus").classList.add("hidden");
+          const area = document.getElementById("chatMessagesArea");
+          area.scrollTop = area.scrollHeight;
+        } else {
+          box.classList.add("hidden");
+          box.classList.remove("flex");
+          document.getElementById("chatTypingStatus").classList.add("hidden");
+          document
+            .getElementById("chatHeaderStatus")
+            .classList.remove("hidden");
+        }
+      }
+
+      window.handleTyping = function () {
+        const input = document.getElementById("chatInputMessage");
+        const btn = document.getElementById("sendIcon");
+        input.style.height = "auto";
+        input.style.height = input.scrollHeight + "px";
+        if (input.value.trim().length > 0 || window.replyingTo) {
+          btn.className = "fa-solid fa-paper-plane text-blue-600 text-xl";
+          updatePresence({ typing: true, lastActive: Date.now() });
+          clearTimeout(typingTimeout);
+          typingTimeout = setTimeout(
+            () => updatePresence({ typing: false }),
+            2000,
+          );
+        } else {
+          btn.className = "fa-solid fa-thumbs-up text-blue-500 text-2xl";
+          updatePresence({ typing: false });
+        }
+      };
+
+      window.handleChatKeydown = function (e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          window.sendChatMessage(e);
+        }
+      };
+
+      window.sendChatMessage = async function (e, imageBase64 = null) {
+        if (e) e.preventDefault();
+        const input = document.getElementById("chatInputMessage");
+        let msg = input.value.trim();
+
+        if (!msg && !imageBase64) {
+          if (
+            document
+              .getElementById("sendIcon")
+              .classList.contains("fa-thumbs-up")
+          )
+            msg = "👍";
+          else return;
+        }
+
+        // Xử lý Replying
+        let replyData = null;
+        if (window.replyingTo) {
+          replyData = window.replyingTo;
+          window.cancelReply();
+        }
+
+        const timeStr =
+          ("0" + new Date().getHours()).slice(-2) +
+          ":" +
+          ("0" + new Date().getMinutes()).slice(-2);
+        const msgId = Date.now();
+
+        let newMessage = {
+          id: msgId,
+          senderId: window.loggedInUserId,
+          senderName: window.loggedInUserName,
+          senderInitial: window.loggedInUserName.charAt(0).toUpperCase(),
+          senderAvatar: window.loggedInUserAvatar,
+          text: msg,
+          image: imageBase64,
+          replyTo: replyData,
+          time: timeStr,
+          timestamp: msgId,
+        };
+        window.chatHistory.team.push(newMessage);
+
+        input.value = "";
+        input.style.height = "auto";
+        document.getElementById("sendIcon").className =
+          "fa-solid fa-thumbs-up text-blue-500 text-2xl";
+        updatePresence({ typing: false });
+        try {
+          await setDoc(doc(db, "project_chats", window.currentProjTitle), {
+            messages: window.chatHistory.team,
+          });
+        } catch (error) {}
+      };
+
+      // TÍNH NĂNG TIỆN ÍCH CHAT
+      window.togglePlusMenu = function () {
+        const menu = document.getElementById("chatPlusMenu");
+        if (menu.classList.contains("hidden")) {
+          menu.classList.remove("hidden");
+          menu.classList.add("block");
+          menu.classList.remove("animate-tab");
+          void menu.offsetWidth;
+          menu.classList.add("animate-tab");
+        } else {
+          menu.classList.add("hidden");
+          menu.classList.remove("block");
+        }
+      };
+      window.closePlusMenu = function () {
+        document.getElementById("chatPlusMenu").classList.add("hidden");
+        document.getElementById("chatPlusMenu").classList.remove("block");
+      };
+
+      window.shareLocation = function () {
+        window.closePlusMenu();
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const lat = position.coords.latitude;
+              const lng = position.coords.longitude;
+              const link = `https://www.google.com/maps?q=${lat},${lng}`;
+              const input = document.getElementById("chatInputMessage");
+              input.value = `📍 Vị trí của tôi:\n${link}`;
+              window.handleTyping();
+            },
+            () => alert("Không thể lấy vị trí. Hãy cấp quyền GPS."),
+          );
+        } else {
+          alert("Trình duyệt không hỗ trợ GPS.");
+        }
+      };
+
+      window.handleChatFileUpload = function (e) {
+        window.closePlusMenu();
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.createElement("canvas");
+            const MAX = 600;
+            let w = img.width;
+            let h = img.height;
+            if (w > h) {
+              if (w > MAX) {
+                h *= MAX / w;
+                w = MAX;
+              }
+            } else {
+              if (h > MAX) {
+                w *= MAX / h;
+                h = MAX;
+              }
+            }
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, w, h);
+            window.sendChatMessage(null, canvas.toDataURL("image/jpeg", 0.7));
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      };
+
+      window.startMicRecord = function () {
+        alert("🎙 Tính năng thu âm đang được phát triển.");
+      };
+
+      // LONG PRESS & CONTEXT MENU
+      let pressTimer;
+      window.handleTouchStart = function (e, id, senderId, text) {
+        pressTimer = window.setTimeout(() => {
+          window.showMsgMenu(e, id, senderId, text, true);
+        }, 600);
+      };
+      window.handleTouchEnd = function () {
+        clearTimeout(pressTimer);
+      };
+
+      window.showMsgMenu = function (
+        e,
+        msgId,
+        senderId,
+        text,
+        isTouch = false,
+      ) {
+        if (!isTouch) e.preventDefault();
+        window.selectedMsgId = msgId;
+        window.selectedMsgText = text;
+        window.selectedMsgSender = senderId;
+
+        const menu = document.getElementById("msgContextMenu");
+        const btnDel = document.getElementById("deleteMsgBtn");
+
+        if (senderId === window.loggedInUserId)
+          btnDel.classList.remove("hidden");
+        else btnDel.classList.add("hidden");
+
+        menu.classList.remove("hidden");
+        menu.classList.add("block");
+
+        let x, y;
+        if (isTouch) {
+          x = e.touches[0].clientX;
+          y = e.touches[0].clientY;
+        } else {
+          x = e.clientX;
+          y = e.clientY;
+        }
+
+        if (x + 150 > window.innerWidth) x = window.innerWidth - 160;
+        if (y + 150 > window.innerHeight) y = window.innerHeight - 160;
+
+        menu.style.left = x + "px";
+        menu.style.top = y + "px";
+        menu.classList.remove("scale-95", "opacity-0");
+        menu.classList.add("scale-100", "opacity-100");
+      };
+
+      window.hideMsgMenu = function () {
+        const menu = document.getElementById("msgContextMenu");
+        menu.classList.remove("scale-100", "opacity-100");
+        menu.classList.add("scale-95", "opacity-0");
         setTimeout(() => {
-          document.getElementById("announcementModal").classList.add("hidden");
-          document.getElementById("announcementModal").classList.remove("flex");
-          document.getElementById("particles-container").innerHTML = ""; // dọn dẹp
+          menu.classList.add("hidden");
+          menu.classList.remove("block");
+        }, 200);
+      };
+
+      window.copyMessage = function () {
+        navigator.clipboard.writeText(window.selectedMsgText);
+        window.hideMsgMenu();
+        alert("Đã sao chép!");
+      };
+      window.deleteMessage = async function () {
+        if (confirm("Thu hồi tin nhắn này với mọi người?")) {
+          window.chatHistory.team = window.chatHistory.team.filter(
+            (m) => m.id != window.selectedMsgId,
+          );
+          try {
+            await setDoc(doc(db, "project_chats", window.currentProjTitle), {
+              messages: window.chatHistory.team,
+            });
+            window.hideMsgMenu();
+          } catch (e) {}
+        }
+      };
+
+      window.replyMessage = function () {
+        const msg = window.chatHistory.team.find(
+          (m) => m.id == window.selectedMsgId,
+        );
+        if (!msg) return;
+        window.replyingTo = {
+          id: msg.id,
+          name: msg.senderName,
+          text: msg.image ? "[Hình ảnh]" : msg.text,
+        };
+        document.getElementById("replyToName").innerText = msg.senderName;
+        document.getElementById("replyToText").innerText = msg.image
+          ? "[Hình ảnh]"
+          : msg.text;
+        document.getElementById("replyBanner").classList.remove("hidden");
+        document.getElementById("replyBanner").classList.add("flex");
+        window.hideMsgMenu();
+        window.handleTyping();
+        document.getElementById("chatInputMessage").focus();
+      };
+
+      window.cancelReply = function () {
+        window.replyingTo = null;
+        document.getElementById("replyBanner").classList.add("hidden");
+        document.getElementById("replyBanner").classList.remove("flex");
+        window.handleTyping();
+      };
+
+      function renderChatMessages() {
+        const area = document.getElementById("chatMessagesArea");
+        area.innerHTML = "";
+        let latestReadMap = {};
+        for (let uid in window.teamPresence) {
+          if (uid === window.loggedInUserId) continue;
+          let p = window.teamPresence[uid];
+          if (!p.lastRead) continue;
+          let lastMsg = [...window.chatHistory.team]
+            .reverse()
+            .find((m) => m.timestamp <= p.lastRead);
+          if (lastMsg) {
+            if (!latestReadMap[lastMsg.id]) latestReadMap[lastMsg.id] = [];
+            latestReadMap[lastMsg.id].push(p);
+          }
+        }
+
+        window.chatHistory.team.forEach((m, index) => {
+          const isMe = m.senderId === window.loggedInUserId;
+
+          let statusHtml = "";
+          if (isMe) {
+            let readers = latestReadMap[m.id] || [];
+            let anyOnline = Object.values(window.teamPresence).some(
+              (p) => p.id !== window.loggedInUserId && p.online,
+            );
+            if (readers.length > 0) {
+              statusHtml =
+                `<div class="flex justify-end gap-0.5 mt-1 pr-1">` +
+                readers
+                  .map((r) =>
+                    r.avatar
+                      ? `<img src="${r.avatar}" class="w-3.5 h-3.5 rounded-full object-cover">`
+                      : `<div class="w-3.5 h-3.5 bg-gray-300 rounded-full flex items-center justify-center text-[7px] text-white font-bold">${r.initial}</div>`,
+                  )
+                  .join("") +
+                `</div>`;
+            } else if (index === window.chatHistory.team.length - 1) {
+              if (anyOnline)
+                statusHtml = `<div class="flex justify-end mt-1 pr-1" title="Đã nhận"><i class="fa-solid fa-circle-check text-gray-300 text-[12px]"></i></div>`;
+              else
+                statusHtml = `<div class="flex justify-end mt-1 pr-1" title="Đã gửi"><i class="fa-regular fa-circle-check text-gray-300 text-[12px]"></i></div>`;
+            }
+          }
+
+          let replyHtml = "";
+          if (m.replyTo) {
+            replyHtml = `<div class="text-[10px] text-gray-500 mb-1 opacity-70 flex items-center gap-1"><i class="fa-solid fa-reply"></i> Đã trả lời ${m.replyTo.name}: ${m.replyTo.text}</div>`;
+          }
+
+          let contentHtml = m.image
+            ? `<img src="${m.image}" class="max-w-[200px] rounded-xl border border-gray-100 shadow-sm">`
+            : m.text;
+          if (m.text && m.image)
+            contentHtml =
+              `<img src="${m.image}" class="max-w-[200px] rounded-xl border border-gray-100 shadow-sm mb-1">` +
+              m.text;
+
+          let textStyle =
+            m.text === "👍" && !m.image
+              ? "bg-transparent text-[40px] shadow-none p-0"
+              : isMe
+                ? "bg-[#0084ff] text-white py-2.5 px-3.5 rounded-2xl text-[15px] shadow-sm whitespace-pre-wrap"
+                : "bg-[#e4e6eb] text-black py-2.5 px-3.5 rounded-2xl text-[15px] shadow-sm whitespace-pre-wrap";
+
+          let eventString = `oncontextmenu="showMsgMenu(event, ${m.id}, '${m.senderId}', '${m.text.replace(/'/g, "\\'")}');" ontouchstart="handleTouchStart(event, ${m.id}, '${m.senderId}', '${m.text.replace(/'/g, "\\'")}')" ontouchend="handleTouchEnd()"`;
+
+          if (isMe) {
+            area.innerHTML += `<div class="flex flex-col items-end mb-1 msg-bubble" ${eventString}>${replyHtml}<div class="flex items-end gap-2 justify-end max-w-[80%]"><div class="${textStyle}">${contentHtml}</div></div>${statusHtml}</div>`;
+          } else {
+            let ava = m.senderAvatar
+              ? `<img src="${m.senderAvatar}" class="w-7 h-7 rounded-full object-cover border border-gray-200">`
+              : `<div class="w-7 h-7 bg-gray-200 text-gray-700 rounded-full flex items-center justify-center font-bold text-xs">${m.senderInitial}</div>`;
+            area.innerHTML += `<div class="flex items-end gap-2 mb-3 max-w-[85%] msg-bubble" ${eventString}><div class="shrink-0">${ava}</div><div class="flex flex-col items-start"><span class="text-[10px] text-gray-400 font-bold mb-0.5 ml-2">${m.senderName}</span>${replyHtml}<div class="${textStyle}">${contentHtml}</div></div></div>`;
+          }
+        });
+        area.scrollTop = area.scrollHeight;
+      }
+
+      window.openChatModal = function () {
+        document.body.classList.add("modal-active");
+        document.getElementById("chatModal").classList.remove("hidden");
+        document.getElementById("chatModal").classList.add("flex");
+        renderChatMessages();
+        updatePresence({ lastRead: Date.now() });
+        setTimeout(
+          () =>
+            document
+              .getElementById("chatContent")
+              .classList.remove("scale-95", "opacity-0"),
+          10,
+        );
+      };
+      window.closeChatModal = function () {
+        document.body.classList.remove("modal-active");
+        document
+          .getElementById("chatContent")
+          .classList.add("scale-95", "opacity-0");
+        updatePresence({ lastRead: Date.now() });
+        setTimeout(() => {
+          document.getElementById("chatModal").classList.add("hidden");
+          document.getElementById("chatModal").classList.remove("flex");
         }, 300);
       };
-
-      // --- CÁC HÀM XỬ LÝ VÍ ---
-      window.openWalletModal = function (tabName) {
-        document.getElementById("userDropdown").classList.add("hidden");
-        document.body.classList.add("modal-active");
-        document.getElementById("walletModal").classList.remove("hidden");
-        document.getElementById("walletModal").classList.add("flex");
-        switchWalletTab(tabName);
-      };
-      window.closeWalletModal = function () {
-        document.body.classList.remove("modal-active");
-        document.getElementById("walletModal").classList.add("hidden");
-        document.getElementById("walletModal").classList.remove("flex");
-      };
-      window.switchWalletTab = function (tab) {
-        ["deposit", "withdraw", "history"].forEach((t) => {
-          document.getElementById("wcontent-" + t).classList.add("hidden");
-          document
-            .getElementById("wcontent-" + t)
-            .classList.remove("block", "animate-tab");
-          document
-            .getElementById("wtab-" + t)
-            .classList.remove("border-blue-600", "text-blue-600");
-          document
-            .getElementById("wtab-" + t)
-            .classList.add("border-transparent", "text-gray-500");
-        });
-        const activeTab = document.getElementById("wcontent-" + tab);
-        activeTab.classList.remove("hidden");
-        activeTab.classList.add("block");
-        activeTab.classList.remove("animate-tab");
-        void activeTab.offsetWidth;
-        activeTab.classList.add("animate-tab");
-        document
-          .getElementById("wtab-" + tab)
-          .classList.remove("border-transparent", "text-gray-500");
-        document
-          .getElementById("wtab-" + tab)
-          .classList.add("border-blue-600", "text-blue-600");
-        if (tab === "history") renderTransactionHistory();
+      window.toggleChatSidebar = function () {
+        const sb = document.getElementById("chatSidebar");
+        if (sb.classList.contains("-translate-x-full")) {
+          sb.classList.remove("-translate-x-full");
+          sb.classList.add("translate-x-0");
+        } else {
+          sb.classList.add("-translate-x-full");
+          sb.classList.remove("translate-x-0");
+        }
       };
 
-      window.generateDepositQR = function () {
-        const amount = document.getElementById("depositAmount").value;
-        if (!amount || parseInt(amount) < 10000) {
-          alert("Vui lòng nhập tối thiểu 10.000đ");
-          return;
-        }
-        const memo = `NAP ${window.loggedInUserId}`;
-        const qrUrl = `https://img.vietqr.io/image/970422-4619092006-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(memo)}&accountName=VU%20XUAN%20CONG`;
-        document.getElementById("depositQRImg").src = qrUrl;
-        document.getElementById("depositQRBox").classList.remove("hidden");
-        document.getElementById("depositQRBox").classList.add("flex");
-      };
-      window.submitDepositRequest = async function () {
-        const amount = parseInt(document.getElementById("depositAmount").value);
-        const transId = "TR_" + Date.now();
-        try {
-          await setDoc(doc(db, "transactions", transId), {
-            id: transId,
-            userId: window.loggedInUserId,
-            type: "deposit",
-            amount: amount,
-            status: "pending",
-            createdAt: Date.now(),
-            dateStr: new Date().toLocaleString("vi-VN"),
-          });
-          alert(
-            "Hệ thống đã ghi nhận yêu cầu nạp tiền! Số dư sẽ được cộng ngay sau khi xác nhận thanh toán.",
-          );
-          document.getElementById("depositAmount").value = "";
-          document.getElementById("depositQRBox").classList.remove("flex");
-          document.getElementById("depositQRBox").classList.add("hidden");
-          switchWalletTab("history");
-        } catch (e) {
-          alert("Lỗi mạng: " + e.message);
-        }
-      };
-      window.submitWithdrawRequest = async function (e) {
-        e.preventDefault();
-        const amount = parseInt(
-          document.getElementById("withdrawAmount").value,
-        );
-        const bank = document.getElementById("withdrawBank").value;
-        const acc = document.getElementById("withdrawAcc").value;
-        const name = document.getElementById("withdrawName").value;
-        if (amount > window.currentUserBalance) {
-          alert(`Số dư không đủ!`);
-          return;
-        }
-        if (amount < 50000) {
-          alert("Số tiền rút tối thiểu là 50.000đ");
-          return;
-        }
-        try {
-          await updateDoc(doc(db, "users", window.loggedInUserId), {
-            balance: window.currentUserBalance - amount,
-          });
-          const transId = "TR_" + Date.now();
-          await setDoc(doc(db, "transactions", transId), {
-            id: transId,
-            userId: window.loggedInUserId,
-            type: "withdraw",
-            amount: amount,
-            bankInfo: `${bank} - ${acc} - ${name}`,
-            status: "pending",
-            createdAt: Date.now(),
-            dateStr: new Date().toLocaleString("vi-VN"),
-          });
-          alert("Đã tạo lệnh rút tiền thành công!");
-          e.target.reset();
-          switchWalletTab("history");
-        } catch (err) {
-          alert("Lỗi: " + err.message);
-        }
-      };
-      window.renderTransactionHistory = function () {
-        const list = document.getElementById("transactionList");
-        if (window.userTransactions.length === 0) {
-          list.innerHTML = `<div class="text-center py-10 text-gray-400 text-sm">Chưa có giao dịch nào.</div>`;
-          return;
-        }
-        list.innerHTML = window.userTransactions
-          .map((t) => {
-            let icon =
-              t.type === "deposit"
-                ? '<div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-lg"><i class="fa-solid fa-arrow-down"></i></div>'
-                : '<div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-lg"><i class="fa-solid fa-arrow-up"></i></div>';
-            let title =
-              t.type === "deposit"
-                ? "Nạp tiền vào Ví"
-                : "Rút tiền / Đổi thưởng";
-            let amountStr =
-              (t.type === "deposit" ? "+" : "-") +
-              new Intl.NumberFormat("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              }).format(t.amount);
-            let color =
-              t.type === "deposit" ? "text-green-600" : "text-red-600";
-            let badge =
-              t.status === "pending"
-                ? '<span class="bg-orange-100 text-orange-600 px-2 py-0.5 rounded text-[10px] font-bold">Đang xử lý</span>'
-                : t.status === "approved"
-                  ? '<span class="bg-green-100 text-green-600 px-2 py-0.5 rounded text-[10px] font-bold">Thành công</span>'
-                  : '<span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Từ chối</span>';
-            let extraInfo = t.bankInfo
-              ? `<p class="text-[10px] text-gray-500 mt-1">${t.bankInfo}</p>`
-              : "";
-            return `<div class="flex items-center justify-between p-4 border border-gray-100 rounded-xl hover:bg-gray-50 transition"><div class="flex items-center gap-3">${icon}<div><h4 class="font-bold text-gray-800 text-sm">${title} ${badge}</h4><p class="text-[10px] text-gray-400">${t.dateStr}</p>${extraInfo}</div></div><span class="font-black ${color}">${amountStr}</span></div>`;
-          })
-          .join("");
-      };
-
-      // --- CÁC HÀM CŨ GIỮ NGUYÊN (Kanban, Chat, Apply...)
+      // KANBAN LOGIC & OTHERS (Giữ nguyên)
       window.changeProject = function (projTitle) {
         localStorage.setItem("activeKanbanProject", projTitle);
         location.reload();
@@ -1516,7 +1892,7 @@
           const btn = document.getElementById("tab-" + id);
           if (content) {
             content.classList.add("hidden");
-            content.classList.remove("flex", "animate-tab");
+            content.classList.remove("animate-tab");
           }
           if (btn) btn.classList.remove("tab-active");
         });
@@ -1685,7 +2061,7 @@
           .classList.add("hidden");
         const resultDiv = window.currentTaskCard.querySelector(".work-result");
         let linkHtml = link
-          ? `<a href="${link}" target="_blank" class="text-blue-600 font-bold hover:underline block mb-1"><i class="fa-solid fa-link mr-1"></i>Xem kết quả đính kèm</a>`
+          ? `<a href="${link}" target="_blank" class="text-blue-600 font-bold hover:underline block mb-1"><i class="fa-solid fa-link mr-1"></i>Xem kết quả</a>`
           : "";
         resultDiv.innerHTML = `${linkHtml}<span class="italic text-[11px]">"${msg}"</span>`;
         resultDiv.classList.remove("hidden");
@@ -1694,16 +2070,6 @@
           "border-l-green-500",
         );
         window.saveBoard();
-        const notif = {
-          id: Date.now().toString(),
-          taskTitle: taskTitle,
-          memberName: window.loggedInUserName,
-          avatar: window.loggedInUserAvatar,
-          time: new Date().toLocaleString("vi-VN"),
-          message: msg,
-          link: link,
-          read: false,
-        };
         try {
           const notifRef = doc(
             db,
@@ -1714,11 +2080,266 @@
           let notifs = [];
           if (notifSnap.exists() && notifSnap.data().items)
             notifs = notifSnap.data().items;
-          notifs.push(notif);
+          notifs.push({
+            id: Date.now().toString(),
+            taskTitle: taskTitle,
+            memberName: window.loggedInUserName,
+            avatar: window.loggedInUserAvatar,
+            time: new Date().toLocaleString("vi-VN"),
+            message: msg,
+            link: link,
+            read: false,
+          });
           await setDoc(notifRef, { items: notifs });
         } catch (err) {}
         document.getElementById("submitWorkModal").classList.add("hidden");
         e.target.reset();
+      };
+
+      window.doneAnnouncement = function () {
+        sessionStorage.setItem("announcementSeen", "true");
+        document
+          .getElementById("announcementContent")
+          .classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          document.getElementById("announcementModal").classList.add("hidden");
+          document.getElementById("announcementModal").classList.remove("flex");
+          document.getElementById("particles-container").innerHTML = "";
+        }, 300);
+      };
+      window.snoozeAnnouncement = function () {
+        localStorage.setItem("announcementSnooze", Date.now() + 3600000);
+        document
+          .getElementById("announcementContent")
+          .classList.add("scale-95", "opacity-0");
+        setTimeout(() => {
+          document.getElementById("announcementModal").classList.add("hidden");
+          document.getElementById("announcementModal").classList.remove("flex");
+          document.getElementById("particles-container").innerHTML = "";
+        }, 300);
+      };
+      function createParticles() {
+        const container = document.getElementById("particles-container");
+        container.innerHTML = "";
+        for (let i = 0; i < 50; i++) {
+          let p = document.createElement("div");
+          p.className = "particle";
+          p.style.left = Math.random() * 100 + "vw";
+          p.style.animationDuration = Math.random() * 3 + 2 + "s";
+          p.style.animationDelay = Math.random() * 2 + "s";
+          let size = Math.random() * 4 + 2;
+          p.style.width = size + "px";
+          p.style.height = size + "px";
+          container.appendChild(p);
+        }
+      }
+
+      window.openWalletModal = function (tabName) {
+        document.getElementById("userDropdown").classList.add("hidden");
+        document.body.classList.add("modal-active");
+        document.getElementById("walletModal").classList.remove("hidden");
+        document.getElementById("walletModal").classList.add("flex");
+        switchWalletTab(tabName);
+      };
+      window.closeWalletModal = function () {
+        document.body.classList.remove("modal-active");
+        document.getElementById("walletModal").classList.add("hidden");
+        document.getElementById("walletModal").classList.remove("flex");
+      };
+      window.switchWalletTab = function (tab) {
+        ["deposit", "withdraw", "history"].forEach((t) => {
+          document.getElementById("wcontent-" + t).classList.add("hidden");
+          document
+            .getElementById("wcontent-" + t)
+            .classList.remove("block", "animate-tab");
+          document
+            .getElementById("wtab-" + t)
+            .classList.remove("border-blue-600", "text-blue-600");
+          document
+            .getElementById("wtab-" + t)
+            .classList.add("border-transparent", "text-gray-500");
+        });
+        const activeTab = document.getElementById("wcontent-" + tab);
+        activeTab.classList.remove("hidden");
+        activeTab.classList.add("block");
+        activeTab.classList.remove("animate-tab");
+        void activeTab.offsetWidth;
+        activeTab.classList.add("animate-tab");
+        document
+          .getElementById("wtab-" + tab)
+          .classList.remove("border-transparent", "text-gray-500");
+        document
+          .getElementById("wtab-" + tab)
+          .classList.add("border-blue-600", "text-blue-600");
+        if (tab === "history") renderTransactionHistory();
+      };
+      window.generateDepositQR = function () {
+        const amount = document.getElementById("depositAmount").value;
+        if (!amount || parseInt(amount) < 10000)
+          return alert("Tối thiểu 10.000đ");
+        const memo = `NAP ${window.loggedInUserId}`;
+        const qrUrl = `https://img.vietqr.io/image/970422-4619092006-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(memo)}&accountName=VU%20XUAN%20CONG`;
+        document.getElementById("depositQRImg").src = qrUrl;
+        document.getElementById("depositQRBox").classList.remove("hidden");
+        document.getElementById("depositQRBox").classList.add("flex");
+      };
+      window.submitDepositRequest = async function () {
+        const amount = parseInt(document.getElementById("depositAmount").value);
+        const transId = "TR_" + Date.now();
+        try {
+          await setDoc(doc(db, "transactions", transId), {
+            id: transId,
+            userId: window.loggedInUserId,
+            type: "deposit",
+            amount: amount,
+            status: "pending",
+            createdAt: Date.now(),
+            dateStr: new Date().toLocaleString("vi-VN"),
+          });
+          alert("Đã gửi yêu cầu nạp tiền!");
+          document.getElementById("depositAmount").value = "";
+          document.getElementById("depositQRBox").classList.remove("flex");
+          document.getElementById("depositQRBox").classList.add("hidden");
+          switchWalletTab("history");
+        } catch (e) {}
+      };
+      window.submitWithdrawRequest = async function (e) {
+        e.preventDefault();
+        const amount = parseInt(
+          document.getElementById("withdrawAmount").value,
+        );
+        const bank = document.getElementById("withdrawBank").value;
+        const acc = document.getElementById("withdrawAcc").value;
+        const name = document.getElementById("withdrawName").value;
+        if (amount > window.currentUserBalance) return alert(`Số dư không đủ!`);
+        if (amount < 50000) return alert("Tối thiểu 50.000đ");
+        try {
+          await updateDoc(doc(db, "users", window.loggedInUserId), {
+            balance: window.currentUserBalance - amount,
+          });
+          const transId = "TR_" + Date.now();
+          await setDoc(doc(db, "transactions", transId), {
+            id: transId,
+            userId: window.loggedInUserId,
+            type: "withdraw",
+            amount: amount,
+            bankInfo: `${bank} - ${acc} - ${name}`,
+            status: "pending",
+            createdAt: Date.now(),
+            dateStr: new Date().toLocaleString("vi-VN"),
+          });
+          alert("Lệnh rút tiền thành công!");
+          e.target.reset();
+          switchWalletTab("history");
+        } catch (err) {}
+      };
+      window.renderTransactionHistory = function () {
+        const list = document.getElementById("transactionList");
+        if (window.userTransactions.length === 0)
+          return (list.innerHTML = `<div class="text-center py-10 text-gray-400 text-sm">Chưa có giao dịch nào.</div>`);
+        list.innerHTML = window.userTransactions
+          .map((t) => {
+            let icon =
+              t.type === "deposit"
+                ? '<div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-lg"><i class="fa-solid fa-arrow-down"></i></div>'
+                : '<div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-lg"><i class="fa-solid fa-arrow-up"></i></div>';
+            let title =
+              t.type === "deposit"
+                ? "Nạp tiền vào Ví"
+                : "Rút tiền / Đổi thưởng";
+            let amountStr =
+              (t.type === "deposit" ? "+" : "-") +
+              new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(t.amount);
+            let color =
+              t.type === "deposit" ? "text-green-600" : "text-red-600";
+            let badge =
+              t.status === "pending"
+                ? '<span class="bg-orange-100 text-orange-600 px-2 py-0.5 rounded text-[10px] font-bold">Đang xử lý</span>'
+                : t.status === "approved"
+                  ? '<span class="bg-green-100 text-green-600 px-2 py-0.5 rounded text-[10px] font-bold">Thành công</span>'
+                  : '<span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Từ chối</span>';
+            return `<div class="flex items-center justify-between p-4 border border-gray-100 rounded-xl hover:bg-gray-50 transition"><div class="flex items-center gap-3">${icon}<div><h4 class="font-bold text-gray-800 text-sm">${title} ${badge}</h4><p class="text-[10px] text-gray-400">${t.dateStr}</p></div></div><span class="font-black ${color}">${amountStr}</span></div>`;
+          })
+          .join("");
+      };
+      window.toggleUserDropdown = function (e) {
+        e.stopPropagation();
+        const drop = document.getElementById("userDropdown");
+        if (drop.classList.contains("hidden")) {
+          drop.classList.remove("hidden");
+          drop.classList.add("block");
+          drop.classList.remove("animate-tab");
+          void drop.offsetWidth;
+          drop.classList.add("animate-tab");
+        } else {
+          drop.classList.add("hidden");
+          drop.classList.remove("block");
+        }
+      };
+      document.addEventListener("click", function (e) {
+        const drop = document.getElementById("userDropdown");
+        if (
+          drop &&
+          !drop.classList.contains("hidden") &&
+          !e.target.closest("#userProfileWrap")
+        ) {
+          drop.classList.add("hidden");
+          drop.classList.remove("block");
+        }
+      });
+      window.openTopRechargeModal = async function () {
+        document.getElementById("userDropdown").classList.add("hidden");
+        document.body.classList.add("modal-active");
+        document.getElementById("topRechargeModal").classList.remove("hidden");
+        document.getElementById("topRechargeModal").classList.add("flex");
+        const listContainer = document.getElementById("topRechargeList");
+        listContainer.innerHTML =
+          '<div class="text-center py-10"><i class="fa-solid fa-spinner fa-spin text-3xl text-indigo-500 mb-3"></i></div>';
+        try {
+          const q = query(
+            collection(db, "users"),
+            orderBy("totalDeposit", "desc"),
+            limit(10),
+          );
+          const querySnapshot = await getDocs(q);
+          listContainer.innerHTML = "";
+          let rank = 1;
+          querySnapshot.forEach((doc) => {
+            const d = doc.data();
+            if (d.totalDeposit > 0 && d.role !== "admin") {
+              let medal = `<span class="text-gray-400 font-black text-lg w-6 text-center">${rank}</span>`;
+              if (rank === 1)
+                medal = `<i class="fa-solid fa-medal text-yellow-400 text-2xl w-6 text-center"></i>`;
+              if (rank === 2)
+                medal = `<i class="fa-solid fa-medal text-gray-300 text-xl w-6 text-center"></i>`;
+              if (rank === 3)
+                medal = `<i class="fa-solid fa-medal text-amber-600 text-lg w-6 text-center"></i>`;
+              let ava = d.avatarBase64
+                ? `<img src="${d.avatarBase64}" class="w-10 h-10 rounded-full object-cover border border-white/20">`
+                : `<div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold">${d.name.charAt(0)}</div>`;
+              let amt = new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(d.totalDeposit);
+              listContainer.innerHTML += `<div class="flex items-center bg-white/5 border border-white/10 rounded-xl p-3 hover:bg-white/10 transition">${medal}<div class="ml-3 mr-3">${ava}</div><div class="flex-1"><h4 class="text-white font-bold text-sm">${d.name}</h4><p class="text-indigo-300 text-[10px]">${d.id}</p></div><div class="text-yellow-400 font-black">${amt}</div></div>`;
+              rank++;
+            }
+          });
+          if (rank === 1)
+            listContainer.innerHTML =
+              '<div class="text-center py-10 text-gray-500">Chưa có dữ liệu bảng xếp hạng.</div>';
+        } catch (err) {
+          listContainer.innerHTML =
+            '<div class="text-center py-10 text-red-500">Lỗi tải dữ liệu!</div>';
+        }
+      };
+      window.closeTopRechargeModal = function () {
+        document.body.classList.remove("modal-active");
+        document.getElementById("topRechargeModal").classList.add("hidden");
+        document.getElementById("topRechargeModal").classList.remove("flex");
       };
       function setupNotificationListener() {
         if (!window.isLeader) return;
@@ -1895,80 +2516,10 @@
             .join("");
         }
       }
-      function setupChatListener() {
-        onSnapshot(
-          doc(db, "project_chats", window.currentProjTitle),
-          (docSnap) => {
-            if (docSnap.exists() && docSnap.data().messages) {
-              window.chatHistory.team = docSnap.data().messages;
-              renderChatMessages();
-            }
-          },
-        );
-      }
-      window.sendChatMessage = async function (e) {
-        e.preventDefault();
-        const input = document.getElementById("chatInputMessage");
-        const msg = input.value.trim();
-        if (!msg || !window.currentProjTitle) return;
-        const time =
-          ("0" + new Date().getHours()).slice(-2) +
-          ":" +
-          ("0" + new Date().getMinutes()).slice(-2);
-        window.chatHistory.team.push({
-          senderId: window.loggedInUserId,
-          senderName: window.loggedInUserName,
-          senderInitial: window.loggedInUserName.charAt(0).toUpperCase(),
-          text: msg,
-          time: time,
-        });
-        input.value = "";
-        try {
-          await setDoc(doc(db, "project_chats", window.currentProjTitle), {
-            messages: window.chatHistory.team,
-          });
-        } catch (error) {}
-      };
-      function renderChatMessages() {
-        const area = document.getElementById("chatMessagesArea");
-        area.innerHTML = "";
-        window.chatHistory.team.forEach((m) => {
-          const isMe = m.senderId === window.loggedInUserId;
-          if (isMe)
-            area.innerHTML += `<div class="flex items-end gap-2 justify-end mb-5"><div class="flex flex-col items-end"><span class="text-[11px] text-gray-500 font-bold mb-1">Bạn</span><div class="bg-blue-600 text-white py-2 px-3.5 rounded-2xl rounded-br-none max-w-[85%] text-sm shadow-sm">${m.text}</div></div><div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 border border-blue-200 shadow-sm">${m.senderInitial}</div></div>`;
-          else
-            area.innerHTML += `<div class="flex items-end gap-2 mb-5"><div class="w-8 h-8 bg-gray-200 text-gray-700 rounded-full flex items-center justify-center font-bold text-xs shrink-0 border border-gray-300 shadow-sm">${m.senderInitial}</div><div class="flex flex-col items-start"><span class="text-[11px] text-gray-500 font-bold mb-1">${m.senderName}</span><div class="bg-white border border-gray-200 text-gray-800 py-2 px-3.5 rounded-2xl rounded-bl-none max-w-[85%] text-sm shadow-sm">${m.text}</div></div></div>`;
-        });
-        area.scrollTop = area.scrollHeight;
-      }
-      window.openChatModal = function () {
-        document.body.classList.add("modal-active");
-        document.getElementById("chatModal").classList.remove("hidden");
-        document.getElementById("chatModal").classList.add("flex");
-        renderChatMessages();
-        setTimeout(
-          () =>
-            document
-              .getElementById("chatContent")
-              .classList.remove("scale-95", "opacity-0"),
-          10,
-        );
-      };
-      window.closeChatModal = function () {
-        document.body.classList.remove("modal-active");
-        document
-          .getElementById("chatContent")
-          .classList.add("scale-95", "opacity-0");
-        setTimeout(() => {
-          document.getElementById("chatModal").classList.add("hidden");
-          document.getElementById("chatModal").classList.remove("flex");
-        }, 300);
-      };
       window.saveProjectSettings = async function (e) {
         e.preventDefault();
         try {
           await updateDoc(doc(db, "projects", window.currentProjTitle), {
-            title: document.getElementById("settingProjName").value,
             description: document.getElementById("settingProjDesc").value,
             category: document.getElementById("settingCategory").value,
           });

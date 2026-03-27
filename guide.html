@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>UNICOLLAB - Cẩm Nang Sinh Viên</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background-color: #f9fafb;
+        color: #1f2937;
+      }
+      .fade-in-section {
+        animation: fadeIn 0.5s ease-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #2563eb;
+        transition: width 0.3s;
+      }
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 100%;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="bg-[#f8fafc]">
+    <header
+      class="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm"
+    >
+      <div
+        class="max-w-[1500px] mx-auto px-4 sm:px-5 py-3 flex flex-wrap items-center justify-between gap-y-3"
+      >
+        <div
+          class="flex items-center gap-2 cursor-pointer shrink-0"
+          onclick="window.location.href = 'matching.html'"
+        >
+          <div
+            class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center text-lg sm:text-xl font-bold"
+          >
+            <i class="fa-brands fa-uniregistry"></i>
+          </div>
+          <div class="flex flex-col">
+            <span
+              class="text-xl sm:text-2xl font-black text-gray-900 tracking-tighter"
+              >UNI<span class="text-blue-600">COLLAB</span></span
+            ><span
+              class="text-[8px] sm:text-[10px] text-blue-800 font-bold -mt-1 uppercase tracking-widest"
+              >NAU Edition</span
+            >
+          </div>
+        </div>
+
+        <div
+          class="flex items-center gap-2 sm:gap-4 ml-auto md:order-3 shrink-0"
+        >
+          <div id="userProfileContainer" class="relative">
+            <button
+              class="flex items-center gap-2 sm:gap-3 p-1 sm:p-1.5 pl-2 sm:pl-3 border border-gray-200 rounded-full hover:border-blue-200 hover:bg-blue-50/50 transition"
+              onclick="toggleUserDropdown(event)"
+            >
+              <span
+                id="userName"
+                class="text-xs sm:text-sm font-bold text-gray-700 hidden sm:block"
+                >Đang tải...</span
+              >
+              <div
+                id="userAvatar"
+                class="w-7 h-7 sm:w-9 sm:h-9 bg-gray-300 rounded-full flex items-center justify-center font-bold text-white text-xs sm:text-sm border border-white shadow-sm overflow-hidden"
+              ></div>
+              <i
+                class="fa-solid fa-chevron-down text-[10px] sm:text-xs text-gray-400 mr-1"
+              ></i>
+            </button>
+            <div
+              id="userDropdown"
+              class="hidden absolute right-0 mt-3 w-56 sm:w-64 bg-white rounded-2xl shadow-xl border border-gray-100 p-3 z-50 fade-in-section"
+            >
+              <div class="space-y-1">
+                <button
+                  onclick="window.location.href = 'kanban.html'"
+                  class="w-full flex items-center gap-3.5 text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-orange-700 transition"
+                >
+                  <i
+                    class="fa-solid fa-users text-orange-500 w-4 text-center"
+                  ></i>
+                  Dự án của tôi
+                </button>
+                <div class="border-t border-gray-100 my-2 pt-2">
+                  <button
+                    onclick="userLogout()"
+                    class="w-full flex items-center gap-3.5 text-left px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-red-600 hover:bg-red-50 transition"
+                  >
+                    <i
+                      class="fa-solid fa-right-from-bracket w-4 text-center"
+                    ></i>
+                    Đăng xuất
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav
+          class="flex items-center gap-5 sm:gap-7 overflow-x-auto hide-scrollbar w-full md:w-auto md:order-2 pb-1 md:pb-0 whitespace-nowrap"
+        >
+          <a
+            href="matching.html"
+            class="nav-link text-xs sm:text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
+            >Tìm đồng đội</a
+          >
+          <a
+            href="ideas.html"
+            class="nav-link text-xs sm:text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
+            >Ý tưởng mới</a
+          >
+          <a
+            href="guide.html"
+            class="nav-link active text-xs sm:text-sm font-semibold text-blue-600"
+            >Cẩm nang</a
+          >
+          <a
+            href="sukien.html"
+            class="nav-link text-xs sm:text-sm font-semibold text-gray-600 hover:text-blue-600 transition"
+            >Sự kiện</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <div
+      class="bg-gradient-to-r from-orange-500 to-rose-500 py-10 sm:py-16 relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"
+      ></div>
+      <div
+        class="max-w-[1500px] mx-auto px-4 sm:px-5 relative z-10 text-center"
+      >
+        <h1
+          class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-3 sm:mb-4 tracking-tight shadow-sm"
+        >
+          CẨM NANG & TÀI LIỆU
+        </h1>
+        <p
+          class="text-orange-100 text-sm sm:text-lg max-w-2xl mx-auto font-medium"
+        >
+          Kho tàng kinh nghiệm thực chiến, hướng dẫn sử dụng công cụ và kỹ năng
+          mềm giúp bạn bứt phá trong mọi dự án.
+        </p>
+      </div>
+    </div>
+
+    <section class="max-w-[1500px] mx-auto px-4 sm:px-5 py-8 sm:py-12">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+      >
+        <div
+          class="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer"
+          onclick="alert('Đang cập nhật nội dung chi tiết!')"
+        >
+          <div
+            class="h-48 bg-gray-100 relative overflow-hidden flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-600"
+          >
+            <i
+              class="fa-brands fa-github text-white text-6xl opacity-80 group-hover:scale-110 transition duration-500"
+            ></i>
+          </div>
+          <div class="p-6">
+            <div
+              class="text-[10px] font-black text-blue-600 uppercase mb-3 bg-blue-50 px-2 py-1 inline-block rounded border border-blue-100"
+            >
+              Kỹ năng Công nghệ
+            </div>
+            <h3
+              class="text-xl font-bold text-gray-800 mb-2 leading-snug group-hover:text-blue-600 transition"
+            >
+              Hướng dẫn sử dụng Git & Github cơ bản cho Sinh viên
+            </h3>
+            <p class="text-sm text-gray-500 line-clamp-2">
+              Cách quản lý source code, làm việc nhóm không sợ bị conflict mã
+              nguồn khi chạy dự án chung.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer"
+          onclick="alert('Đang cập nhật nội dung chi tiết!')"
+        >
+          <div
+            class="h-48 bg-gray-100 relative overflow-hidden flex items-center justify-center bg-gradient-to-br from-pink-500 to-rose-500"
+          >
+            <i
+              class="fa-brands fa-figma text-white text-6xl opacity-80 group-hover:scale-110 transition duration-500"
+            ></i>
+          </div>
+          <div class="p-6">
+            <div
+              class="text-[10px] font-black text-pink-600 uppercase mb-3 bg-pink-50 px-2 py-1 inline-block rounded border border-pink-100"
+            >
+              Thiết kế UI/UX
+            </div>
+            <h3
+              class="text-xl font-bold text-gray-800 mb-2 leading-snug group-hover:text-pink-600 transition"
+            >
+              Tự học Figma: Thiết kế giao diện Web/App siêu tốc
+            </h3>
+            <p class="text-sm text-gray-500 line-clamp-2">
+              Dù bạn không phải Designer chuyên nghiệp, bài viết này sẽ giúp bạn
+              tạo ra bản phác thảo chuẩn chỉnh.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer"
+          onclick="alert('Đang cập nhật nội dung chi tiết!')"
+        >
+          <div
+            class="h-48 bg-gray-100 relative overflow-hidden flex items-center justify-center bg-gradient-to-br from-amber-500 to-orange-500"
+          >
+            <i
+              class="fa-solid fa-microphone-lines text-white text-6xl opacity-80 group-hover:scale-110 transition duration-500"
+            ></i>
+          </div>
+          <div class="p-6">
+            <div
+              class="text-[10px] font-black text-orange-600 uppercase mb-3 bg-orange-50 px-2 py-1 inline-block rounded border border-orange-100"
+            >
+              Kỹ năng Mềm
+            </div>
+            <h3
+              class="text-xl font-bold text-gray-800 mb-2 leading-snug group-hover:text-orange-600 transition"
+            >
+              Nghệ thuật Thuyết trình Bảo vệ Đồ án đạt điểm A+
+            </h3>
+            <p class="text-sm text-gray-500 line-clamp-2">
+              Bí kíp trình bày trước hội đồng phản biện, cách chuẩn bị slide
+              slide PowerPoint thu hút người nghe.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer"
+          onclick="alert('Đang cập nhật nội dung chi tiết!')"
+        >
+          <div
+            class="h-48 bg-gray-100 relative overflow-hidden flex items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-500"
+          >
+            <i
+              class="fa-solid fa-handshake-angle text-white text-6xl opacity-80 group-hover:scale-110 transition duration-500"
+            ></i>
+          </div>
+          <div class="p-6">
+            <div
+              class="text-[10px] font-black text-emerald-600 uppercase mb-3 bg-emerald-50 px-2 py-1 inline-block rounded border border-emerald-100"
+            >
+              Quy trình
+            </div>
+            <h3
+              class="text-xl font-bold text-gray-800 mb-2 leading-snug group-hover:text-emerald-600 transition"
+            >
+              Cách ứng xử khi làm việc nhóm đa chuyên ngành
+            </h3>
+            <p class="text-sm text-gray-500 line-clamp-2">
+              Làm sao để IT, Designer và Marketing không "đánh nhau" khi chạy
+              chung một dự án?
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedUser = localStorage.getItem("userProfileData");
+        if (!savedUser) {
+          window.location.href = "index.html";
+          return;
+        }
+
+        const userData = JSON.parse(savedUser);
+        document.getElementById("userName").innerText = userData.name;
+        const avatarEl = document.getElementById("userAvatar");
+        if (userData.avatarBase64) {
+          avatarEl.innerHTML = `<img src="${userData.avatarBase64}" class="w-full h-full object-cover rounded-full">`;
+        } else {
+          avatarEl.classList.replace("bg-gray-300", "bg-orange-500");
+          avatarEl.innerText = userData.name.charAt(0).toUpperCase();
+        }
+      });
+
+      window.toggleUserDropdown = (e) => {
+        e.stopPropagation();
+        document.getElementById("userDropdown").classList.toggle("hidden");
+      };
+      document.addEventListener("click", (e) => {
+        if (!document.getElementById("userProfileContainer").contains(e.target))
+          document.getElementById("userDropdown").classList.add("hidden");
+      });
+      window.userLogout = function () {
+        if (confirm("Đăng xuất khỏi hệ thống?")) {
+          localStorage.removeItem("userProfileData");
+          window.location.href = "index.html";
+        }
+      };
+    </script>
+  </body>
+</html>
