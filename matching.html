@@ -272,7 +272,7 @@
                   <i class="fa-solid fa-users w-5 text-orange-400"></i> Dự án
                   của tôi</button
                 ><button
-                  onclick="leaderLogout()"
+                  onclick="window.location.href = 'index.html'"
                   class="w-full text-left px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition flex items-center font-bold mt-2"
                 >
                   <i class="fa-solid fa-right-from-bracket w-5"></i> Đăng xuất
@@ -698,7 +698,7 @@
           ></textarea>
           <div
             id="projectSkillContainer"
-            class="flex flex-wrap gap-2 p-2 border rounded-xl mb-4"
+            class="flex flex-wrap gap-2 p-2 border rounded-xl mb-4 relative focus-within:ring-1 focus-within:ring-blue-500 transition"
           >
             <input
               type="text"
@@ -706,6 +706,10 @@
               placeholder="Kỹ năng yêu cầu..."
               class="outline-none p-1 text-sm flex-grow"
             />
+            <ul
+              id="projectSkillSuggestions"
+              class="hidden absolute left-0 top-full mt-1 w-full bg-white border rounded-xl shadow-lg z-50 max-h-40 overflow-y-auto custom-scrollbar"
+            ></ul>
           </div>
           <div class="bg-gray-50 p-4 rounded-xl mb-4">
             <div class="flex justify-between mb-3">
