@@ -158,11 +158,14 @@
       </div>
       <div class="mt-auto p-4 border-t border-slate-800 shrink-0">
         <button
-          onclick="adminLogout()"
-          class="w-full flex items-center px-4 py-3 rounded-xl font-bold transition text-red-400 hover:bg-red-500/10 hover:text-red-300"
-        >
-          <i class="fa-solid fa-right-from-bracket w-6 text-left"></i> Đăng xuất
-        </button>
+  onclick="window.location.href = 'index.html'"
+  class="w-full text-left px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition flex items-center font-bold mt-2"
+>
+
+<button
+  onclick="userLogout()"
+  class="w-full text-left px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-red-500/20 transition flex items-center font-bold mt-2"
+>
       </div>
     </aside>
 
@@ -494,7 +497,7 @@
             id="subcontent-events-create"
             class="hidden bg-white rounded-2xl border shadow-sm overflow-hidden max-w-4xl mx-auto mt-4"
           >
-            <form onsubmit="createEvent(event)" class="p-6 space-y-4">
+            <form onsubmit="submitCreateEvent(event)" class="p-6 space-y-4">
               <input
                 type="text"
                 id="evTitle"
@@ -1157,7 +1160,7 @@
         };
         reader.readAsDataURL(file);
       };
-      window.createEvent = async function (e) {
+      window.submitCreateEvent = async function (e) {
         e.preventDefault();
         const evId = "EV_" + Date.now();
         try {
@@ -1170,12 +1173,17 @@
             videoUrl: document.getElementById("evVideoUrl").value,
             createdAt: new Date(),
           });
-          alert("Đã đăng!");
+          alert("Đã đăng sự kiện thành công!");
           e.target.reset();
           document.getElementById("evPreviewImg").classList.add("hidden");
           window.evImageBase64 = "";
-          switchSubTab("events", "all");
-        } catch (err) {}
+
+          // Gọi hàm chuyển tab an toàn
+          window.switchSubTab("events", "all");
+        } catch (err) {
+          console.error("Lỗi khi đăng sự kiện:", err);
+          alert("Không thể đăng sự kiện, vui lòng thử lại!");
+        }
       };
     </script>
   </body>
